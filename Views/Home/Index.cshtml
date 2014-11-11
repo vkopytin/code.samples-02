@@ -1,0 +1,45 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@inherits System.Web.Mvc.WebViewPage<InitializeData>
+
+@{
+    Page.Title = "Title goes here";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+<div>
+@using (Html.BeginForm("Initialize", "Home", FormMethod.Post))
+{
+    <ol>
+        <li>
+        @Html.LabelFor(x => x.ExternalOrderID)
+        @Html.TextBoxFor(x => x.ExternalOrderID)
+        </li>
+        <li>
+        @Html.LabelFor(x => x.PartnerID)
+        @Html.TextBoxFor(x => x.PartnerID)
+        </li>
+        <li>
+        @Html.LabelFor(x => x.ChannelID)
+        @Html.TextBoxFor(x => x.ChannelID)
+        </li>
+        <li>
+        @Html.LabelFor(x => x.ItemCollection)
+        @Html.TextBoxFor(x => x.ItemCollection)
+        </li>
+        <li>
+        @Html.LabelFor(x => x.Mode)
+        @Html.TextBoxFor(x => x.Mode)
+        </li>
+        <li>
+        @Html.LabelFor(x => x.Currency)
+        @Html.TextBoxFor(x => x.Currency)
+        </li>
+        <li>
+        @Html.LabelFor(x => x.ReturnURL)
+        @Html.TextBoxFor(x => x.ReturnURL)
+        </li>
+    </ol>
+    <input type="submit" value="Initialize" />
+}
+</div>

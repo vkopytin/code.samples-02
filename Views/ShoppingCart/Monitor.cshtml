@@ -1,0 +1,334 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Postscript2Model
+@inherits System.Web.Mvc.WebViewPage<ShoppingCartArgs>
+
+@{
+    Page.Title = "Title goes here";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+@section customHead
+{
+<link type="text/css" rel="stylesheet" href="/js/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="/js/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="/js/js/jquery.jqGrid.src.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/css/ui.jqgrid.css" />
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/underscore.js"></script>
+<script type="text/javascript" src="/js/backbone.js"></script>
+
+<style type="text/css">
+#items table
+{
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+}
+
+#items td,th
+{
+    border-right: 1px solid silver;
+    border-bottom: 1px solid gray;
+    max-width: 300px;
+    overflow: auto;
+}
+#items td>div, th>div
+{
+    overflow:auto;
+    padding: 2px 5px;
+}
+</style>
+
+}
+
+<script type="text/template" id="item-template">
+<a href="#/options" class="btn btn-primary">Options</a>
+<hr/>
+<table cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+    <% _.each (fields, function (field) { %>
+    
+        <th class="table-cell">
+            <div><%= field.replace(/_/gi, " ") %></div>
+        </th>
+    <% }); %>
+</tr>
+</thead>
+<tbody>
+<% _.each(items, function(item) { %>
+<tr>
+    <% _.each (fields, function (field) { %>
+    
+        <td class="table-cell">
+            <div><%= item.get(field) %></div>
+        </td>
+    <% }); %>
+</tr>
+<% }); %>
+</tbody>
+<table>
+</script>
+
+<script type="text/template" id="edit-options-template">
+<div style="width:300px;margin: 0 auto;border: 1px solid gray;">
+<a href="#/">Close</a>
+<form class="edit-options-form">
+    <legend>Change Options</legend>
+    <label for="showRecords">Show records</label>
+    <input type="text" name="showRecords"/>
+    <hr/>
+    <button id="btOK" type="submit">Change options</button>
+</form>
+</div>
+</script>
+
+<script type="text/javascript">
+(function ($) {
+
+    var sc_fields = @(Html.Raw(Json.Encode(Helpers.GetDisplayProperties<shopping_cart>().Select(x => x.Name).ToArray())));
+
+    var ShoppingCartItem = Backbone.Model.extend({
+
+        defaults: { shopping_cart_id: '0' },
+
+        get: function () {
+
+            var value = Backbone.Model.prototype.get.apply(this, arguments);
+
+            if (/\/Date\([0-9]+\)\//.test(value)) {
+
+                return eval("new " + value.slice(1, -1)).toISOString().replace(/[TZ]|\.[0-9]+/gi, " ");
+            }
+
+            return value;
+        }
+    });
+
+    var ShoppingCartCollection = Backbone.Collection.extend({
+
+        model: ShoppingCartItem,
+
+        url: function () {
+
+            return '/api/shoppingcart/items/0/10';
+        }
+    });
+
+    var ListView = Backbone.View.extend({
+
+        el: '#page',
+        fetchRecords: 10,
+        collection: new ShoppingCartCollection(),
+
+        events: { 'click button#add': 'addItem' },
+
+        initialize: function () {
+
+            _.bindAll(this, 'render', 'addItem');
+
+            this.collection.fetch();
+        },
+
+        render: function () {
+
+            var template = _.template($('#item-template').html(), {
+                fields: sc_fields,
+                items: this.collection.models
+            });
+
+            $('#items', this.$el).html(template);
+
+            return this;
+        },
+
+        addItem: function () {
+
+        },
+
+        update: function (onSuccess) {
+            var self = this;
+            var onSuccess = onSuccess || function () {};
+
+            setTimeout(function() {
+
+                self.collection.fetch({ 
+
+                    url: '/api/shoppingcart/items/0/' + self.fetchRecords,
+
+                    success: function (data) {
+
+                        self.render();
+
+                        onSuccess();
+                }});
+            }, 0);
+        }
+    });
+ 
+    $.fn.extend({ toHash: function () {
+
+        var attrs = {};
+ 
+        $.each($(this).serializeArray(), function(i, field) {
+            attrs[field.name] = field.value;
+        });
+ 
+        return attrs;
+    }});
+
+    var EditOptionsView = Backbone.View.extend({
+
+        el: '#editOptions',
+
+        events: {
+            'submit .edit-options-form': 'changeOptions',
+            'click #btOK': 'doaction'
+        },
+
+        render: function() {
+
+            var template = _.template($('#edit-options-template').html(), {
+                 
+            });
+
+            this.$el.html(template);
+
+            return this;
+        },
+
+        changeOptions: function(ev) {
+
+            var data = $(ev.currentTarget).toHash();
+
+            return false;
+        },
+
+        close: function() {
+
+            this.$el.html('');
+        }
+    });
+
+    var MainView = Backbone.View.extend({
+
+        el: 'body',
+
+        listView: null,
+
+        events: {
+            'click button#btReload': 'update'
+        },
+
+        initialize: function () {
+
+            _.bindAll(this, 'render', 'reloadPage', 'update', 'startWaitUpdates');
+
+            this.listView = new ListView({ model: ShoppingCartItem });
+
+            setTimeout(this.startWaitUpdates, 0);
+        },
+
+        startWaitUpdates: function () {
+            var self = this;
+
+            $.ajax({
+                type: "GET",
+                url: "/cmd/getUpdates?wait=30",
+                cache: false,
+                success: function (data) {
+
+                    if (data == "new-data") {
+
+                        self.reloadPage();
+                    }
+                    else if (data == "reconnect") {
+
+                        setTimeout(self.startWaitUpdates, 0);
+                    }
+                }
+            });
+        },
+
+        update: function () {
+
+            $('#btReload').prop('disabled', true);
+            $('#btReload').text("Updating...");
+
+            this.listView.update(function (data) {
+
+                $('#btReload').text("Update Page");
+                $('#btReload').prop('disabled', false);
+            });
+        },
+
+        reloadPage: function () {
+            var self = this;
+
+            $('#btReload').prop('disabled', true);
+            $('#btReload').text("Updating...");
+
+            this.listView.update(function (data) {
+
+                $('#btReload').text("Update Page");
+                $('#btReload').prop('disabled', false);
+
+                setTimeout(self.startWaitUpdates, 0);
+            });
+        },
+
+        render: function () {
+
+            this.listView.update();
+
+        }
+    });
+
+    var Router = Backbone.Router.extend({
+        routes: {
+            '': 'home',
+            'options': 'editOptions'
+        }
+    });
+
+    $(document).ready(function () {
+
+        var router = new Router();
+        var mainView = new MainView();
+        var editOptionsView = new EditOptionsView();
+
+        router.on('route:home', function() {
+
+            editOptionsView.close();
+            mainView.render();
+        });
+
+        router.on('route:editOptions', function () {
+
+            editOptionsView.render();
+
+        });
+
+        Backbone.history.start();
+    });
+
+})(jQuery);
+
+
+
+</script>
+
+<div id="editOptions"></div>
+<div id="page">
+    <button id="btReload">Update Page</button>
+    <div id="items">
+
+    </div>
+</div>
+<!--
+<div id="test">
+<iframe src="/ShoppingCart/Index" style="border: 0px;height: 500px;width:100%;">
+</iframe>
+</div>
+-->

@@ -1,0 +1,72 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@inherits System.Web.Mvc.WebViewPage<DesignArgs>
+
+@{
+    Page.Title = "Title goes here";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+@section customHead
+{
+<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="~/js/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="~/js/js/jquery.jqGrid.src.js"></script>
+<link type="text/css" rel="stylesheet" href="~/js/css/ui.jqgrid.css" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        jQuery("#customers").jqGrid(
+	{
+	    url: '/api/designsData',
+	    datatype: "json",
+	    colNames: ['ID', 'PSP_ID', 'psp_name', 'designName', 'creatorEmail', 'Category', 'Category2'],
+	    colModel: [
+			{ name: 'ID', index: 'ID', width: 55 },
+			{ name: 'PSP_ID', index: 'PSP_ID', width: 90 },
+			{ name: 'psp_name', index: 'psp_name', width: 100 },
+			{ name: 'designName', index: 'designName', width: 180, align: "left" },
+			{ name: 'creatorEmail', index: 'creatorEmail', width: 180, align: "left" },
+			{ name: 'Category1', index: 'Category1', width: 200, align: "left" },
+			{ name: 'Category2', index: 'Category2', width: 200, align: "left" }
+		],
+	    rowNum: 10,
+	    rowList: [10, 20, 30],
+	    pager: '#pager2',
+	    sortname: 'ID',
+	    viewrecords: true,
+	    sortorder: "desc",
+	    caption: "Gallery designs",
+	    jsonReader: { repeatitems: false, id: "0" }
+	});
+
+        jQuery("#customers").jqGrid('navGrid', '#pager2', { edit: false, add: false, del: false });
+    });
+</script>
+}
+<div>
+<div id="gridCustomers">
+<table id="customers">
+<tr><td></td></tr>
+</table>
+<div id="pager2"></div>
+</div>
+<table>
+@foreach (var design in Model.PublicDesigns)
+{
+    <tr>
+    <td>@design.designName</td>
+    <td>@Html.ActionLink("Details: " + design.PSP_ID, "Details", new { pspid = design.PSP_ID })</td>
+    <td><ol>
+    @foreach (var parameter in design.Parameters)
+    {
+        <li>@parameter.DisplayName: @parameter.Value</li>
+    }
+    </ol></td>
+    </tr>
+}
+</table>
+</div>

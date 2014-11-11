@@ -1,0 +1,241 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Postscript2Model
+@inherits System.Web.Mvc.WebViewPage<InvoiceModel>
+
+@{
+    Page.Title = "Invoice Manager";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+@section customHead
+{
+<link type="text/css" rel="stylesheet" href="/js/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="/js/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="/js/js/jquery.jqGrid.src.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/css/ui.jqgrid.css" />
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/underscore.js"></script>
+<script type="text/javascript" src="/js/backbone.js"></script>
+
+<style type="text/css">
+#page table
+{
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+}
+
+#page td,th
+{
+    border-right: 1px solid silver;
+    border-bottom: 1px solid gray;
+    max-width: 300px;
+    overflow: auto;
+}
+
+#page td>div, th>div
+{
+    overflow:auto;
+    padding: 2px 5px;
+}
+</style>
+
+}
+
+<script type="text/template" id="main-template">
+<div class="menu">
+<ul>
+    <li><a href="#/">Home</a></li>
+    <li><a id="update" href="#/update">Update</a></li>
+    <li><a id="cuService" href="#/cuService">QueryService</a></li>
+</ul>
+</div>
+<hr/>
+<table cellpadding="0" cellspacing="0">
+<thead><tr>
+<% _.each (fields, function (pName) { %>
+    <th><div class="table-cell"><%= pName %></div></th>
+<% }); %>
+</tr></thead>
+<tbody>
+<% _.each(items, function(item) { %>
+<tr>
+    <% _.each (fields, function (pName) { %>
+
+        <td class="table-cell">
+            <div><%= item.get(pName) %></div>
+        </td>
+    <% }); %>
+</tr>
+<% }); %>
+</tbody>
+</table>
+</script>
+
+<script type="text/template" id="login-template">
+<iframe id="loginFrame" src="/Signup/LoginForm" style="border: 0px; width:300px;height 200px;">
+</iframe>
+</script>
+
+<script type="text/javascript">
+(function ($) {
+
+    var i_fields = @(Html.Raw(Json.Encode(Helpers.GetDisplayProperties<invoice>().Select(x => x.Name).ToArray())));
+    var defaultItems = @(Html.Raw(Json.Encode(Model.LastInvoices(5))));
+
+    var app = { Models: {}, Collections: {}, Views: {}, Router: {} };
+
+    app.Models.Invoice = Backbone.Model.extend({});
+
+    app.Collections.Invoices = Backbone.Collection.extend({
+        model: app.Models.Invoice,
+        url: '/InvoiceManager/List/10'
+    });
+
+    app.Views.Main = Backbone.View.extend({
+        el: '#page',
+
+        events: {
+            'click a#update' : 'update',
+            'click a#cuService': 'queryService'
+        },
+
+        initialize: function () {
+            var self = this;
+
+            _.bindAll(this, "start", "render", "update", "queryService");
+            this.items = new app.Collections.Invoices();
+
+            _.each(['reset', 'change', 'add'], function (evtName) {
+
+                this.listenTo(this.items, evtName, function (ev) {
+
+                    self.render();
+                });
+            }, this);
+
+        },
+
+        render: function () {
+
+            var template = _.template($('#main-template').html(), {
+
+                fields: i_fields,
+                items: this.items.models
+            });
+
+            this.$el.html(template);
+        },
+
+        update: function() {
+
+            this.items.fetch();
+        },
+
+        start: function () {
+
+            this.items.reset(defaultItems);
+        },
+
+        queryService: function() {
+
+            $.ajax({
+                type: "get",
+                url: "http://www.psprint.com/api/PSPWebservice/ShippingService.svc/web/GetJobDetailsGetOrderDetails",//?strEmailId=vkopytin@geeksforless.net&strCallback=callback",
+                data: { strEmailId: 'vkopytin@geeksforless.net', strCallback: 'callback' },
+                //dataType: 'json',
+                //dataType: 'jsonp',
+                //jsonpCallback: 'strCallback',
+                //contentType: "text/html",
+                contentType: 'application/json',
+                processData: false,
+                success: function(ret) {
+
+                    $('.page').html(ret);
+                },
+                error: function(xhr) {
+
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+
+    });
+
+    app.Views.LoginView = Backbone.View.extend({
+        el: '#loginForm',
+
+        initialize: function() {
+
+            _.bindAll(this, 'render');
+        },
+
+        render: function() {
+
+            var template = _.template($('#login-template').html(), {});
+            this.$el.html(template);
+        }
+    });
+
+    app.Router = Backbone.Router.extend({
+        routes: {
+            'login': 'showLogin',
+            'logout': 'logout',
+            '': 'home'
+        },
+
+        home: function () {
+
+            $('#loginForm').html('');
+            app.mainView.start();
+        },
+
+        showLogin: function() {
+
+            app.loginView.render();
+        },
+
+        logout: function() {
+
+            $.get("/Signup/Logout", function (result) {
+
+                if (result = "OK") {
+
+                    window.location.hash = '';
+                    window.location.reload(true);
+                }
+            });
+        }
+
+    });
+
+    $(document).ready(function () {
+
+        app.router = new app.Router();
+
+        app.mainView = new app.Views.Main();
+        app.loginView = new app.Views.LoginView();
+
+        Backbone.history.start();
+    });
+
+})(jQuery);
+</script>
+
+<div>
+@if (Request.Cookies["login"] == null)
+{
+    <a href="#/login">Login</a>
+}
+else
+{
+    <a href="#/logout">Logout</a>
+}
+</div>
+<div id="loginForm">
+
+</div>
+<div id="page">
+
+</div>

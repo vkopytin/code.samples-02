@@ -1,0 +1,69 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Postscript2Model
+@inherits System.Web.Mvc.WebViewPage<InvoiceModel>
+
+@{
+    Page.Title = "Invoice Manager";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+@section customHead
+{
+<link type="text/css" rel="stylesheet" href="/js/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="/js/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/ui/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="/js/js/jquery.jqGrid.src.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/css/ui.jqgrid.css" />
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/underscore.js"></script>
+<script type="text/javascript" src="/js/backbone.js"></script>
+
+<style type="text/css">
+
+</style>
+}
+
+<script type="text/template" id="main-template">
+
+</script>
+
+<script type="text/javascript">
+(function ($) {
+
+    
+    $(document).ready(function () {
+
+
+    });
+
+})(jQuery);
+
+
+
+</script>
+
+<div id="page">
+@if (Request["logout"] == null)
+{
+<form action="/Signup/Login" method="post">
+<div>
+    <input type="text" name="userName" value="vkopytin@geeksforless.net" />
+</div>
+<div>
+    <input type="text" name="password" value="temp123" />
+</div>
+<div>
+    <button type="submit">Login</button>
+</div>
+</form>
+}
+else
+{
+<form action="/Signup/Logout" method="post">
+<div>
+    <button type="submit">Logout</button>
+</div>
+</form>
+}
+</div>

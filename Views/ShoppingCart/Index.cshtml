@@ -1,0 +1,139 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Postscript2Model
+@inherits System.Web.Mvc.WebViewPage<ShoppingCartArgs>
+
+@{
+    Page.Title = "Title goes here";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+@section customHead
+{
+<link type="text/css" rel="stylesheet" href="/js/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="/js/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/ui/jquery-ui.js"></script>
+<script type="text/javascript" src="~/js/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="~/js/js/jquery.jqGrid.src.js"></script>
+<link type="text/css" rel="stylesheet" href="~/js/css/ui.jqgrid.css" />
+
+<style type="text/css">
+#items table
+{
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+}
+
+#items td,th
+{
+    border-right: 1px solid silver;
+    border-bottom: 1px solid gray;
+    max-width: 300px;
+    overflow: auto;
+}
+#items td>div, th>div
+{
+    overflow:auto;
+    padding: 2px 5px;
+}
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        setTimeout(startWaitUpdates, 0);
+
+        $('#btReload').click(function () {
+
+            $('#btReload').prop('disabled', true);
+            $('#btReload').text("Updating...");
+            $('#items').load(window.location.href + " #items", function () {
+
+                $('#btReload').text("Update Page");
+                $('#btReload').prop('disabled', false);
+            });
+        });
+
+        $('#getImages').click(function () {
+
+            for (var i = 0; i < 10; i++) {
+
+                setTimeout(queryImages, 0);
+            }
+        });
+    });
+
+    function queryImages() {
+
+        $.ajax({
+            type: "GET",
+            url: "http://www.psprint.com/gallery/ImageHandler.ashx?Imgpath=cde/2500/2500-preview-001.jpg&t=2013-10-10T00:26:15",
+            cache: false,
+            success: function (data) {
+            } 
+        });
+    }
+
+    function startWaitUpdates() {
+        $.ajax({
+            type: "GET",
+            url: "/cmd/getUpdates?wait=30",
+            cache: false,
+            success: function (data) {
+
+                if (data == "new-data") {
+
+                    reloadPage();
+                }
+                else if (data == "reconnect") {
+
+                    setTimeout(startWaitUpdates, 0);
+                }
+            }
+        });
+    }
+
+    function reloadPage() {
+
+        $('#btReload').prop('disabled', true);
+        $('#btReload').text("Updating...");
+
+        $('#items').load(window.location.href + " #items", function () {
+
+            setTimeout(startWaitUpdates, 0);
+
+            $('#btReload').text("Update Page");
+            $('#btReload').prop('disabled', false);
+
+        });
+
+
+        //window.location.reload(foreceGet = true);
+    }
+</script>
+}
+
+<button id="btReload">Update Page</button>
+<button id="getImages">Get Images 10</button>
+<div id="items">
+<table cellpadding="0" cellspacing="0">
+<tr>
+    @foreach (var prop in Helpers.GetDisplayProperties<shopping_cart>())
+    {
+        <th class="table-cell">
+            <div>@prop.Name.Replace("_", " ")</div>
+        </th>
+    }
+</tr>
+@foreach (shopping_cart sc in Model.LastShoppingCarts)
+{
+    <tr id="@sc.shopping_cart_id">
+    @foreach (var prop in Helpers.GetDisplayProperties<shopping_cart>())
+    {
+        <td class="table-cell">
+        <div>@prop.GetValue(sc, null)</div>
+        </td>
+    }
+    </tr>
+}
+</table>
+</div>

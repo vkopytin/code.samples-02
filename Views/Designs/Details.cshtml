@@ -1,0 +1,41 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@inherits System.Web.Mvc.WebViewPage<DesignDetails>
+
+@{
+    Page.Title = "Title goes here";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+
+<div>
+@if (@Model.Design != null)
+{
+<table>
+    <tr><td>
+        <table>
+            <tr>
+                <td><label>Design Name: </label>@Model.Design.designName</td>
+            </tr>
+            <tr>
+                <td><label>PSP ID: </label>@Model.Design.PSP_ID</td>
+            </tr>
+        </table>
+    </td>
+    <td>
+            <label>Design parameters:</label>
+    <table>
+    @foreach (var parameter in @Model.Design.Parameters)
+    {
+        <tr>
+            <td><label for="@parameter.Name">@parameter.DisplayName</label></td><td><input id="@parameter.Name" name="@parameter.Name" value="@parameter.Value" style="width: 200px" /></td>
+        </tr>
+    }
+    </table>
+    </td></tr>
+</table>
+}
+else
+{
+    <span>No record found for ID:</span> @Model.PSPID
+}
+</div>

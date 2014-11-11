@@ -1,0 +1,71 @@
+﻿@using System.Web.Mvc
+@using System.Web.Mvc.Html
+@using Postscript2Model
+@inherits System.Web.Mvc.WebViewPage
+
+@{
+    Page.Title = "Title goes here";
+    Layout = "~/Views/Shared/DefaultLayout.cshtml";
+}
+@section customHead
+{
+<link type="text/css" rel="stylesheet" href="/js/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="/js/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="/js/ui/jquery-ui.js"></script>
+<script type="text/javascript" src="~/js/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="~/js/js/jquery.jqGrid.src.js"></script>
+<link type="text/css" rel="stylesheet" href="~/js/css/ui.jqgrid.css" />
+
+<style type="text/css">
+#items input
+{
+    width: 100%;
+}
+#items label
+{
+    margin: 3px 6px;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+
+});
+</script>
+}
+<div id="items">
+<form action="http://www.psprint.com/designupload/PartnerAPI.aspx" method="get">
+<table>
+<tr><td><label for="CompanyName">CompanyName:</label></td><td colspan="3"><input type="text" name="CompanyName" value="EVERGLADES TECHNOLOGIES" /></td></tr>
+<tr><td><label for="FullName">FullName:</label></td><td colspan="3"><input type="text" name="FullName" value="ALLISONKENWORTHY" /></td></tr>
+<tr><td><label for="EmailorOther">EmailorOther:</label></td><td colspan="3"><input type="text" name="EmailorOther" value="vkopytin@geeksforless.net" /></td></tr>
+<tr><td><label for="PhoneorOther">PhoneorOther:</label></td><td colspan="3"><input type="text" name="PhoneorOther" value="916-498-9917" /></td></tr>
+<tr><td><label for="AddressLine1">AddressLine1:</label></td><td colspan="3"><input type="text" name="AddressLine1" value="1 UNION SQUARE W STE 302" /></td></tr>
+<tr><td><label for="AddressLine2">AddressLine2:</label></td><td colspan="3"><input type="text" name="AddressLine2" value="vkopytin@geeksforless.net" /></td></tr>
+<tr><td><label for="City">City:</label></td><td colspan="3"><input type="text" name="City" value="Oakland" /></td></tr>
+<tr><td><label for="county">county:</label></td><td colspan="3"><input type="text" name="county" value="CA" /></td></tr>
+<tr><td><label for="Zipcode">Zipcode:</label></td><td colspan="3"><input type="text" name="Zipcode" value="94555" /></td></tr>
+<tr><td><label for="WebsiteorOther">WebsiteorOther:</label></td><td colspan="3"><input type="text" name="WebsiteorOther" value="www.everglades.com" /></td></tr>
+<tr><td><label for="companymessage">companymessage:</label></td><td colspan="3"><input type="text" name="companymessage" value="" /></td></tr>
+
+<tr><td><label for="JobTitle">JobTitle:</label></td><td><input type="text" name="JobTitle" value="" /></td>
+<td><label for="ContactInfo1">ContactInfo1:</label></td><td><input type="text" name="ContactInfo1" value="" /></td></tr>
+<tr><td><label for="MobileorOther">MobileorOther:</label></td><td><input type="text" name="MobileorOther" value="" /></td>
+<td><label for="ContactInfo2">ContactInfo2:</label></td><td><input type="text" name="ContactInfo2" value="" /></td></tr>
+<tr><td><label for="SocialMediaorOther">SocialMediaorOther:</label></td><td><input type="text" name="SocialMediaorOther" value="" /></td>
+<td><label for="Custominfo1">Custominfo1:</label></td><td><input type="text" name="Custominfo1" value="" /></td></tr>
+<tr><td><label for="LicenseNumber">LicenseNumber:</label></td><td><input type="text" name="LicenseNumber" value="" /></td>
+<td><label for="Custominfo2">Custominfo2:</label></td><td><input type="text" name="Custominfo2" value="" /></td></tr>
+<tr><td><label for="FaxorOther">FaxorOther:</label></td><td><input type="text" name="FaxorOther" value="" /></td>
+<td><label for="Custominfo3">Custominfo3:</label></td><td><input type="text" name="Custominfo3" value="" /></td></tr>
+
+<tr><td><label for="logo">logo:</label></td><td colspan="3"><input type="text" name="logo" value="http://www.psprint.com/images/logo/admin@psprintcom/psprint-001.png" /></td></tr>
+<tr><td><label for="ProjectId">ProjectId:</label></td><td colspan="3"><input type="text" name="ProjectId" value="222448" /></td></tr>
+<tr><td><label for="templatestyle">templatestyle:</label></td><td colspan="3"><input type="text" name="templatestyle" value="27" /></td></tr>
+<tr><td><label for="storeid">storeid:</label></td><td colspan="3"><input type="text" name="storeid" value="65" /></td></tr>
+<tr><td colspan="3"></td><td><input type="submit" value="Run API" /></td></tr>
+</table>
+
+</form>
+</div>
