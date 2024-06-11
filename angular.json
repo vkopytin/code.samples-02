@@ -70,8 +70,9 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "host": "dev.local",
-            "port": 4200
+            "host": "local-dev.azurewebsites.net",
+            "port": 443,
+            "ssl": true
           }
         },
         "extract-i18n": {

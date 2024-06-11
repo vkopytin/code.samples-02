@@ -1,0 +1,16 @@
+.register-profile {
+  padding: 5px;
+
+  display: flex;
+
+  div {
+      display: flex;
+      justify-content: flex-end;
+
+  }
+
+  input {
+      margin-top: 2px;
+      margin-left: 6px;
+  }
+}

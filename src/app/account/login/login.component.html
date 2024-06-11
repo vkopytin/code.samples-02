@@ -1,0 +1,26 @@
+<div class="modal-backdrop"></div>
+<div open="open" class="modal" role="dialog">
+  <div class="modal-box">
+    <form method="dialog" [formGroup]="loginForm">
+      <label class="form-control w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">Login</span>
+        </div>
+        <input class="input input-sm w-full max-w-xs" type="text" placeholder="examle@email.com" formControlName="username" autocomplete="username"/>
+      </label>
+
+      <div class="modal-action">
+        <p class="p-2">
+          <span>Don't have an account? Register&nbsp;</span>
+          <a class="link" routerLink="/register" routerLinkActive="active">here</a>
+          <span>.</span>
+        </p>
+        <div class="join">
+          <input class="btn btn-neutral join-item" type="reset" value="Cancel" (click)="onCancel()" />
+          <input class="btn btn-primary join-item" type="submit" value="Login" (click)="onSubmit()"/>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-backdrop"></div>
+</div>

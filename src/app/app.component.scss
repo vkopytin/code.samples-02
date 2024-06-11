@@ -1,0 +1,25 @@
+nav {
+  display: flex;
+  text-align: center;
+
+  .nav-left {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    display: inline-block;
+    list-style-type: none;
+
+    li {
+      margin-left: auto;
+      margin-right: auto;
+      display: inline-block;
+      margin: 2px 6px;
+    }
+
+  }
+
+  .nav-right {
+    justify-content: right;
+  }
+  
+}

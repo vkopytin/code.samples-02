@@ -1,0 +1,69 @@
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox" disabled="disabled" />
+          </label>
+        </th>
+        <th>
+          Client id/name
+        </th>
+        <th>
+          Audientce/Redirect Uri
+        </th>
+        <th>
+          Scopes
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for (c of allClients; track c) {
+      <tr [class.bg-base-200]="selectedItem?.clientId == c.clientId" (click)="selectClient(c.clientId)">
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox" [checked]="c.isActive" />
+          </label>
+        </th>
+        <td>
+          <div class="flex items-center gap-3">
+            <div>
+              <div class="font-bold">{{ c.clientId }}</div>
+              <div class="text-sm opacity-50">{{ c.clientName }}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="text-sm">{{ c.clientUri }}</div>
+          <div class="text-sm opacity-50">{{ c.redirectUri }}</div>
+        </td>
+        <td>
+          @for (s of c.allowedScopes; track s) {
+            <span class="badge badge-ghost badge-sm">{{ s }}</span>
+          }
+        </td>
+        <th>
+          <button class="btn btn-ghost btn-xs" (click)="generateApplicationAccessToken(c.clientId, $event)">
+            Make App Token
+          </button>
+        </th>
+
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
+<hr/>
+<div>
+  <button class="btn" (click)="request()">Request data</button>
+</div>
+@if(appToken.accessToken) {
+  <div class="card bg-base-200">
+    <div class="card-body">
+      <h2 class="card-title">Application Token</h2>
+      <p class="py-6 access-token">{{ appToken.accessToken }}</p>
+    </div>
+  </div>
+}
