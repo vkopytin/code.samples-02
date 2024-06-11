@@ -15,7 +15,7 @@ export const authConfig: AuthConfig = {
   redirectUri: window.location.origin + '/index.html',
 
   // Name der Angular-Anwendung
-  clientId: 'local-dev',
+  clientId: 'vko-id prod',
 
   // Rechte des Benutzers, die die Angular-Anwendung wahrnehmen möchte
   scope: 'read:files openid profile email offline_access api',

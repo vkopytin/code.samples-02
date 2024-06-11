@@ -15,6 +15,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 })
 export class AuthClientDetailsComponent implements OnInit {
   clientForm!: FormGroup;
+  isEdit = false;
 
   @Input()
   get selectedItem(): ClientModel {
@@ -56,6 +57,7 @@ export class AuthClientDetailsComponent implements OnInit {
       const res$ = this.account.getClient(id).pipe(take(1));
       const client = await lastValueFrom(res$);
       this.selectItem(client);
+      this.isEdit = true;
     }
   }
 
@@ -79,7 +81,7 @@ export class AuthClientDetailsComponent implements OnInit {
       redirectUri: this.clientForm.get('redirectUri')?.value,
       isActive: this.clientForm.get('isActive')?.value
     };
-    if (this.selectedItem) {
+    if (this.isEdit) {
       const req$ = this.account.saveClient(client);
       this.selectedItem = await lastValueFrom(req$);
     } else {
