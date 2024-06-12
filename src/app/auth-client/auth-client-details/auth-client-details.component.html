@@ -2,7 +2,7 @@
   <ul>
     <li><a routerLink="/">Home</a></li> 
     <li><a routerLink="/clients">Clients</a></li> 
-    <li>Details</li>
+    <li><a routerLink="/clients/details/">New Client</a></li>
   </ul>
 </div>
 
@@ -66,7 +66,7 @@
   <div class="join">
     <input class="btn btn-neutral join-item" type="reset" value="Cancel" (click)="clearSelection()" />
     <input class="btn btn-primary join-item" type="submit"
-      [value]="selectedItem ? 'Update' : 'Create'"
+      [value]="isEdit ? 'Update' : 'Create'"
       [disabled]="!clientForm.valid"
       (click)="saveClient()"
       />
