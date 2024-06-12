@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-
-import { LoginComponent } from './account';
+import { environment } from '../environments/environment';
 
 export const authConfig: AuthConfig = {
 
@@ -15,7 +14,7 @@ export const authConfig: AuthConfig = {
   redirectUri: window.location.origin + '/index.html',
 
   // Name der Angular-Anwendung
-  clientId: 'vko-idm prod',
+  clientId: environment.clientId,
 
   // Rechte des Benutzers, die die Angular-Anwendung wahrnehmen möchte
   scope: 'read:files openid profile email offline_access api',
