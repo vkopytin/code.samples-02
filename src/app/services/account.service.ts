@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { ClientModel, ClientToSave } from './models/clientToSave';
+import { Observable } from 'rxjs';
+import { ClientModel, ClientToSave } from './models/clientModel';
+import { UserModel } from './models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,9 @@ export class AccountService {
   }
   public(): Observable<{}> {
     return this.http.get(`${this.domain}/home/public`);
+  }
+
+  getUser(userId: string): Observable<UserModel> {
+    return this.http.get<UserModel>(`${this.domain}/home/user/${userId}`);
   }
 }

@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ClientModel } from '../../services/models/clientToSave';
-import { lastValueFrom } from 'rxjs';
-import { AccountService } from '../../services/account.service';
-import { AuthService } from '../../services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+
+import { AccountService } from '../../services/account.service';
+import { AuthService } from '../../services/auth.service';
+import { ClientModel } from '../../services/models/clientModel';
 
 @Component({
   selector: 'app-auth-client-list',
@@ -14,7 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './auth-client-list.component.scss'
 })
 export class AuthClientListComponent implements OnInit {
-  allClients!: ClientModel[];
+  allClients?: ClientModel[];
   appToken = { accessToken: '' };
 
   @Input()

@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ClientModel, ClientToSave } from '../../services/models/clientToSave';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { lastValueFrom, take } from 'rxjs';
+
 import { AccountService } from '../../services/account.service';
 import { AuthService } from '../../services/auth.service';
-import { lastValueFrom, take } from 'rxjs';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ClientModel, ClientToSave } from '../../services/models/clientModel';
 
 @Component({
   selector: 'app-auth-client-details',
@@ -37,7 +38,7 @@ export class AuthClientDetailsComponent implements OnInit {
     this.selectItem(client);
   }
 
-  constructor(private activatedRoute: ActivatedRoute, private auth: AuthService, private account: AccountService) {
+  constructor(private activatedRoute: ActivatedRoute, private account: AccountService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -52,7 +53,7 @@ export class AuthClientDetailsComponent implements OnInit {
       isActive: new FormControl<boolean>(true, Validators.required),
     });
 
-    const id: string | undefined = this.activatedRoute.snapshot.params['id'];
+    const id: string | undefined = this.activatedRoute.snapshot.params['clientId'];
     if (id) {
       const res$ = this.account.getClient(id).pipe(take(1));
       const client = await lastValueFrom(res$);

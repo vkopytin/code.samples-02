@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 
 import { OAuthService } from 'angular-oauth2-oidc';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const skipWhenAuthorizationHeaderIsDefined = (target: {}, propertyKey: string, descriptor: PropertyDescriptor) => {
   const originalMethod = descriptor.value;
@@ -18,7 +19,7 @@ const skipWhenAuthorizationHeaderIsDefined = (target: {}, propertyKey: string, d
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private oauthService: OAuthService) {
+  constructor(private oauthService: OAuthService, private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -46,7 +47,10 @@ export class AuthInterceptor implements HttpInterceptor {
   autoLogin<T extends { status: number; }>(error: T): T {
     const { status }: { status?: number } = error;
     if (status === 401) {
-      this.oauthService.initLoginFlow();
+      this.router.navigate(
+        [{ outlets: { account: 'login' } }],
+        { queryParams: { prevUrl: this.route.url }}
+      );
     }
 
     return error;

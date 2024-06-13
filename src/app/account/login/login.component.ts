@@ -32,10 +32,10 @@ export class LoginComponent implements OnInit {
       return;
     }
     const { prevUrl } = this.route.snapshot.queryParams;
-    const username = this.loginForm.get('username')!.value;
+    const userName = this.loginForm.get('username')!.value;
 
     this.oauthService.initLoginFlow(prevUrl, {
-      username
+      userName
     });
 
     if (prevUrl) {

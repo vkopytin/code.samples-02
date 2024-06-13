@@ -1,0 +1,52 @@
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox" disabled="disabled" />
+          </label>
+        </th>
+        <th>
+          Client id/name
+        </th>
+        <th>
+          Audientce/Redirect Uri
+        </th>
+        <th>
+          Scopes
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    @for (c of allUsers; track c) {
+      <tr [class.bg-base-200]="selectedItem?.userId == c.userId" (click)="selectUser(c.userId)">
+        <th>
+          <label>
+            <input type="checkbox" class="checkbox" [checked]="c.isActive" />
+          </label>
+        </th>
+        <td>
+          <div class="flex items-center gap-3">
+            <div>
+              <div class="font-bold">{{ c.userId }}</div>
+              <div class="text-sm opacity-50">{{ c.userName }}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <th>
+
+        </th>
+
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>

@@ -28,7 +28,7 @@ export class AuthService {
     const formData = new FormData();
     formData.append('client_id', clientId);
     formData.append('grant_type', 'appToken');
-    return this.http.post<{ access_token: string; }>(`${this.domain}/Auth/token`, formData)
+    return this.http.post<{ access_token: string; }>(`${this.domain}/Auth/app-token`, formData)
       .pipe(map(({ access_token }) => ({ accessToken: access_token })));
   }
 
