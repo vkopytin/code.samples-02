@@ -12,7 +12,6 @@ import { AuthClientListComponent } from './auth-client-list/auth-client-list.com
   styleUrl: './auth-client.component.scss'
 })
 export class AuthClientComponent {
-  @Input()
   appToken = '';
 
   constructor() {

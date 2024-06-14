@@ -3,7 +3,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
 
-export const authConfig: AuthConfig = {
+const authConfig: AuthConfig = {
 
   // Url des Authorization-Servers
   //issuer: 'https://localhost:5000',

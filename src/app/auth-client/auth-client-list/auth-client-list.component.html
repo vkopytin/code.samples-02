@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     @for (c of allClients; track c) {
-      <tr [class.bg-base-200]="selectedItem?.clientId == c.clientId" (click)="selectClient(c.clientId)">
+      <tr (click)="selectClient(c)">
         <th>
           <label>
             <input type="checkbox" class="checkbox" [checked]="c.isActive" />

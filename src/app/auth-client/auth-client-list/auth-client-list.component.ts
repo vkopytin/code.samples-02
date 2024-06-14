@@ -15,14 +15,8 @@ import { ClientModel } from '../../services/models/clientModel';
   styleUrl: './auth-client-list.component.scss'
 })
 export class AuthClientListComponent implements OnInit {
-  allClients?: ClientModel[];
+  allClients?: ClientModel[] = this.account.lastClients;
   appToken = { accessToken: '' };
-
-  @Input()
-  selectedItem?: ClientModel;
-
-  @Output()
-  selectedItemChange = new EventEmitter<ClientModel>();
 
   constructor(private auth: AuthService, private account: AccountService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
@@ -32,12 +26,8 @@ export class AuthClientListComponent implements OnInit {
     this.allClients = await lastValueFrom(req$);
   }
 
-  selectClient(clientId: string): void {
-    this.router.navigate(['details', clientId], { relativeTo: this.activatedRoute });
-  }
-
-  clearSelection(): void {
-    this.selectedItem = undefined;
+  selectClient(client: ClientModel): void {
+    this.router.navigate(['details', client.clientId], { relativeTo: this.activatedRoute });
   }
 
   async generateApplicationAccessToken(clientId: string, e: Event): Promise<void> {

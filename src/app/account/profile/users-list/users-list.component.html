@@ -8,10 +8,10 @@
           </label>
         </th>
         <th>
-          Client id/name
+          User Name/name
         </th>
         <th>
-          Audientce/Redirect Uri
+          Role
         </th>
         <th>
           Scopes
@@ -21,7 +21,7 @@
     </thead>
     <tbody>
     @for (c of allUsers; track c) {
-      <tr [class.bg-base-200]="selectedItem?.userId == c.userId" (click)="selectUser(c.userId)">
+      <tr (click)="selectUser(c)">
         <th>
           <label>
             <input type="checkbox" class="checkbox" [checked]="c.isActive" />
@@ -30,16 +30,20 @@
         <td>
           <div class="flex items-center gap-3">
             <div>
-              <div class="font-bold">{{ c.userId }}</div>
-              <div class="text-sm opacity-50">{{ c.userName }}</div>
+              <div class="font-bold">{{ c.userName }}</div>
+              @if (c.name) {
+                <div class="text-sm opacity-50">{{ c.name }}</div>
+              } @else {
+                <div class="text-sm opacity-50"><i>empty name</i></div>
+              }
             </div>
           </div>
         </td>
         <td>
-
+          <span class="badge badge-ghost badge-sm">{{ c.role }}</span>
         </td>
         <td>
-
+          <button class="btn btn-ghost btn-xs">Impersonate</button>
         </td>
         <th>
 

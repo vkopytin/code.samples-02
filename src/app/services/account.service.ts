@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ClientModel, ClientToSave } from './models/clientModel';
-import { UserModel } from './models/userModel';
+import { UserModel, UserToSave } from './models/userModel';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,8 @@ import { UserModel } from './models/userModel';
 export class AccountService {
   domain = 'https://account1.azurewebsites.net';
   //domain = 'https://localhost:3001'
+  lastClients?: ClientModel[];
+  lastUsers?: UserModel[];
 
   constructor(private http: HttpClient) { }
 
@@ -26,7 +28,9 @@ export class AccountService {
   }
 
   listClients(): Observable<ClientModel[]> {
-    return this.http.get<ClientModel[]>(`${this.domain}/home/list-clients`);
+    return this.http.get<ClientModel[]>(`${this.domain}/home/list-clients`).pipe(
+      tap(res => this.lastClients = res)
+    );
   }
 
   index(): Observable<{}> {
@@ -41,5 +45,19 @@ export class AccountService {
 
   getUser(userId: string): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.domain}/home/user/${userId}`);
+  }
+
+  createUser(user: UserToSave): Observable<UserToSave> {
+    return this.http.post<UserToSave>(`${this.domain}/home/create-user`, user);
+  }
+
+  saveUser(client: UserToSave): Observable<UserToSave> {
+    return this.http.put<UserToSave>(`${this.domain}/home/save-user`, client);
+  }
+
+  listUsers(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.domain}/home/list-users`).pipe(
+      tap(res => this.lastUsers = res)
+    );
   }
 }
