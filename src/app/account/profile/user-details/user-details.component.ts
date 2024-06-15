@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 import { AccountService } from '../../../services/account.service';
 
@@ -13,13 +13,20 @@ import { AccountService } from '../../../services/account.service';
 })
 export class UserDetailsComponent implements OnInit {
   userForm!: FormGroup;
+  isEdit = false;
 
-  constructor(private account: AccountService) {
+  constructor(private activatedRoute: ActivatedRoute, private account: AccountService) {
 
   }
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
+
     });
+
+    const id: string | undefined = this.activatedRoute.snapshot.params['clientId'];
+    if (id) {
+      this.isEdit = true;
+    }
   }
 }

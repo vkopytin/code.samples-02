@@ -19,6 +19,7 @@ export class AuthClientListComponent implements OnInit {
   appToken = { accessToken: '' };
 
   constructor(private auth: AuthService, private account: AccountService, private activatedRoute: ActivatedRoute, private router: Router) {
+
   }
 
   async ngOnInit(): Promise<void> {

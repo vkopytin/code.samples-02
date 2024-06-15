@@ -6,8 +6,8 @@ import { environment } from '../environments/environment';
 const authConfig: AuthConfig = {
 
   // Url des Authorization-Servers
-  //issuer: 'https://localhost:5000',
-  issuer: 'https://idm2.azurewebsites.net',
+  issuer: 'https://localhost:5000',
+  //issuer: 'https://idm2.azurewebsites.net',
 
   // Url der Angular-Anwendung
   // An diese URL sendet der Authorization-Server den Access Code
@@ -42,7 +42,7 @@ export class AppComponent {
   private async initLogin(): Promise<void> {
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    //this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh();
     this.isLoading = false;
   }
 
