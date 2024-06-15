@@ -6,8 +6,7 @@ import { environment } from '../environments/environment';
 const authConfig: AuthConfig = {
 
   // Url des Authorization-Servers
-  //issuer: 'https://localhost:5000',
-  issuer: 'https://idm2.azurewebsites.net',
+  issuer: environment.issuer,
 
   // Url der Angular-Anwendung
   // An diese URL sendet der Authorization-Server den Access Code
