@@ -4,7 +4,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { lastValueFrom, take } from 'rxjs';
 
 import { AccountService } from '../../services/account.service';
-import { AuthService } from '../../services/auth.service';
 import { ClientModel, ClientToSave } from '../../services/models/clientModel';
 
 @Component({
