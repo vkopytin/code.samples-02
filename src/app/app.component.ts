@@ -20,7 +20,11 @@ const authConfig: AuthConfig = {
   scope: 'read:files read:user-info openid profile email offline_access api',
 
   // Code Flow (PKCE ist standardmäßig bei Nutzung von Code Flow aktiviert)
-  responseType: 'code'
+  responseType: 'code',
+
+  timeoutFactor: .75,
+  disableIdTokenTimer: true,
+  useSilentRefresh: true,
 }
 
 @Component({
@@ -42,7 +46,7 @@ export class AppComponent {
   private async initLogin(): Promise<void> {
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    this.oauthService.setupAutomaticSilentRefresh();
+    //this.oauthService.setupAutomaticSilentRefresh();
     this.isLoading = false;
   }
 

@@ -25,9 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   @skipWhenAuthorizationHeaderIsDefined
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (/Auth\/Token/gi.test(req.url)) {
-      return (of());
-    }
     const accessToken = this.oauthService.getAccessToken();
 
     if (accessToken) {
