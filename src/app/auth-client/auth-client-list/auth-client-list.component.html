@@ -1,59 +1,38 @@
 <div class="overflow-x-auto">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" disabled="disabled" />
-          </label>
-        </th>
-        <th>
-          Client id/name
-        </th>
-        <th>
-          Audientce/Redirect Uri
-        </th>
-        <th>
-          Scopes
-        </th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
     @for (c of allClients; track c) {
-      <tr (click)="selectClient(c)">
-        <th>
-          <label>
-            <input type="checkbox" class="checkbox" [checked]="c.isActive" />
-          </label>
-        </th>
-        <td>
-          <div class="flex items-center gap-3">
-            <div>
-              <div class="font-bold">{{ c.clientId }}</div>
-              <div class="text-sm opacity-50">{{ c.clientName }}</div>
+      <div class="card card-side m-4 shadow" (click)="selectClient(c)">
+        <figure>
+          <div class="stat">
+            <div class="stat-title">
+              {{ c.clientId }}
+            </div>
+            <div class="">
+              {{ c.clientName }}
+            </div>
+            <div class="stat-desc">
+              {{ c.clientUri }}
             </div>
           </div>
-        </td>
-        <td>
-          <div class="text-sm">{{ c.clientUri }}</div>
-          <div class="text-sm opacity-50">{{ c.redirectUri }}</div>
-        </td>
-        <td>
-          @for (s of c.allowedScopes; track s) {
-            <span class="badge badge-ghost badge-sm">{{ s }}</span>
-          }
-        </td>
-        <th>
-          <button class="btn btn-ghost btn-xs" (click)="generateApplicationAccessToken(c.clientId, $event)">
-            Make App Token
-          </button>
-        </th>
-
-      </tr>
+        </figure>
+        <div class="card-body">
+          <label class="label">
+            <input type="checkbox" class="toggle toggle-primary" [checked]="c.isActive" title="Is Active" />
+            <span class="text-sm">Is Active</span>
+          </label>
+          <div class="font-bold break-all">{{ c.redirectUri }}</div>
+          <div class="text-sm opacity-50">
+            @for (s of c.allowedScopes; track s) {
+              <span class="badge badge-ghost badge-sm">{{ s }}</span>
+            }
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-primary" (click)="generateApplicationAccessToken(c.clientId, $event)">
+              Make App Token
+            </button>
+          </div>
+          </div>
+      </div>
     }
-    </tbody>
-  </table>
 </div>
 <hr/>
 <div>

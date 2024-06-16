@@ -10,13 +10,15 @@
   </nav>
   <nav class="navbar-end">
     <button class="btn btn-ghost" (click)="openLogin()">Login</button>
-  </nav>  
+  </nav>
 </header>
 
-@if (isLoading) {
-  <div>Loading...</div>
-} @else {
-  <router-outlet></router-outlet>
-}
+<div class="container">
+  @if (isLoading) {
+    <div>Loading...</div>
+  } @else {
+    <router-outlet></router-outlet>
+  }
+</div>
 
 <router-outlet #accountOutlet="outlet" name="account"></router-outlet>
