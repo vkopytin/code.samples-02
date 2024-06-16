@@ -6,13 +6,13 @@ import { UserLoginResult } from './models/userLoginResult';
 import { UserRegisterInput } from './models/userRegisterInput';
 import { UserRegisterResult } from './models/userRegisterResult';
 import { UserInfo } from './models/UserInfo';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  domain = 'https://idm2.azurewebsites.net';
-  //domain = 'https://localhost:5000';
+  domain: string = environment.idm.domain;
 
   constructor(private http: HttpClient) { }
 

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { ClientModel, ClientToSave } from './models/clientModel';
 import { UserModel, UserToSave } from './models/userModel';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  domain = 'https://account1.azurewebsites.net';
-  //domain = 'https://localhost:3001'
+  domain: string = environment.account.domain;
   lastClients?: ClientModel[];
   lastUsers?: UserModel[];
 
