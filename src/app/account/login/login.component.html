@@ -1,7 +1,7 @@
 <div class="modal-backdrop"></div>
 <div open="open" class="modal" role="dialog">
   <div class="modal-box">
-    <form method="dialog" [formGroup]="loginForm">
+    <form method="dialog" [formGroup]="loginForm" [ngSubmit]="onSubmit()">
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">Login</span>
@@ -17,7 +17,7 @@
         </p>
         <div class="join">
           <input class="btn btn-neutral join-item" type="reset" value="Cancel" (click)="onCancel()" />
-          <input class="btn btn-primary join-item" type="submit" value="Login" (click)="onSubmit()"/>
+          <input class="btn btn-primary join-item" type="submit" value="Login" [disabled]="loginForm.invalid" />
         </div>
       </div>
     </form>
