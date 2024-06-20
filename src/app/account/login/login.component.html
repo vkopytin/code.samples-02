@@ -1,7 +1,7 @@
 <div class="modal-backdrop"></div>
 <div open="open" class="modal" role="dialog">
   <div class="modal-box">
-    <form method="dialog" [formGroup]="loginForm" [ngSubmit]="onSubmit()">
+    <form method="dialog" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <label class="form-control w-full max-w-xs">
         <div class="label">
           <span class="label-text">Login</span>
