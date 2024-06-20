@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listArticles():
+    this.listArticles();
   }
 
   async listArticles(): Promise<void> {
