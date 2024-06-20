@@ -10,7 +10,7 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent extends OnInit {
+export class HomeComponent implements OnInit {
   allArticles = this.articles.lastArticles;
 
   constructor(public articles: ArticlesService) {
