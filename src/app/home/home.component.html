@@ -1,5 +1,21 @@
 <div class="client-region">
   <p>Home component</p>
   <router-outlet></router-outlet>
-  <button class="btn" (click)="listArticles()">List Articles</button>
+  <ul>
+    @for (a of allArticles; track a) {
+      <li>
+        <div class="card border m-4 shadow">
+          <figure>&nbsp;</figure>
+          <div class="card-body">
+            <div class="card-actions justify-end">
+              <button class="btn btn-sm btn-primary">Save</button>
+            </div>
+            <div>{{ a.title }}</div>
+            <code>{{ a.description }}</code>
+            <div [(content-editor)]="a.description" (content-editorChange)="contentChange($event)"></div>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
 </div>

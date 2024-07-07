@@ -1,10 +1,9 @@
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',

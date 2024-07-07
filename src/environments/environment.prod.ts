@@ -6,5 +6,8 @@ export const environment = {
   },
   account: {
     domain: 'https://account1.azurewebsites.net',
-  }
+  },
+  catalog: {
+    domain: 'https://catalog3.azurewebsites.net',
+  },
 };

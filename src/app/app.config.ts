@@ -16,7 +16,13 @@ export const appConfig: ApplicationConfig = {
   importProvidersFrom(HttpClientModule),
   provideOAuthClient({
     resourceServer: {
-      allowedUrls: ['https://account1.azurewebsites.net', 'https://localhost:3001', 'https://vko-idm.azurewebsites.net'],
+      allowedUrls: [
+        'https://account1.azurewebsites.net',
+        'https://localhost:3001',
+        'https://vko-idm.azurewebsites.net',
+        'https://catalog3.azurewebsites.net',
+        'http://localhost:3000',
+      ],
       sendAccessToken: true,
     }
   })]

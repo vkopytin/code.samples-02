@@ -1,0 +1,13 @@
+<ng-template #defaultTemplate let-child>D: {{ child.innerHTML }}</ng-template>
+<ng-template #divTemplate let-child let-ctx="ctx"><div [editor]="child">{{ child.innerHTML }}</div></ng-template>
+<ng-template #pTemplate let-child let-ctx="ctx"><p [editor]="child">{{ child.innerHTML }}</p></ng-template>
+@if (element.children.length) {
+  @for (child of toArray(element.children); track child) {
+    <ng-content *ngTemplateOutlet="cmp(child.nodeName, 'div') ? divTemplate
+    : cmp(child.nodeName, 'p') ? pTemplate
+    : defaultTemplate; context: { $implicit: child, ctx: this }
+    "></ng-content>
+  }
+} @else {
+  <div [editor]="element"></div>
+}
