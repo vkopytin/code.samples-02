@@ -8,13 +8,13 @@ import { ArticleDraft } from './models/articleDraft';
   providedIn: 'root'
 })
 export class ArticlesService {
-  domain: string = environment.account.domain;
+  domain: string = environment.catalog.domain;
   lastArticles?: ArticleDraft[];
 
   constructor(private http: HttpClient) { }
 
   listArticles(): Observable<ArticleDraft[]> {
-    return this.http.get<ArticleDraft[]>(`${this.domain}/home/list-articles`).pipe(
+    return this.http.get<ArticleDraft[]>(`${this.domain}/articles/list`).pipe(
       tap(res => this.lastArticles = res)
     );
   }
