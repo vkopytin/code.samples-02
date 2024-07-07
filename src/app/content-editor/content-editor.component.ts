@@ -25,6 +25,7 @@ export class ContentEditorComponent {
   @Output('content-editorChange') htmlChange = new EventEmitter();
 
   @HostListener('input', ['$event']) onChange(evnt: Event) {
+    this.originValue = this.element.innerHTML;
     this.htmlChange.emit(this.element.innerHTML);
   }
 

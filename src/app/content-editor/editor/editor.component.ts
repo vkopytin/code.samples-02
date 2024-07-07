@@ -17,10 +17,13 @@ export class EditorComponent {
     return this.element;
   }
   set child(value: HTMLElement) {
-    if (value.innerHTML === this.elRef.nativeElement.innerHTML) {
+    if (this.element === value) {
       return;
     }
     this.element = value;
+    if (this.elRef.nativeElement.innerHTML === value.innerHTML) {
+      return;
+    }
     this.elRef.nativeElement.innerHTML = value.innerHTML;
   }
 

@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.allWebSites = await lastValueFrom(res$);
   }
 
-  contentChange(html: any): void {
-    console.log(this.allArticles?.find(() => true)?.description);
+  contentChange(article: ArticleDraft): void {
+    console.log(article.description);
   }
 }

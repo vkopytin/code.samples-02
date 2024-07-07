@@ -12,7 +12,7 @@
             </div>
             <div>{{ a.title }}</div>
             <code>{{ a.description }}</code>
-            <div [(content-editor)]="a.description" (content-editorChange)="contentChange($event)"></div>
+            <div [(content-editor)]="a.description" (content-editorChange)="contentChange(a)"></div>
           </div>
         </div>
       </li>
