@@ -7,6 +7,7 @@ import { ArticleDraft } from '../services/models/articleDraft';
 import { WebSiteModel } from '../services/models/webSiteModel';
 import { WebSitesService } from '../services/webSites.service';
 import { ContentEditorModule } from '../content-editor/content-editor.module';
+import { debounce } from '../utils';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ import { ContentEditorModule } from '../content-editor/content-editor.module';
 export class HomeComponent implements OnInit {
   allArticles?: ArticleDraft[] = this.articles.lastArticles;
   allWebSites?: WebSiteModel[] = this.webSites.lastWebsites;
+  contentChange = debounce(this.contentChangeInternal, 500);
 
   constructor(public articles: ArticlesService, public webSites: WebSitesService) {
 
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.listArticles();
     this.listWebSites();
+    this.articles.listArticles2().subscribe(res => console.log(res));
   }
 
   async listArticles(): Promise<void> {
@@ -38,7 +41,8 @@ export class HomeComponent implements OnInit {
     this.allWebSites = await lastValueFrom(res$);
   }
 
-  contentChange(article: ArticleDraft): void {
-    console.log(article.description);
+  private async contentChangeInternal(article: ArticleDraft): Promise<void> {
+    const res$ = this.articles.updateArticle(article);
+    await lastValueFrom(res$);
   }
 }
