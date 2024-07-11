@@ -1,6 +1,11 @@
 <div class="client-region">
   <p>Home component</p>
   <router-outlet></router-outlet>
+  <form [formGroup]="articleForm" (ngSubmit)="createArticle()">
+    <input type="text" formControlName="articleTitle" name="title" placeholder="Title..." />
+    <input type="text" formControlName="articleDescription" name="description" placeholder="Description..." />
+    <button type="submit" [disabled]="articleForm.invalid">Add</button>
+  </form>
   <ul>
     @for (a of allArticles; track a) {
       <li>

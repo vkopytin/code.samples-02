@@ -25,6 +25,10 @@ export class ArticlesService {
     );
   }
 
+  createArticle(article: ArticleDraft): Observable<ArticleDraft> {
+    return this.http.post<ArticleDraft>(`${this.domain}/articles/create`, article);
+  }
+
   updateArticle(article: ArticleDraft): Observable<ArticleDraft> {
     return this.http.put<ArticleDraft>(`${this.domain}/articles/${article.id}`, article);
   }
