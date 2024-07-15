@@ -1,10 +1,25 @@
 <ng-template #defaultTemplate let-child>D: {{ child.innerHTML }}</ng-template>
-<ng-template #divTemplate let-child let-ctx="ctx"><div [editor]="child">{{ child.innerHTML }}</div></ng-template>
-<ng-template #pTemplate let-child let-ctx="ctx"><p [editor]="child">{{ child.innerHTML }}</p></ng-template>
+<ng-template #brTemplate let-child><br/></ng-template>
+<ng-template #divTemplate let-child let-ctx="ctx">
+  <div class="block-region">
+    <button class="btn btn-link btn-xs" (click)="isEditable = !isEditable">Toggle Editable</button>
+    <div>
+      @if (isEditable) {
+        <div [editor]="child">{{ child.innerHTML }}</div>
+      } @else {
+        <div class="editable-element" [(content-editor)]="child.innerHTML"></div>
+      }
+    </div>
+  </div>
+</ng-template>
+<ng-template #pTemplate let-child let-ctx="ctx">
+  <p class="editable-element" [editor]="child">{{ child.innerHTML }}</p>
+</ng-template>
 @if (element.children.length) {
   @for (child of toArray(element.children); track child) {
     <ng-content *ngTemplateOutlet="cmp(child.nodeName, 'div') ? divTemplate
     : cmp(child.nodeName, 'p') ? pTemplate
+    : cmp(child.nodeName, 'br') ? brTemplate
     : defaultTemplate; context: { $implicit: child, ctx: this }
     "></ng-content>
   }

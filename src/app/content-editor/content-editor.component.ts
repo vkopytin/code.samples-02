@@ -8,6 +8,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 export class ContentEditorComponent {
   element = document.createElement('div');
   originValue = '';
+  isEditable = false;
 
   @Input('content-editor') get html(): string {
     return this.originValue;

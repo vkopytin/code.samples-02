@@ -11,20 +11,18 @@ import { Component, ElementRef, HostBinding, HostListener, Input } from '@angula
 export class EditorComponent {
   private element: HTMLElement = document.createElement('div');
 
-  @HostBinding('attr.contenteditable') contenteditable: string | boolean = "true";
+  @HostBinding('attr.contenteditable') contenteditable: string | boolean = "false";
 
   @Input('editor') get child(): HTMLElement {
     return this.element;
   }
   set child(value: HTMLElement) {
-    if (this.element === value) {
-      return;
+    if (this.element !== value) {
+      this.element = value;
     }
-    this.element = value;
-    if (this.elRef.nativeElement.innerHTML === value.innerHTML) {
-      return;
+    if (this.elRef.nativeElement.innerHTML !== value.innerHTML) {
+      this.elRef.nativeElement.innerHTML = value.innerHTML;
     }
-    this.elRef.nativeElement.innerHTML = value.innerHTML;
   }
 
   @HostListener('focusin', ['$event']) onFocusIn(evnt: Event) {

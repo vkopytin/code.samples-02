@@ -1,0 +1,9 @@
+[contenteditable="true"] {
+  outline: 1px dotted #107ec756;
+  outline-offset: 2px;
+}
+
+*:empty:before {
+  content: 'Enter text here...';
+  color: #555;
+}
