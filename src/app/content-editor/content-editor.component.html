@@ -2,18 +2,22 @@
 <ng-template #brTemplate let-child><br/></ng-template>
 <ng-template #divTemplate let-child let-ctx="ctx">
   <div class="block-region">
-    <button class="btn btn-link btn-xs" (click)="isEditable = !isEditable">Toggle Editable</button>
-    <div>
+    <div class="edit-menu">
+      <button class="btn btn-link btn-xs" (click)="isEditable = !isEditable">
+        {{ isEditable ? 'Done' : 'Edit' }}
+      </button>
+    </div>
+    <div class="block-workspace">
       @if (isEditable) {
-        <div [editor]="child">{{ child.innerHTML }}</div>
+        <div class="element-editor" [editor]="child">{{ child.innerHTML }}</div>
       } @else {
-        <div class="editable-element" [(content-editor)]="child.innerHTML"></div>
+        <div class="content-editor" [(content-editor)]="child.innerHTML"></div>
       }
     </div>
   </div>
 </ng-template>
 <ng-template #pTemplate let-child let-ctx="ctx">
-  <p class="editable-element" [editor]="child">{{ child.innerHTML }}</p>
+  <p class="element-editor" [editor]="child">{{ child.innerHTML }}</p>
 </ng-template>
 @if (element.children.length) {
   @for (child of toArray(element.children); track child) {
