@@ -12,6 +12,6 @@ export const environment = {
   },
   catalog: {
     //domain: 'https://catalog3.azurewebsites.net',
-    domain: 'http://localhost:3000',
+    domain: 'https://localhost:3002',
   },
 };

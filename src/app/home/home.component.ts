@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.listArticles();
     this.listWebSites();
-    this.articles.listArticles2().subscribe(res => console.log(res));
   }
 
   async listArticles(): Promise<void> {
