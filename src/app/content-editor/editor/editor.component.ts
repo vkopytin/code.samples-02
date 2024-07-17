@@ -20,8 +20,15 @@ export class EditorComponent {
     if (this.element !== value) {
       this.element = value;
     }
-    if (this.elRef.nativeElement.innerHTML !== value.innerHTML) {
-      this.elRef.nativeElement.innerHTML = value.innerHTML;
+
+    if (this.element.nodeName === '#text') {
+      if (this.elRef.nativeElement.innerHTML !== value.textContent) {
+        this.elRef.nativeElement.innerHTML = value.textContent || '';
+      }
+    } else {
+      if (this.elRef.nativeElement.innerHTML !== value.innerHTML) {
+        this.elRef.nativeElement.innerHTML = value.innerHTML;
+      }
     }
   }
 
@@ -32,7 +39,11 @@ export class EditorComponent {
     this.contenteditable = 'false';
   }
   @HostListener('input', ['$event']) onChange(evnt: Event) {
-    this.element.innerHTML = this.elRef.nativeElement.innerHTML;
+    if (this.element.nodeName === '#text') {
+      this.element.textContent = this.elRef.nativeElement.innerHTML;
+    } else {
+      this.element.innerHTML = this.elRef.nativeElement.innerHTML;
+    }
   }
 
   constructor(private elRef: ElementRef) {

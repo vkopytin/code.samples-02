@@ -16,7 +16,7 @@
               <button class="btn btn-sm btn-primary">Save</button>
             </div>
             <div>{{ a.title }}</div>
-            <code>{{ a.description }}</code>
+            <code [(code-editor)]="a.description" (code-editorChange)="contentChange(a)"></code>
             <div [(content-editor)]="a.description" (content-editorChange)="contentChange(a)"></div>
           </div>
         </div>

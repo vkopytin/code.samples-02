@@ -1,29 +1,33 @@
-<ng-template #defaultTemplate let-child>D: {{ child.innerHTML }}</ng-template>
+<ng-template #defaultTemplate let-child>[{{ child.nodeName }}]: {{ child.innerHTML }}</ng-template>
+<ng-template #textTemplate let-child><span [editor]="child"></span></ng-template>
 <ng-template #brTemplate let-child><br/></ng-template>
+<ng-template #spanTemplate let-child><span [editor]="child"></span></ng-template>
 <ng-template #divTemplate let-child let-ctx="ctx">
   <div class="block-region">
-    <div class="edit-menu">
-      <button class="btn btn-link btn-xs" (click)="isEditable = !isEditable">
-        {{ isEditable ? 'Done' : 'Edit' }}
-      </button>
-    </div>
     <div class="block-workspace">
-      @if (isEditable) {
-        <div class="element-editor" [editor]="child">{{ child.innerHTML }}</div>
+      @if (isEditable === child) {
+        <div class="element-editor" [editor]="child"></div>
       } @else {
         <div class="content-editor" [(content-editor)]="child.innerHTML"></div>
       }
     </div>
+    <div class="edit-menu">
+      <button class="btn btn-link btn-xs" (click)="isEditable = isEditable===child ? false : child">
+        {{ isEditable===child ? 'Done' : 'Edit' }}
+      </button>
+    </div>
   </div>
 </ng-template>
 <ng-template #pTemplate let-child let-ctx="ctx">
-  <p class="element-editor" [editor]="child">{{ child.innerHTML }}</p>
+  <p class="element-editor" [editor]="child"></p>
 </ng-template>
 @if (element.children.length) {
-  @for (child of toArray(element.children); track child) {
+  @for (child of toArray(element.childNodes); track child) {
     <ng-content *ngTemplateOutlet="cmp(child.nodeName, 'div') ? divTemplate
     : cmp(child.nodeName, 'p') ? pTemplate
     : cmp(child.nodeName, 'br') ? brTemplate
+    : cmp(child.nodeName, '#text') ? textTemplate
+    : cmp(child.nodeName, 'span') ? spanTemplate
     : defaultTemplate; context: { $implicit: child, ctx: this }
     "></ng-content>
   }
