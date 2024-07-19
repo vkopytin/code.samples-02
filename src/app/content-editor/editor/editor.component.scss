@@ -1,0 +1,12 @@
+[contenteditable="true"] {
+  background-color: #55555555;
+}
+
+:empty::before {
+  --tw-content: 'Enter text here...';
+  color: #555;
+}
+
+:empty::after {
+  --tw-content: ' ';
+}

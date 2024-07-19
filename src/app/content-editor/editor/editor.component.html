@@ -1,0 +1,30 @@
+<ng-template #defaultTemplate let-child>{{ child.nodeName }} : {{ child.textContent || child.innerText }}</ng-template>
+<ng-template #divTemplate let-child>
+  <div [editor]="child"></div>
+</ng-template>
+<ng-template #pTemplate let-child>
+  <p [(html-editor)]="child.innerHTML"></p>
+</ng-template>
+<ng-template #brTemplate let-child>
+  <br>
+</ng-template>
+<ng-template #bTemplate let-child>
+  <b [editor]="child"></b>
+</ng-template>
+<ng-template #iTemplate let-child>
+  <i [editor]="child"></i>
+</ng-template>
+<ng-template #textContentTemplate let-child>
+  <span [(html-editor)]="child.textContent"></span>
+</ng-template>
+
+@for (el of toArray(child.childNodes); track el) {
+  <ng-container *ngTemplateOutlet="cmp(el.nodeName, 'div') ? divTemplate
+   : cmp(el.nodeName, 'p') ? pTemplate
+   : cmp(el.nodeName, 'b') ? bTemplate
+   : cmp(el.nodeName, 'i') ? iTemplate
+   : cmp(el.nodeName, 'br') ? brTemplate
+   : cmp(el.nodeName, '#text') ? textContentTemplate
+   : defaultTemplate; context: { $implicit: el, ctx: this }
+  "></ng-container>
+}

@@ -20,33 +20,19 @@ export class EditorComponent {
     if (this.element !== value) {
       this.element = value;
     }
-
-    if (this.element.nodeName === '#text') {
-      if (this.elRef.nativeElement.innerHTML !== value.textContent) {
-        this.elRef.nativeElement.innerHTML = value.textContent || '';
-      }
-    } else {
-      if (this.elRef.nativeElement.innerHTML !== value.innerHTML) {
-        this.elRef.nativeElement.innerHTML = value.innerHTML;
-      }
-    }
   }
 
-  @HostListener('focusin', ['$event']) onFocusIn(evnt: Event) {
-    this.contenteditable = 'true';
-  }
-  @HostListener('focusout', ['$event']) onFocusOut(evnt: Event) {
-    this.contenteditable = 'false';
-  }
-  @HostListener('input', ['$event']) onChange(evnt: Event) {
-    if (this.element.nodeName === '#text') {
-      this.element.textContent = this.elRef.nativeElement.innerHTML;
-    } else {
-      this.element.innerHTML = this.elRef.nativeElement.innerHTML;
-    }
+  constructor() {
+
   }
 
-  constructor(private elRef: ElementRef) {
+  toArray(children: NodeListOf<ChildNode> | HTMLCollection): HTMLElement[] {
+    return [].slice.call(children);
+  }
 
+  cmp(s1: string, s2: string): boolean {
+    s1 = (s1 + '').toLowerCase();
+    s2 = (s2 + '').toLowerCase();
+    return s1 === s2;
   }
 }

@@ -6,37 +6,23 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
   styleUrl: './content-editor.component.scss'
 })
 export class ContentEditorComponent {
-  element = document.createElement('div');
   originValue = '';
-  isEditable = false;
+  editHtml = false;
 
   @Input('content-editor') get html(): string {
     return this.originValue;
   }
   set html(value: string) {
-    const newElement = document.createElement('div');
-    newElement.innerHTML = value;
-    if (newElement.innerHTML === this.originValue) {
+    if (value === this.originValue) {
       return;
     }
     this.originValue = value;
-    this.element = newElement;
   }
 
   @Output('content-editorChange') htmlChange = new EventEmitter();
 
   @HostListener('input', ['$event']) onChange(evnt: Event) {
-    this.originValue = this.element.innerHTML;
-    this.htmlChange.emit(this.element.innerHTML);
+    this.htmlChange.emit(this.originValue);
   }
 
-  toArray(children: NodeListOf<ChildNode> | HTMLCollection): ChildNode[] {
-    return [].slice.call(children);
-  }
-
-  cmp(s1: string, s2: string): boolean {
-    s1 = (s1 + '').toLowerCase();
-    s2 = (s2 + '').toLowerCase();
-    return s1 === s2;
-  }
 }
