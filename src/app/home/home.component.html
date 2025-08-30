@@ -17,7 +17,7 @@
     <button type="submit" [disabled]="articleForm.invalid">Add</button>
   </form>
   <ul>
-    @for (a of allArticles; track a) {
+    @for (a of allArticles; track a.id) {
     <li>
       <div class="card border m-4 shadow">
         <figure>&nbsp;</figure>

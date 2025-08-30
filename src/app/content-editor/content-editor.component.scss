@@ -10,3 +10,37 @@
 :empty::after {
   --tw-content: ' ';
 }
+
+.doc-editor {
+  min-height: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: Calibri, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  outline: none;
+}
+
+.doc-editor:focus {
+  border-color: #66afe9;
+  box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+.html-code-editor {
+  min-height: 200px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px;
+  border-radius: 4px;
+  outline: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: auto;
+}
+
+.html-code-editor:focus {
+  border-color: #66afe9;
+  box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}

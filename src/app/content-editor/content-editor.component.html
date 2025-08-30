@@ -61,9 +61,9 @@
       tabindex="0"
     >
       @if (!editHtml) {
-      <div [(html-editor)]="html"></div>
+      <div class="doc-editor" [(html-editor)]="html"></div>
       } @else {
-      <code class="language-html" [(code-editor)]="html"></code>
+      <code class="block html-code-editor" [(code-editor)]="html"></code>
       }
     </div>
   </div>

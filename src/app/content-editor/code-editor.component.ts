@@ -19,6 +19,9 @@ export class CodeEditorComponent {
     if (this.text !== value) {
       this.text = value;
       this.elRef.nativeElement.innerText = value;
+    } else if (value === '') {
+      this.text = '<p><br/></p>';
+      this.elRef.nativeElement.innerText = this.text;
     }
   }
 
