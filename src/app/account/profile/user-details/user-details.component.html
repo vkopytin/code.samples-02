@@ -7,5 +7,49 @@
 </div>
 
 <form [formGroup]="userForm">
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Email</span>
+    </label>
+    <input
+      [disabled]="true"
+      type="email"
+      placeholder="Type here"
+      class="input input-bordered w-full max-w-xs"
+      formControlName="userName"
+    />
+    <label class="label">
+      <span class="label-text-alt text-red-500"
+        >@if (userForm.get('email')?.invalid && userForm.get('email')?.touched)
+        { Valid Email is required }</span
+      >
+    </label>
+  </div>
 
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Full Name</span>
+    </label>
+    <input
+      type="text"
+      placeholder="Type here"
+      class="input input-bordered w-full max-w-xs"
+      formControlName="name"
+    />
+    <label class="label">
+      <span class="label-text-alt text-red-500"
+        >@if (userForm.get('firstName')?.invalid &&
+        userForm.get('firstName')?.touched) { First Name is required }</span
+      >
+    </label>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary mt-4"
+    [disabled]="userForm.invalid"
+    (click)="onSubmit()"
+  >
+    Save
+  </button>
 </form>
