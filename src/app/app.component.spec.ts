@@ -1,10 +1,14 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [HttpClientTestingModule, AppComponent, OAuthModule.forRoot()],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
@@ -24,6 +28,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, web-client');
+    expect(compiled.querySelector('div')?.textContent).toContain('Loading...');
   });
 });

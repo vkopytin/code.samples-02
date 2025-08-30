@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContentEditorComponent } from './content-editor.component';
+import { ContentEditorModule } from './content-editor.module';
 
 describe('ContentEditorComponent', () => {
   let component: ContentEditorComponent;
@@ -8,10 +9,10 @@ describe('ContentEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContentEditorComponent]
+      imports: [ContentEditorModule]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ContentEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
