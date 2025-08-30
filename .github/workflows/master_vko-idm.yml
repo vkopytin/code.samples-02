@@ -28,7 +28,7 @@ jobs:
           npm install
           npm run build --if-present
           sed -i -z "s/ removeAllListeners()\n/ removeAllListeners();process.nextTick(() => process.exit(code || 0));\n/g" node_modules/karma/lib/server.js
-          npm run test --if-present --no-watch --browsers=ChromeHeadlessCI --code-coverage
+          npm run test --if-present  --watch=false
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
