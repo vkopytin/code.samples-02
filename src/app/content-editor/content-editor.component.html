@@ -70,7 +70,11 @@
       @if (!editHtml) {
       <div #docEditor class="doc-editor" [(html-editor)]="html"></div>
       } @else {
-      <code class="block html-code-editor" [(code-editor)]="html"></code>
+      <code
+        #docEditor
+        class="block html-code-editor"
+        [(code-editor)]="html"
+      ></code>
       }
     </div>
   </div>
