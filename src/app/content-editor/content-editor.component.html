@@ -51,8 +51,15 @@
       </div>
       <div class="flex-auto flex pt-2 rounded-tr-xl overflow-hidden">
         <div
-          class="flex-auto flex justify-end bg-slate-700/50 border-y border-slate-500/30 pr-4"
-        ></div>
+          class="flex-auto flex justify-end items-center bg-slate-700/50 border-y border-slate-500/30 pr-4"
+        >
+          <button
+            class="btn btn-xs btn-outline"
+            (click)="copyToClipboard(docEditor)"
+          >
+            Copy
+          </button>
+        </div>
       </div>
     </div>
     <div
@@ -61,7 +68,7 @@
       tabindex="0"
     >
       @if (!editHtml) {
-      <div class="doc-editor" [(html-editor)]="html"></div>
+      <div #docEditor class="doc-editor" [(html-editor)]="html"></div>
       } @else {
       <code class="block html-code-editor" [(code-editor)]="html"></code>
       }

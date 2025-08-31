@@ -1,4 +1,5 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: '[content-editor]',
@@ -6,8 +7,15 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
   styleUrl: './content-editor.component.scss'
 })
 export class ContentEditorComponent {
+  @ViewChild ("docEditor", {read: ElementRef}) docEditor?: ElementRef;
+
   originValue = '';
   editHtml = false;
+  private window: Window | null;
+
+  constructor(@Inject(DOCUMENT) private document: Document) {
+    this.window = this.document.defaultView;
+  }
 
   @Input('content-editor') get html(): string {
     return this.originValue;
@@ -25,4 +33,28 @@ export class ContentEditorComponent {
     this.htmlChange.emit(this.originValue);
   }
 
+  async copyToClipboard(docEditor: ElementRef = this.docEditor!): Promise<void> {
+    if (!docEditor) return;
+    const plainText = docEditor.nativeElement?.innerText || this.originValue || '';
+
+    if (this.window?.navigator?.clipboard) {
+      try {
+        await this.window.navigator.clipboard.writeText(plainText);
+        return;
+      } catch {}
+    }
+
+    const range = this.document.createRange();
+    range.selectNodeContents(docEditor.nativeElement);
+    const selection = this.window?.getSelection();
+    if (selection) {
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+    try {
+      this.document.execCommand('copy');
+    } finally {
+      if (selection) selection.removeAllRanges();
+    }
+  }
 }
