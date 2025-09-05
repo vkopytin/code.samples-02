@@ -1,22 +1,17 @@
+/* Card padding variable */
+:root {
+    --padding-card: 0px;
+}
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.card-body {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
+
 .container {
     margin: auto;
-}
-
-.card {
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-.card-body {
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
 }
