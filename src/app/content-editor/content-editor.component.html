@@ -53,9 +53,20 @@
         <div
           class="flex-auto flex justify-end items-center bg-slate-700/50 border-y border-slate-500/30 pr-4"
         >
-          <button class="btn btn-xs" (click)="copyToClipboard(docEditor)">
-            Copy
-          </button>
+          <div class="join">
+            <button
+              class="btn btn-xs join-item"
+              (click)="pasteFromClipboard(docEditor)"
+            >
+              Paste
+            </button>
+            <button
+              class="btn btn-xs join-item"
+              (click)="copyToClipboard(docEditor)"
+            >
+              Copy
+            </button>
+          </div>
         </div>
       </div>
     </div>

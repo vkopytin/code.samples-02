@@ -33,6 +33,23 @@ export class ContentEditorComponent {
     this.htmlChange.emit(this.originValue);
   }
 
+  async pasteFromClipboard(docEditor: ElementRef = this.docEditor!): Promise<void> {
+    if (!docEditor) return;
+
+    docEditor.nativeElement.focus();
+
+    if (this.window?.navigator?.clipboard) {
+      try {
+        const text = await this.window.navigator.clipboard.readText();
+        document.execCommand('insertText', false, text);
+        return;
+      } catch {}
+    }
+
+    docEditor.nativeElement.focus();
+    this.document.execCommand('paste');
+  }
+
   async copyToClipboard(docEditor: ElementRef = this.docEditor!): Promise<void> {
     if (!docEditor) return;
     const plainText = docEditor.nativeElement?.innerText || this.originValue || '';
