@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.container {
+    margin: auto;
+}
+
 .card {
     padding-left: 0px;
     padding-right: 0px;
