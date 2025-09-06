@@ -1,13 +1,14 @@
 import { Routes } from '@angular/router';
 
+import { AcceptShareComponent } from './accept-share.component';
 import { LoginComponent, ProfileComponent, RegisterComponent } from './account';
-import { AuthGuard } from './helpers/auth.guard';
-import { HomeComponent } from './home/home.component';
+import { UserDetailsComponent } from './account/profile/user-details/user-details.component';
+import { UsersListComponent } from './account/profile/users-list/users-list.component';
 import { AuthClientDetailsComponent } from './auth-client/auth-client-details/auth-client-details.component';
 import { AuthClientListComponent } from './auth-client/auth-client-list/auth-client-list.component';
 import { AuthClientComponent } from './auth-client/auth-client.component';
-import { UsersListComponent } from './account/profile/users-list/users-list.component';
-import { UserDetailsComponent } from './account/profile/user-details/user-details.component';
+import { AuthGuard } from './helpers/auth.guard';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [{
   path: '',
@@ -41,6 +42,8 @@ export const routes: Routes = [{
       path: 'details/:userId', component: UserDetailsComponent,
       data: { breadcrumb: 'details' },
     }]
+  }, {
+    path: 'accept-share', component: AcceptShareComponent
   }, {
     path: 'register', component: RegisterComponent
   }, {
