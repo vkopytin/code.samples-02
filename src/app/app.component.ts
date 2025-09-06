@@ -36,6 +36,7 @@ export class AppComponent {
 
   constructor(private router: Router, private oauthService: OAuthService) {
     this.initLogin();
+    oauthService.setStorage(localStorage);
   }
 
   private async initLogin(): Promise<void> {

@@ -4,7 +4,11 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { AuthInterceptor } from './auth.interceptor';
-import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
+
+function storageFactory() : OAuthStorage {
+  return localStorage;
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [{
@@ -14,6 +18,7 @@ export const appConfig: ApplicationConfig = {
   },
   provideRouter(routes),
   importProvidersFrom(HttpClientModule),
+  { provide: OAuthStorage, useFactory: storageFactory },
   provideOAuthClient({
     resourceServer: {
       allowedUrls: [
