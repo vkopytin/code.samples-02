@@ -1,5 +1,7 @@
 import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { CodeEditorComponent } from './code-editor.component';
+import { HtmlEditorComponent } from './html-editor.component';
 
 @Component({
   selector: '[content-editor]',
@@ -8,6 +10,8 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ContentEditorComponent {
   @ViewChild ("docEditor", {read: ElementRef}) docEditor?: ElementRef;
+  @ViewChild(CodeEditorComponent) codeEditor?: CodeEditorComponent;
+  @ViewChild(HtmlEditorComponent) htmlEditor?: HtmlEditorComponent;
 
   originValue = '';
   editHtml = false;
@@ -35,6 +39,12 @@ export class ContentEditorComponent {
 
   async pasteFromClipboard(docEditor: ElementRef = this.docEditor!): Promise<void> {
     if (!docEditor) return;
+
+    if (this.codeEditor) {
+      this.codeEditor.contenteditable = 'true';
+    } else if (this.htmlEditor) {
+      this.htmlEditor.contenteditable = 'true';
+    }
 
     docEditor.nativeElement.focus();
 
