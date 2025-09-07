@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MediaLibraryComponent } from './media-library.component';
 import { MediaLibraryModule } from './media-library.module';
 
@@ -9,7 +9,7 @@ describe('MediaLibraryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MediaLibraryModule]
+      imports: [MediaLibraryModule, HttpClientTestingModule],
     })
     .compileComponents();
 
