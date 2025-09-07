@@ -19,4 +19,8 @@ export class ArticleBlocksService {
         tap(res => this.lastArticleBlocks = res)
       );
   }
+
+  updateArticleBlock(block: ArticleBlock): Observable<ArticleBlock> {
+    return this.http.put<ArticleBlock>(`${this.domain}/articleblocks/${block.id}`, block);
+  }
 }

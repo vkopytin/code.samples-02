@@ -5,8 +5,12 @@
       placeholder="Enter title..."
       class="card-title bg-slate-700 w-100"
       [(code-editor)]="block.title"
+      (code-editorChange)="contentChange(block)"
     ></h2>
-    <div [(content-editor)]="block.description"></div>
+    <div
+      [(content-editor)]="block.description"
+      (content-editorChange)="contentChange(block)"
+    ></div>
   </div>
 </div>
 }
