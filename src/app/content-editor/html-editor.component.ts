@@ -19,7 +19,7 @@ export class HtmlEditorComponent {
     if (this.text !== value) {
       this.text = value;
       this.elRef.nativeElement.innerHTML = value;
-    } else if (value === '') {
+    } else if (!value) {
       this.text = '<p><br/></p>';
       this.elRef.nativeElement.innerHTML = this.text;
     }

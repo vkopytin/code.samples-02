@@ -1,1 +1,12 @@
-<p>media-library works!</p>
+@for (block of lastArticleBlocks; track block.id) {
+<div class="card shadow bg-base-200 rounded-tl">
+  <div class="card-body">
+    <h2
+      placeholder="Enter title..."
+      class="card-title bg-slate-700 w-100"
+      [(code-editor)]="block.title"
+    ></h2>
+    <div [(content-editor)]="block.description"></div>
+  </div>
+</div>
+}

@@ -1,10 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ArticleBlocksService } from '../../services/articleBlocks.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: '[media-library]',
   templateUrl: './media-library.component.html',
   styleUrl: './media-library.component.scss'
 })
-export class MediaLibraryComponent {
+export class MediaLibraryComponent implements OnInit {
   @Input('media-library') folder? = '';
+  lastArticleBlocks = this.articleBlocks.lastArticleBlocks;
+
+  constructor(public articleBlocks: ArticleBlocksService) {
+
+  }
+
+  ngOnInit(): void {
+    this.listArticleBlocks();
+  }
+
+  async listArticleBlocks(): Promise<void> {
+    const res$ = this.articleBlocks.listArticleBlocks();
+    this.lastArticleBlocks = await lastValueFrom(res$);
+  }
 }
