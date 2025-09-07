@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
+  imports: [CommonModule],
   selector: 'app-accept-share',
   template: `
     <div class="p-4">

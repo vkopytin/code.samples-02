@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
+import { ContentEditorModule } from '../content-editor/content-editor.module';
 import { ArticlesService } from '../services/articles.service';
 import { ArticleDraft } from '../services/models/articleDraft';
 import { WebSiteModel } from '../services/models/webSiteModel';
 import { WebSitesService } from '../services/webSites.service';
-import { ContentEditorModule } from '../content-editor/content-editor.module';
 import { debounce } from '../utils';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MediaLibraryModule } from './media-library/media-library.module';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, ContentEditorModule, FormsModule, ReactiveFormsModule],
+  imports: [RouterOutlet, RouterModule, ContentEditorModule, MediaLibraryModule, FormsModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

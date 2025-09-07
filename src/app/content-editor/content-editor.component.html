@@ -7,7 +7,7 @@
         aria-orientation="horizontal"
       >
         <button
-          class="flex items-center relative z-10 overflow-hidden px-4 py-1 [&:not(:focus-visible)]:focus:outline-none text-sky-300"
+          class="flex items-center relative overflow-hidden px-4 py-1 [&:not(:focus-visible)]:focus:outline-none text-sky-300"
           [class.text-sky-300]="!editHtml"
           [class.text-slate-400]="editHtml"
           role="tab"
@@ -15,7 +15,7 @@
           tabindex="0"
           (click)="editHtml = false"
         >
-          <span class="z-10">Text</span>
+          <span>Text</span>
           @if (editHtml) {
           <div
             class="pointer-events-none absolute inset-0 bg-slate-700/50 border-y border-slate-500/30 border-r rounded-tr"
@@ -26,7 +26,7 @@
           ></div>
           }</button
         ><button
-          class="flex items-center relative z-10 overflow-hidden px-4 py-1 [&:not(:focus-visible)]:focus:outline-none text-slate-400"
+          class="flex items-center relative overflow-hidden px-4 py-1 [&:not(:focus-visible)]:focus:outline-none text-slate-400"
           [class.text-sky-300]="editHtml"
           [class.text-slate-400]="!editHtml"
           role="tab"
@@ -34,13 +34,13 @@
           tabindex="-1"
           (click)="editHtml = true"
         >
-          <span class="z-10">HTML</span>
+          <span>HTML</span>
           @if (!editHtml) {
           <div
             class="pointer-events-none absolute inset-0 bg-slate-700/50 border-y border-slate-500/30 border-l rounded-tl"
           ></div>
           <div
-            class="pointer-events-none absolute inset-0 inset-y-px border-r border-slate-200/5 z-20"
+            class="pointer-events-none absolute inset-0 inset-y-px border-r border-slate-200/5"
           ></div>
           } @else {
           <div

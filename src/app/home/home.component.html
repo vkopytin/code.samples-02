@@ -1,40 +1,71 @@
-<div class="client-region">
-  <p>Home component</p>
-  <router-outlet></router-outlet>
-  <form [formGroup]="articleForm" (ngSubmit)="createArticle()">
-    <input
-      type="text"
-      formControlName="articleTitle"
-      name="title"
-      placeholder="Title..."
-    />
-    <input
-      type="text"
-      formControlName="articleDescription"
-      name="description"
-      placeholder="Description..."
-    />
-    <button type="submit" [disabled]="articleForm.invalid">Add</button>
-  </form>
-  <ul>
-    @for (a of allArticles; track a.id) {
-    <li class="card shadow bg-base-200">
-      <figure>&nbsp;</figure>
-      <h2
-        class="card-title bg-slate-700"
-        [(code-editor)]="a.title"
-        (code-editorChange)="contentChange(a)"
-      ></h2>
-      <div class="card-body">
-        <div class="card-actions justify-end">
-          <button class="btn btn-xs btn-primary">Save</button>
+<router-outlet></router-outlet>
+<div class="drawer drawer-end">
+  <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <label for="my-drawer-4" class="drawer-button btn btn-ghost btn-xs"
+      >Media library</label
+    >
+    <div class="client-region">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="articleForm" (ngSubmit)="createArticle()">
+            <div class="card-title">
+              <input
+                type="text"
+                formControlName="articleTitle"
+                name="title"
+                placeholder="Title..."
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                formControlName="articleDescription"
+                name="description"
+                placeholder="Description..."
+              />
+            </div>
+            <div class="card-actions">
+              <button
+                class="btn"
+                type="submit"
+                [disabled]="articleForm.invalid"
+              >
+                Add
+              </button>
+            </div>
+          </form>
         </div>
-        <div
-          [(content-editor)]="a.description"
-          (content-editorChange)="contentChange(a)"
-        ></div>
       </div>
-    </li>
-    }
-  </ul>
+      <ul>
+        @for (a of allArticles; track a.id) {
+        <li class="card shadow bg-base-200">
+          <figure>&nbsp;</figure>
+          <h2
+            class="card-title bg-slate-700"
+            [(code-editor)]="a.title"
+            (code-editorChange)="contentChange(a)"
+          ></h2>
+          <div class="card-body">
+            <div class="card-actions justify-end">
+              <button class="btn btn-xs btn-primary">Save</button>
+            </div>
+            <div
+              [(content-editor)]="a.description"
+              (content-editorChange)="contentChange(a)"
+            ></div>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+  <div class="drawer-side">
+    <label
+      for="my-drawer-4"
+      aria-label="close sidebar"
+      class="drawer-overlay"
+    ></label>
+    <div [media-library]></div>
+  </div>
 </div>
