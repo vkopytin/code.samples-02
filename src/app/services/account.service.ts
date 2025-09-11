@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, lastValueFrom, Observable, of, tap } from 'rxjs';
 import { ClientModel, ClientToSave } from './models/clientModel';
 import { UserModel, UserToSave } from './models/userModel';
 import { environment } from '../../environments/environment';
@@ -14,6 +14,16 @@ export class AccountService {
   lastUsers?: UserModel[];
 
   constructor(private http: HttpClient) { }
+
+  healthCheck(): Promise<{}> {
+    const req = this.http.get(`${this.domain}/health`, {
+      responseType: 'text',
+    }).pipe(
+      catchError(() => { return of('not ready'); })
+    );
+
+    return lastValueFrom(req);
+  }
 
   getClient(clientId: string): Observable<ClientModel> {
     return this.http.get<ClientModel>(`${this.domain}/home/client/${clientId}`);

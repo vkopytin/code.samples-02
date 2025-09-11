@@ -3,12 +3,17 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { AppComponent } from './app.component';
+import { AccountService } from './services/account.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, AppComponent, OAuthModule.forRoot()],
-      providers: [provideRouter([])],
+      imports: [
+        HttpClientTestingModule,
+        AppComponent,
+        OAuthModule.forRoot()
+      ],
+      providers: [provideRouter([]), AccountService],
     }).compileComponents();
   });
 

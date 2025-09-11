@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
+import { AccountService } from './services/account.service';
 
 const authConfig: AuthConfig = {
 
@@ -34,7 +35,11 @@ export class AppComponent {
   open = false;
   isLoading = true;
 
-  constructor(private router: Router, private oauthService: OAuthService) {
+  constructor(
+    private router: Router,
+    private account: AccountService,
+    private oauthService: OAuthService
+  ) {
     this.initLogin();
     oauthService.setStorage(localStorage);
   }
@@ -43,6 +48,7 @@ export class AppComponent {
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
+    await this.account.healthCheck();
     this.isLoading = false;
   }
 
