@@ -8,6 +8,7 @@ import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, 
   template: '',
 })
 export class CodeEditorComponent {
+  public viewId = 'code-editor-' + Math.random().toString(36).substring(2);
   private text: string = '';
 
   @HostBinding('attr.contenteditable') contenteditable: string | boolean = "false";

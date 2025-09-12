@@ -2,10 +2,18 @@
   <nav class="navbar-start"></nav>
   <nav class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
-      <li><a routerLinkActive="active" routerLink="/home">Home</a></li>
-      <li><a routerLinkActive="active" routerLink="/clients">Clients</a></li>
-      <li><a routerLinkActive="active" routerLink="/profile">Profile</a></li>
-      <li><a routerLinkActive="active" routerLink="/register">Register</a></li>
+      <li>
+        <a routerLinkActive="menu-active" routerLink="/home">Home</a>
+      </li>
+      <li>
+        <a routerLinkActive="menu-active" routerLink="/clients">Clients</a>
+      </li>
+      <li>
+        <a routerLinkActive="menu-active" routerLink="/profile">Profile</a>
+      </li>
+      <li>
+        <a routerLinkActive="menu-active" routerLink="/register">Register</a>
+      </li>
     </ul>
   </nav>
   <nav class="navbar-end">
@@ -15,9 +23,9 @@
 
 <div class="container">
   @if (isLoading) {
-    <div>Loading...</div>
+  <div>Loading...</div>
   } @else {
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
   }
 </div>
 

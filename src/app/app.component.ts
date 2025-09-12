@@ -36,7 +36,7 @@ export class AppComponent {
   isLoading = true;
 
   constructor(
-    private router: Router,
+    public router: Router,
     private account: AccountService,
     private oauthService: OAuthService
   ) {
