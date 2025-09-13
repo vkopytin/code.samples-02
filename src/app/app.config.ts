@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
   provideOAuthClient({
     resourceServer: {
       allowedUrls: [
-        'https://account1.azurewebsites.net',
+        'https://account3.azurewebsites.net',
         'https://localhost:3001',
         'https://vko-idm.azurewebsites.net',
         'https://catalog3.azurewebsites.net',
