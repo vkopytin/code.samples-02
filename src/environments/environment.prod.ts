@@ -5,7 +5,7 @@ export const environment = {
     domain: 'https://idm2.azurewebsites.net',
   },
   account: {
-    domain: 'https://account1.azurewebsites.net',
+    domain: 'https://account3.azurewebsites.net',
   },
   catalog: {
     domain: 'https://catalog3.azurewebsites.net',
