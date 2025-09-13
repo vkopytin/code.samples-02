@@ -21,19 +21,19 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: "20.x"
+          node-version: '22.x'
 
       - name: npm install, build, and test
         run: |
           npm install
           npm run build --if-present
           npm run test --if-present
-
+      
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: ./dist/web-client/browser
+          path: .
 
   deploy:
     runs-on: ubuntu-latest
@@ -47,18 +47,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
-
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_27B043CB573447B4B39D6E0D64F17146 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3E333A3772514A3EB09F9CA984425869 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BA2A5E686EDD476F9C58EB0123CD3533 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_3A60480D7D0B45E09DA3B199435FFD95 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8E2D8D6D31A145539229D7B6ADD852A3 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B2B27A7AEEAC44BB9E917D9C06B116F3 }}
 
-      - name: "Deploy to Azure Web App"
+      - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: "vko-idm"
-          slot-name: "Production"
+          app-name: 'vko-idm'
+          slot-name: 'Production'
           package: .
+          
