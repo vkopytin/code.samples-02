@@ -11,7 +11,7 @@ import { debounce } from '../../../utils';
   styleUrl: './media-item.component.scss'
 })
 export class MediaItemComponent {
-  @Input('media-item') item!: ArticleBlock;
+  @Input('media-item') item = {} as ArticleBlock;
   @Output('media-itemChange') itemChange = new EventEmitter<ArticleBlock>();
 
   contentChange = debounce(this.contentChangeInternal, 500);
