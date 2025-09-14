@@ -1,16 +1,3 @@
 @for (block of lastArticleBlocks; track block.id) {
-<div class="card shadow bg-base-200 rounded-tl">
-  <div class="card-body">
-    <h2
-      placeholder="Enter title..."
-      class="card-title bg-slate-700 w-100"
-      [(code-editor)]="block.title"
-      (code-editorChange)="contentChange(block)"
-    ></h2>
-    <div
-      [(content-editor)]="block.description"
-      (content-editorChange)="contentChange(block)"
-    ></div>
-  </div>
-</div>
+<div [media-item]="block" class="card shadow bg-base-200 rounded-tl"></div>
 }

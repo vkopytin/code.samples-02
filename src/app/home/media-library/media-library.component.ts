@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ArticleBlocksService } from '../../services/articleBlocks.service';
 import { lastValueFrom } from 'rxjs';
-import { ArticleBlock } from '../../services/models/articleBlock';
-import { debounce } from '../../utils';
+import { ArticleBlocksService } from '../../services/articleBlocks.service';
 
 @Component({
   selector: '[media-library]',
@@ -12,11 +10,8 @@ import { debounce } from '../../utils';
 export class MediaLibraryComponent implements OnInit {
   @Input('media-library') folder? = '';
   lastArticleBlocks = this.articleBlocks.lastArticleBlocks;
-  contentChange = debounce(this.contentChangeInternal, 500);
 
-  constructor(public articleBlocks: ArticleBlocksService) {
-
-  }
+  constructor(public articleBlocks: ArticleBlocksService) { }
 
   ngOnInit(): void {
     this.listArticleBlocks();
@@ -27,8 +22,4 @@ export class MediaLibraryComponent implements OnInit {
     this.lastArticleBlocks = await lastValueFrom(res$);
   }
 
-  async contentChangeInternal(block: ArticleBlock): Promise<void> {
-    const res$ = this.articleBlocks.updateArticleBlock(block);
-    await lastValueFrom(res$);
-  }
 }

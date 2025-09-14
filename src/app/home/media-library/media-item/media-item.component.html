@@ -1,0 +1,25 @@
+<figure>
+  <button class="btn btn-outline-secondary my-2 my-sm-0">
+    <label class="click-to-upload">
+      <i class="fa fa-3x">camera</i>
+      <input
+        type="file"
+        class="hidden"
+        accept="image/*,video/*"
+        (input)="uploadMedia($event)"
+      />
+    </label>
+  </button>
+</figure>
+<div class="card-body">
+  <h2
+    placeholder="Enter title..."
+    class="card-title bg-slate-700 w-100"
+    [(code-editor)]="item.title"
+    (code-editorChange)="contentChange(item)"
+  ></h2>
+  <div
+    [(content-editor)]="item.description"
+    (content-editorChange)="contentChange(item)"
+  ></div>
+</div>
