@@ -20,7 +20,10 @@ export class ArticlesService {
   }
 
   createArticle(article: ArticleDraft): Observable<ArticleDraft> {
-    return this.http.post<ArticleDraft>(`${this.domain}/articles/create`, article);
+    return this.http.post<ArticleDraft>(`${this.domain}/articles/create`, {
+      ...article,
+      blocks: [],
+    });
   }
 
   updateArticle(article: ArticleDraft): Observable<ArticleDraft> {
