@@ -1,19 +1,77 @@
-<p>Create new profile</p>
 <div class="register-profile">
-  <form [formGroup]="registerForm">
-    <div><label>Full Name<input type="text" formControlName="name" name="name" autocomplete="name" /></label></div>
-    <div><label>Login<input type="text" name="username" formControlName="username" autocomplete="username" /></label></div>
-    <div><label>Password <input type="password" name="password" formControlName="password" autocomplete="new-password" /></label></div>
-    <div>
-      <label for="user-role">Role</label>
-      <select id="user-role" name="role" formControlName="role">
-        <option [value]="''"></option>
-        <option [value]="'Everyone'" [defaultSelected]="true">Everyone</option>
-      </select>
+  <form class="fieldset" [formGroup]="registerForm">
+    <legend class="fieldset-legend">Create new profile</legend>
+    <label class="input validator">
+      <span class="label">Full Name</span>
+      <input
+        required
+        type="text"
+        formControlName="name"
+        name="name"
+        autocomplete="name"
+      />
+    </label>
+    <div class="validator-hint">Please, enter full name</div>
+    <label class="input validator">
+      <span class="label">Login (email)</span>
+      <input
+        required
+        type="email"
+        name="username"
+        formControlName="username"
+        autocomplete="username"
+      />
+    </label>
+    <div class="validator-hint">Please, enter login</div>
+    <label
+      class="input validator"
+      [class.input-error]="hasConfirmPasswordError"
+    >
+      <span class="label">New Password</span>
+      <input
+        required
+        type="password"
+        name="password"
+        formControlName="password"
+        autocomplete="new-password"
+      />
+    </label>
+    <div class="validator-hint">Password is required</div>
+    <label
+      class="input validator"
+      [class.input-error]="hasConfirmPasswordError"
+      [attr.aria-invalid]="hasConfirmPasswordError"
+    >
+      <span class="label">Confirm password</span>
+      <input
+        required
+        type="password"
+        name="confirm-password"
+        formControlName="confirm-password"
+      />
+    </label>
+    <div class="validator-hint" [class.hidden]="!hasConfirmPasswordError">
+      Passwords are not the same
     </div>
-    <div>
-      <input type="reset" value="Cancel" (click)="onCancel()" />
-      <input type="submit" value="Create" (click)="onSubmit()" />
+    <label for="user-role">Role</label>
+    <select class="select" id="user-role" name="role" formControlName="role">
+      <option [value]="''"></option>
+      <option [value]="'Everyone'" [defaultSelected]="true">Everyone</option>
+    </select>
+    <div class="join">
+      <input
+        class="btn join-item"
+        type="reset"
+        value="Cancel"
+        (click)="onCancel()"
+      />
+      <input
+        class="btn btn-neutral join-item"
+        type="submit"
+        value="Create"
+        [attr.aria-disabled]="registerForm.invalid"
+        (click)="onSubmit()"
+      />
     </div>
   </form>
 </div>

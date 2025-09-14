@@ -15,6 +15,10 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
 
+  public get hasConfirmPasswordError() {
+    return this.registerForm.get('confirm-password')?.hasError('confirmPassword');
+  }
+
   constructor(private auth: AuthService, private router: Router) {
 
   }
@@ -24,7 +28,15 @@ export class RegisterComponent implements OnInit {
       name: new FormControl<string>('', Validators.required),
       username: new FormControl<string>('', Validators.required),
       password: new FormControl<string>('', Validators.required),
+      'confirm-password': new FormControl<string>('', Validators.required),
       role: new FormControl<string>('Everyone', Validators.required),
+    }, {
+      validators: (control) => {
+        if (control.value.password !== control.value['confirm-password']) {
+          control.get("confirm-password")?.setErrors({ confirmPassword: true });
+        }
+        return null;
+      },
     });
   }
 
