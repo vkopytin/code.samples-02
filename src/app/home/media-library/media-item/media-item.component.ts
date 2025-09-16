@@ -30,9 +30,13 @@ export class MediaItemComponent {
   }
 
   async uploadMedia(evnt: Event) {
+    if (!this.item.id) {
+      console.warn(`Attemting to upload media when block id doesn't exist`);
+      return;
+    }
     evnt && evnt.preventDefault();
     const eventTarget = evnt.target as HTMLInputElement;
-    const res$ = this.mediaSrv.upload(eventTarget);
+    const res$ = this.mediaSrv.upload(this.item.id, eventTarget);
 
     try {
       const res = await lastValueFrom(res$);

@@ -11,19 +11,19 @@ import { environment } from '../../environments/environment';
 export class MediaService {
   domain: string = environment.catalog.domain;
 
-  uploadMediaUrl = `${this.domain}/media/upload`;
+  uploadMediaUrl = (blockId: string) => `${this.domain}/media/block/${blockId}/upload`;
   updateMediaUrl = (id: string) => `${this.domain}/media/update/${id}`;
 
   constructor(
     private http: HttpClient,
   ) { }
 
-  upload(media: HTMLInputElement) {
+  upload(blockId: string, media: HTMLInputElement) {
     const formData = new FormData();
     for (const file of [].slice.call(media.files, 0) as File[]) {
         formData.append(file.name, file);
     }
-    return this.http.post<CommonResponse<ArticleBlock>>(this.uploadMediaUrl, formData).pipe(
+    return this.http.post<CommonResponse<ArticleBlock>>(this.uploadMediaUrl(blockId), formData).pipe(
       map(({ result }) => result)
     );
   }
