@@ -1,7 +1,11 @@
 <figure>
-  <button class="btn btn-outline-secondary my-2 my-sm-0">
-    <label class="click-to-upload">
+  <button class="btn-outline-secondary my-2 my-sm-0">
+    <label class="click-to-upload" [class.btn]="!item.media?.sourceUrl">
+      @if (item.media?.sourceUrl){
+      <img src="{{ item.media?.sourceUrl }}" />
+      } @else {
       <i class="fa fa-3x">camera</i>
+      }
       <input
         type="file"
         class="hidden"

@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "@tailwindcss/postcss": "^4.1.13",
     "@tailwindcss/typography": "^0.5.13",
     "angular-oauth2-oidc": "^17.0.2",
     "rxjs": "~7.8.0",
@@ -39,7 +40,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "^8.4.38",
+    "postcss": "^8.5.6",
+    "postcss-import": "^16.1.1",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.4.2"
   }
