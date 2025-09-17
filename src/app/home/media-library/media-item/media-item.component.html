@@ -1,8 +1,8 @@
 <figure>
   <button class="btn-outline-secondary my-2 my-sm-0">
-    <label class="click-to-upload" [class.btn]="!item.media?.sourceUrl">
-      @if (item.media?.sourceUrl){
-      <img src="{{ item.media?.sourceUrl }}" />
+    <label class="click-to-upload" [class.btn]="!item.sourceUrl">
+      @if (item.sourceUrl){
+      <img src="{{ item.sourceUrl }}" />
       } @else {
       <i class="fa fa-3x">camera</i>
       }
