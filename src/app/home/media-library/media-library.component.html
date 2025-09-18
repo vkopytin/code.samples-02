@@ -1,3 +1,10 @@
 @for (block of lastArticleBlocks; track block.id) {
 <div [media-item]="block" class="card shadow bg-base-100 rounded-tl"></div>
 }
+<button
+  class="btn btn-info"
+  [class.btn-dash]="this.articleBlocks.hasMore"
+  (click)="this.loadMore()"
+>
+  Load more
+</button>

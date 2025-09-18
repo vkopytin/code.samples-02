@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, map, tap } from 'rxjs';
 import { ArticleBlocksService } from '../../services/articleBlocks.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { ArticleBlocksService } from '../../services/articleBlocks.service';
 export class MediaLibraryComponent implements OnInit {
   @Input('media-library') folder? = '';
   lastArticleBlocks = this.articleBlocks.lastArticleBlocks;
+  limit = 10;
 
   constructor(public articleBlocks: ArticleBlocksService) { }
 
@@ -22,4 +23,16 @@ export class MediaLibraryComponent implements OnInit {
     this.lastArticleBlocks = await lastValueFrom(res$);
   }
 
+  async loadMore(): Promise<void> {
+    if (!this.articleBlocks.hasMore) {
+      return;
+    }
+
+    const res$ = this.articleBlocks.listArticleBlocks(
+      this.lastArticleBlocks.length,
+      this.limit
+    );
+    const articles = await lastValueFrom(res$);
+    this.lastArticleBlocks = [...this.lastArticleBlocks, ...articles];
+  }
 }
