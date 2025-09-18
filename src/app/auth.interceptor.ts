@@ -1,9 +1,10 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpInterceptorFn } from '@angular/common/http';
 
 const skipWhenAuthorizationHeaderIsDefined = (target: {}, propertyKey: string, descriptor: PropertyDescriptor) => {
   const originalMethod = descriptor.value;
@@ -19,13 +20,11 @@ const skipWhenAuthorizationHeaderIsDefined = (target: {}, propertyKey: string, d
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private oauthService: OAuthService, private router: Router, private route: ActivatedRoute) {
-
-  }
 
   @skipWhenAuthorizationHeaderIsDefined
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const accessToken = this.oauthService.getAccessToken();
+    const oauthService = inject(OAuthService);
+    const accessToken = oauthService.getAccessToken();
 
     if (accessToken) {
       const authRequest = req.clone({
@@ -45,14 +44,23 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   autoLogin<T extends { status: number; }>(error: T): T {
+    const router = inject(Router);
+    const route = inject(ActivatedRoute);
     const { status }: { status?: number } = error;
     if (status === 401) {
-      this.router.navigate(
+      router.navigate(
         [{ outlets: { account: 'login' } }],
-        { queryParams: { prevUrl: this.route.url }}
+        { queryParams: { prevUrl: route.url }}
       );
     }
 
     return error;
   }
 }
+
+const impl = new AuthInterceptor();
+
+export const authInterceptor: HttpInterceptorFn = (req, next) =>
+{
+    return impl.intercept(req, {handle: next});
+};

@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MediaItemComponent } from './media-item.component';
 import { MediaLibraryModule } from '../media-library.module';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MediaItemComponent', () => {
   let component: MediaItemComponent;
@@ -9,8 +10,9 @@ describe('MediaItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MediaLibraryModule]
-    })
+    imports: [MediaLibraryModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(MediaItemComponent);

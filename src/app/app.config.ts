@@ -1,9 +1,9 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { AuthInterceptor } from './auth.interceptor';
+import { authInterceptor } from './auth.interceptor';
 import { OAuthStorage, provideOAuthClient } from 'angular-oauth2-oidc';
 
 function storageFactory() : OAuthStorage {
@@ -11,13 +11,9 @@ function storageFactory() : OAuthStorage {
 }
 
 export const appConfig: ApplicationConfig = {
-  providers: [{
-    provide : HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi   : true,
-  },
+  providers: [
   provideRouter(routes),
-  importProvidersFrom(HttpClientModule),
+  provideHttpClient(withInterceptors([authInterceptor])),
   { provide: OAuthStorage, useFactory: storageFactory },
   provideOAuthClient({
     resourceServer: {

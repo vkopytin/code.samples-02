@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { AuthClientDetailsComponent } from './auth-client-details.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuthClientDetailsComponent', () => {
   let component: AuthClientDetailsComponent;
@@ -10,9 +11,9 @@ describe('AuthClientDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuthClientDetailsComponent, HttpClientTestingModule],
-      providers: [provideRouter([])],
-    })
+    imports: [AuthClientDetailsComponent],
+    providers: [provideRouter([]), provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(AuthClientDetailsComponent);
