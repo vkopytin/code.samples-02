@@ -1,6 +1,8 @@
 export default {
-  content: ["./src/**/*.{html,ts}", "./src/index.html"],
-  theme: { extend: {} },
+  content: ["./src/**/*.{html,ts}"],
+  theme: {
+    extend: {},
+  },
   plugins: [require("daisyui")],
   daisyui: {
     themes: [

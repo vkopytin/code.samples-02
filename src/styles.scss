@@ -10,6 +10,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin "daisyui" {
+  themes: dark --default, forest --prefersdark;
+}
+
 .card-body {
     padding-top: .25rem;
     padding-bottom: .25rem;
