@@ -3,6 +3,8 @@
     <label class="click-to-upload btn-outline" [class.btn]="!item.sourceUrl">
       @if (item.sourceUrl){
       <img src="{{ item.sourceUrl }}" />
+      }@else if (item.origin) {
+      <img src="{{ item.origin }}" />
       } @else {
       <i class="fa fa-3x">camera</i>
       }
