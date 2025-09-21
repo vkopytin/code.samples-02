@@ -32,6 +32,10 @@ export class ArticleBlocksService {
       );
   }
 
+  getById(blockId: string) {
+    return this.http.get<ArticleBlock>(`${this.domain}/articleblocks/${blockId}`);
+  }
+
   updateArticleBlock(block: ArticleBlock): Observable<ArticleBlock> {
     return this.http.put<ArticleBlock>(`${this.domain}/articleblocks/${block.id}`, block);
   }

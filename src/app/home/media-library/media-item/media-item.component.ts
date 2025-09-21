@@ -23,7 +23,6 @@ export class MediaItemComponent {
 
   }
 
-
   async contentChangeInternal(block: ArticleBlock): Promise<void> {
     const res$ = this.articleBlocks.updateArticleBlock(block);
     await lastValueFrom(res$);
@@ -49,5 +48,21 @@ export class MediaItemComponent {
     }
 
     eventTarget.value = '';
+    this.waitNormalization(10);
+  }
+
+  async waitNormalization(count: number) {
+    if (count <= 0 || !this.item.id) {
+      return;
+    }
+    const res$ = this.articleBlocks.getById(this.item.id);
+    const item = await lastValueFrom(res$);
+    if (item.sourceUrl != this.item.sourceUrl) {
+      this.item = item;
+      this.itemChange.emit(this.item);
+      return;
+    }
+
+    setTimeout(() => this.waitNormalization(count - 1), 1000);
   }
 }

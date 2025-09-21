@@ -1,9 +1,9 @@
-<figure>
+<figure class="stats">
   <button class="btn-outline-secondary my-2 my-sm-0">
     <label class="click-to-upload btn-outline" [class.btn]="!item.sourceUrl">
-      @if (item.sourceUrl){
+      @if (item.sourceUrl) {
       <img src="{{ item.sourceUrl }}" />
-      }@else if (item.origin) {
+      } @else if (item.origin) {
       <img src="{{ item.origin }}" />
       } @else {
       <i class="fa fa-3x">camera</i>
@@ -15,6 +15,9 @@
         (input)="uploadMedia($event)"
       />
     </label>
+    @if (item.mediaError) {
+    <div class="stat-desc text-secondary">{{ item.mediaError }}</div>
+    }
   </button>
 </figure>
 <div class="card-body">

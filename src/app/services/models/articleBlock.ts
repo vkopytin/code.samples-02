@@ -8,4 +8,5 @@ export interface ArticleBlock {
     sourceUrl?: string;
     width?: number;
     height?: number;
+    mediaError?: string;
 }
