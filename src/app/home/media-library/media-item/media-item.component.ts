@@ -41,7 +41,7 @@ export class MediaItemComponent {
       const res = await lastValueFrom(res$);
 
       this.item = res;
-      this.itemChange.emit(this.item);
+      this.itemChange.emit(res);
     } catch (ex) {
 
       console.error(ex);
@@ -59,7 +59,7 @@ export class MediaItemComponent {
     const item = await lastValueFrom(res$);
     if (item.sourceUrl != this.item.sourceUrl) {
       this.item = item;
-      this.itemChange.emit(this.item);
+      this.itemChange.emit(item);
       return;
     }
 
