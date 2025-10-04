@@ -17,7 +17,7 @@ const authConfig: AuthConfig = {
   clientId: environment.clientId,
 
   // Rechte des Benutzers, die die Angular-Anwendung wahrnehmen möchte
-  scope: 'read:files read:user-info openid profile email offline_access api https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly',
+  scope: 'read:files read:user-info openid profile email offline_access api https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
 
   // Code Flow (PKCE ist standardmäßig bei Nutzung von Code Flow aktiviert)
   responseType: 'code'
