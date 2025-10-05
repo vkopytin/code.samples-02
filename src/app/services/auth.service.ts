@@ -65,4 +65,10 @@ export class AuthService {
       withCredentials: true
     });
   }
+
+  googleLogin(): Observable<{url: string}> {
+    const form = new FormData();
+
+    return this.http.post<{url: string}>(`${this.domain}/home/google-login-url`, form, { withCredentials: true });
+  }
 }

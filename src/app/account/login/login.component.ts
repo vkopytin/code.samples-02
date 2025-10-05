@@ -2,21 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 
+import { AsyncPipe } from '@angular/common';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../../services/auth.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [AsyncPipe, RouterOutlet, RouterModule, FormsModule, ReactiveFormsModule],
   providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  googleLoginUrl = '';
 
-  constructor(private oauthService: OAuthService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private authService: AuthService,
+    private oauthService: OAuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
 
   }
 
@@ -24,6 +32,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       username: new FormControl<string>('', Validators.required),
     });
+    this.loadGoogleLoginUrl();
   }
 
   onSubmit(): void {
@@ -46,6 +55,13 @@ export class LoginComponent implements OnInit {
 
   onCancel(): void {
     this.closeForm();
+  }
+
+  async loadGoogleLoginUrl() {
+    const res$ = this.authService.googleLogin();
+    const res = await lastValueFrom(res$);
+
+    this.googleLoginUrl = res.url;
   }
 
   private closeForm(): void {
