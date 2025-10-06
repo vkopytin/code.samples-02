@@ -9,8 +9,10 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [AppComponent,
-        OAuthModule.forRoot()],
+    imports: [
+      AppComponent,
+      OAuthModule.forRoot()
+    ],
     providers: [provideRouter([]), AccountService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 }).compileComponents();
   });

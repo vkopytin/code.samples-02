@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, map } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { cookieExists, cookieRead } from '../utils';
+import { UserInfo } from './models/UserInfo';
 import { UserLoginResult } from './models/userLoginResult';
 import { UserRegisterInput } from './models/userRegisterInput';
 import { UserRegisterResult } from './models/userRegisterResult';
-import { UserInfo } from './models/UserInfo';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   domain: string = environment.idm.domain;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private oauthService: OAuthService,
+    private http: HttpClient,
+  ) { }
 
   isAuthenticated(): boolean {
     return cookieExists('token');
@@ -68,6 +72,8 @@ export class AuthService {
 
   googleLogin(): Observable<{url: string}> {
     const form = new FormData();
+
+    form.append('accessToken', this.oauthService.getAccessToken());
 
     return this.http.post<{url: string}>(`${this.domain}/home/google-login-url`, form, { withCredentials: true });
   }
