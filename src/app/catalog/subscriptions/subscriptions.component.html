@@ -1,0 +1,9 @@
+<h2>Subscriptions</h2>
+@for (sub of subscriptions; track sub.id) {
+<div class="subscription-card">
+  <h3>{{ sub.title }}</h3>
+  <p>{{ sub.description }}</p>
+  <button class="btn btn-primary">Subscribe</button>
+  <button class="btn btn-secondary">Unsubscribe</button>
+</div>
+}
