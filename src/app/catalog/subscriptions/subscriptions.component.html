@@ -1,9 +1,21 @@
 <h2>Subscriptions</h2>
-@for (sub of subscriptions; track sub.id) {
-<div class="subscription-card">
-  <h3>{{ sub.title }}</h3>
-  <p>{{ sub.description }}</p>
-  <button class="btn btn-primary">Subscribe</button>
-  <button class="btn btn-secondary">Unsubscribe</button>
+<div class="flex flex-col flex-wrap gap-4">
+  @for (sub of subscriptions; track sub.id) {
+  <div class="card card-md card-full bg-base-200 shadow-sm">
+    <figure class="w-32">
+      <img
+        [src]="sub.snippet.thumbnails?.default?.url"
+        alt="Channel Thumbnail"
+      />
+    </figure>
+    <div class="card-body">
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary">Unsubscribe</button>
+        <button class="btn btn-ghost">Subscribe</button>
+      </div>
+      <h2 class="card-title">{{ sub.snippet.title }}</h2>
+      <p>{{ sub.snippet.description }}</p>
+    </div>
+  </div>
+  }
 </div>
-}

@@ -9,6 +9,7 @@ import { AuthClientListComponent } from './auth-client/auth-client-list/auth-cli
 import { AuthClientComponent } from './auth-client/auth-client.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { SubscriptionsComponent } from './catalog/subscriptions/subscriptions.component';
 
 export const routes: Routes = [{
   path: '',
@@ -42,6 +43,8 @@ export const routes: Routes = [{
       path: 'details/:userId', component: UserDetailsComponent,
       data: { breadcrumb: 'details' },
     }]
+  }, {
+    path: 'subscriptions', component: SubscriptionsComponent
   }, {
     path: 'accept-share', component: AcceptShareComponent
   }, {

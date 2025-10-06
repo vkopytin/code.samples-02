@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Subscription } from './subscription.model';
+import { SubscriptionItem, SubscriptionResponse } from './subscription.model';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
 })
 export class SubscriptionsComponent {
   domain = environment.catalog.domain;
-  subscriptions: Subscription[] = [];
+  subscriptions: SubscriptionItem[] = [];
 
   constructor(
     private http: HttpClient
@@ -22,7 +22,7 @@ export class SubscriptionsComponent {
   }
 
   async loadSubscriptions(): Promise<void> {
-    const res$ = this.http.get<{items: Subscription[]}>(`${this.domain}/youtube-api/subscriptions`);
+    const res$ = this.http.get<SubscriptionResponse>(`${this.domain}/youtube-api/list-channels`);
     const res = await lastValueFrom(res$);
 
     this.subscriptions = res.items;
