@@ -15,15 +15,14 @@
           name="username"
         />
       </label>
-
+      <p class="label">
+        <span>Don't have an account? Register&nbsp;</span>
+        <a class="link" routerLink="/register" routerLinkActive="active"
+          >here</a
+        >
+        <span>.</span>
+      </p>
       <div class="modal-action">
-        <p class="p-2">
-          <span>Don't have an account? Register&nbsp;</span>
-          <a class="link" routerLink="/register" routerLinkActive="active"
-            >here</a
-          >
-          <span>.</span>
-        </p>
         <div class="join">
           <a
             href="{{ googleLoginUrl }}"
