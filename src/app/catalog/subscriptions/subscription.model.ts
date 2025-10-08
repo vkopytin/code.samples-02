@@ -5,8 +5,11 @@ export interface SubscriptionItem {
   description: string;
   thumbnailUrl: string;
   updatedAt: string;
+  isSubscribed: boolean;
 }
 
 export interface SubscriptionResponse {
   items: SubscriptionItem[];
+  limit: number;
+  total: number;
 }
