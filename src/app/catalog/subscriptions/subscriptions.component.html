@@ -1,4 +1,20 @@
+<ng-template #pagination>
+  <div class="pagination">
+    @for (index of pages; track index) {
+    <button
+      class="btn btn-sm"
+      [class.btn-dash]="page === index + 1"
+      (click)="goToPage(index + 1)"
+    >
+      {{ index + 1 }}
+    </button>
+    }
+  </div>
+</ng-template>
+
 <div>
+  <ng-container *ngTemplateOutlet="pagination"></ng-container>
+
   <div class="flex flex-col flex-wrap">
     @for (sub of subscriptions; track sub.id) {
     <div
@@ -31,15 +47,6 @@
     </div>
     }
   </div>
-  <div class="pagination">
-    @for (index of pages; track index) {
-    <button
-      class="btn btn-sm"
-      [class.btn-dash]="page === index + 1"
-      (click)="goToPage(index + 1)"
-    >
-      {{ index + 1 }}
-    </button>
-    }
-  </div>
+
+  <ng-container *ngTemplateOutlet="pagination"></ng-container>
 </div>

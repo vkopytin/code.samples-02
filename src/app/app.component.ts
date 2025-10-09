@@ -3,6 +3,7 @@ import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
 import { AccountService } from './services/account.service';
+import { NgTemplateOutlet } from '@angular/common';
 
 const authConfig: AuthConfig = {
 
@@ -26,7 +27,7 @@ const authConfig: AuthConfig = {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule],
+  imports: [NgTemplateOutlet, RouterOutlet, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
