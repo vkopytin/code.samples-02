@@ -43,13 +43,13 @@ export class SubscriptionsComponent {
   }
 
   async subscribe(channelId: string): Promise<void> {
-    const res$ = this.http.post(`${this.domain}/youtube-api/subscribe`, { channelId });
+    const res$ = this.http.post(`${this.domain}/youtube-api/subscribe/${channelId}`, {});
     await lastValueFrom(res$);
     this.loadSubscriptions();
   }
 
-  async unsubscribe(channelId: string): Promise<void> {
-    const res$ = this.http.post(`${this.domain}/youtube-api/unsubscribe`, { channelId });
+  async unsubscribe(resourceId: string): Promise<void> {
+    const res$ = this.http.post(`${this.domain}/youtube-api/unsubscribe/${resourceId}`, {});
     await lastValueFrom(res$);
     this.loadSubscriptions();
   }
