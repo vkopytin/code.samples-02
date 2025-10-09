@@ -1,7 +1,19 @@
-<header class="navbar bg-base-100">
+<div class="container mx-auto pt-16">
+  @if (isLoading) {
+  <div>Loading...</div>
+  } @else {
+  <router-outlet></router-outlet>
+  }
+</div>
+
+<header
+  class="navbar bg-base-100 shadow-sm app-header absolute top-0 left-0 w-full z-50"
+>
   <nav class="navbar-start"></nav>
   <nav class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
+    <ul
+      class="menu menu-horizontal px-1 xl:menu-horizontal bg-base-200 rounded-box lg:min-w-max"
+    >
       <li>
         <a routerLinkActive="menu-active" routerLink="/home">Home</a>
       </li>
@@ -12,9 +24,24 @@
         <a routerLinkActive="menu-active" routerLink="/profile">Profile</a>
       </li>
       <li>
-        <a routerLinkActive="menu-active" routerLink="/subscriptions">
-          Subscriptions
-        </a>
+        <details>
+          <summary>Subscriptions</summary>
+          <ul>
+            <li>
+              <a routerLinkActive="menu-active" routerLink="/subscriptions">
+                Subscriptions
+              </a>
+            </li>
+            <li>
+              <a
+                routerLinkActive="menu-active"
+                routerLink="/subscriptions/old-channels"
+              >
+                Old Channels
+              </a>
+            </li>
+          </ul>
+        </details>
       </li>
       <li>
         <a routerLinkActive="menu-active" routerLink="/register">Register</a>
@@ -25,13 +52,5 @@
     <button class="btn btn-ghost" (click)="openLogin()">Login</button>
   </nav>
 </header>
-
-<div class="container">
-  @if (isLoading) {
-  <div>Loading...</div>
-  } @else {
-  <router-outlet></router-outlet>
-  }
-</div>
 
 <router-outlet #accountOutlet="outlet" name="account"></router-outlet>

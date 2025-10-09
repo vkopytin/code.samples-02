@@ -1,5 +1,6 @@
 nav {
-  display: flex;
+  top:0;
+  left:0;
   text-align: center;
 
   .nav-left {
@@ -21,5 +22,5 @@ nav {
   .nav-right {
     justify-content: right;
   }
-  
+
 }

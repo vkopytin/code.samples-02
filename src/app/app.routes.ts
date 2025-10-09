@@ -44,7 +44,15 @@ export const routes: Routes = [{
       data: { breadcrumb: 'details' },
     }]
   }, {
-    path: 'subscriptions', component: SubscriptionsComponent
+    path: 'subscriptions', component: SubscriptionsComponent,
+    data: { breadcrumb: 'Subscriptions' },
+    children: [{
+      path: '', component: SubscriptionsComponent,
+      data: { breadcrumb: 'Subscriptions' },
+    }, {
+      path: 'old-channels', component: SubscriptionsComponent,
+      data: { breadcrumb: 'Old Channels' },
+    }]
   }, {
     path: 'accept-share', component: AcceptShareComponent
   }, {
