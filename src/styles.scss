@@ -11,7 +11,7 @@
 @tailwind utilities;
 
 @plugin "daisyui" {
-  themes: dark --default, abyss --prefersdark;
+  themes: dark --default, dim --prefersdark;
 }
 
 .card-body {
