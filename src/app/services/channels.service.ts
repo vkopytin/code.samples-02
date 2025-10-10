@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable, lastValueFrom, map, tap } from 'rxjs';
+import { Observable, lastValueFrom, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { SubscriptionResponse } from '../catalog/subscriptions/subscription.model';
+import { SubscriptionResponse } from '../catalog/subscription.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,12 @@ export class ChannelsService {
   ) { }
 
   loadSubscriptions(from=0, limit=10): Observable<SubscriptionResponse> {
+    return this.http.get<SubscriptionResponse>(
+      `${this.domain}/youtube-api/list-subscriptions?limit=${limit}&from=${from}`
+    );
+  }
+
+  loadChannels(from=0, limit=10): Observable<SubscriptionResponse> {
     return this.http.get<SubscriptionResponse>(
       `${this.domain}/youtube-api/list-channels?limit=${limit}&from=${from}`
     );

@@ -1,14 +1,14 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { ChannelsService } from '../../services/channels.service';
-import { SubscriptionItem } from './subscription.model';
+import { SubscriptionItem } from '../subscription.model';
 
 @Component({
   selector: 'app-subscriptions',
   standalone: true,
-  imports: [NgTemplateOutlet, RouterModule, RouterOutlet],
+  imports: [RouterModule, NgTemplateOutlet],
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.scss'
 })

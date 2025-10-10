@@ -11,6 +11,7 @@ import { ChannelsComponent } from './catalog/channels/channels.component';
 import { SubscriptionsComponent } from './catalog/subscriptions/subscriptions.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { CatalogComponent } from './catalog/catalog.component';
 
 export const routes: Routes = [{
   path: '',
@@ -45,7 +46,7 @@ export const routes: Routes = [{
       data: { breadcrumb: 'details' },
     }]
   }, {
-    path: 'subscriptions', component: SubscriptionsComponent,
+    path: 'subscriptions', component: CatalogComponent,
     data: { breadcrumb: 'Subscriptions' },
     children: [{
       path: '', component: SubscriptionsComponent,
