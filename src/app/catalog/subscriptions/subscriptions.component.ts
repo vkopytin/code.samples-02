@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
-import { SubscriptionItem, SubscriptionResponse } from './subscription.model';
-import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
 import { NgTemplateOutlet } from '@angular/common';
-import { environment } from '../../../environments/environment';
+import { Component } from '@angular/core';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { ChannelsService } from '../../services/channels.service';
+import { SubscriptionItem } from './subscription.model';
 
 @Component({
   selector: 'app-subscriptions',
   standalone: true,
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, RouterModule, RouterOutlet],
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.scss'
 })
 export class SubscriptionsComponent {
-  domain = environment.catalog.domain;
   subscriptions: SubscriptionItem[] = [];
   total = 0;
   limit = 10;
@@ -22,19 +21,9 @@ export class SubscriptionsComponent {
   pages: number[] = [];
 
   constructor(
-    private http: HttpClient
+    private channels: ChannelsService
   ) {
     this.loadSubscriptions();
-  }
-
-  async loadSubscriptions(): Promise<void> {
-    const res$ = this.http.get<SubscriptionResponse>(`${this.domain}/youtube-api/list-channels?limit=${this.limit}&from=${this.from}`);
-    const res = await lastValueFrom(res$);
-
-    this.subscriptions = res.items;
-    this.limit = res.limit;
-    this.total = res.total;
-    this.pages = Array(Math.ceil(this.total / this.limit)).fill(0).map((_, i) => i);
   }
 
   async goToPage(page: number): Promise<void> {
@@ -43,15 +32,24 @@ export class SubscriptionsComponent {
     await this.loadSubscriptions();
   }
 
+  async loadSubscriptions(): Promise<void> {
+    const res = await lastValueFrom(
+      this.channels.loadSubscriptions(this.from, this.limit)
+    );
+
+    this.subscriptions = res.items;
+    this.limit = res.limit;
+    this.total = res.total;
+    this.pages = Array(Math.ceil(this.total / this.limit)).fill(0).map((_, i) => i);
+  }
+
   async subscribe(channelId: string): Promise<void> {
-    const res$ = this.http.post(`${this.domain}/youtube-api/subscribe/${channelId}`, {});
-    await lastValueFrom(res$);
+    await lastValueFrom(this.channels.subscribe(channelId));
     this.loadSubscriptions();
   }
 
   async unsubscribe(resourceId: string): Promise<void> {
-    const res$ = this.http.post(`${this.domain}/youtube-api/unsubscribe/${resourceId}`, {});
-    await lastValueFrom(res$);
+    await lastValueFrom(this.channels.unsubscribe(resourceId));
     this.loadSubscriptions();
   }
 }

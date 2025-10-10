@@ -70,10 +70,11 @@ export class AuthService {
     });
   }
 
-  googleLogin(): Observable<{url: string}> {
+  googleLogin(prevUrl: string): Observable<{url: string}> {
     const form = new FormData();
 
     form.append('accessToken', this.oauthService.getAccessToken());
+    form.append('prevUrl', prevUrl);
 
     return this.http.post<{url: string}>(`${this.domain}/home/google-login-url`, form, { withCredentials: true });
   }

@@ -7,9 +7,10 @@ import { UsersListComponent } from './account/profile/users-list/users-list.comp
 import { AuthClientDetailsComponent } from './auth-client/auth-client-details/auth-client-details.component';
 import { AuthClientListComponent } from './auth-client/auth-client-list/auth-client-list.component';
 import { AuthClientComponent } from './auth-client/auth-client.component';
+import { ChannelsComponent } from './catalog/channels/channels.component';
+import { SubscriptionsComponent } from './catalog/subscriptions/subscriptions.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
-import { SubscriptionsComponent } from './catalog/subscriptions/subscriptions.component';
 
 export const routes: Routes = [{
   path: '',
@@ -50,7 +51,7 @@ export const routes: Routes = [{
       path: '', component: SubscriptionsComponent,
       data: { breadcrumb: 'Subscriptions' },
     }, {
-      path: 'old-channels', component: SubscriptionsComponent,
+      path: 'old-channels', component: ChannelsComponent,
       data: { breadcrumb: 'Old Channels' },
     }]
   }, {

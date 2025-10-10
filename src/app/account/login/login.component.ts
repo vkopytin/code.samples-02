@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/rou
 import { AsyncPipe } from '@angular/common';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../../services/auth.service';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -58,7 +58,9 @@ export class LoginComponent implements OnInit {
   }
 
   async loadGoogleLoginUrl() {
-    const res$ = this.authService.googleLogin();
+    const { prevUrl } = this.route.snapshot.queryParams;
+    const backUrl = window.location;
+    const res$ = this.authService.googleLogin(`${prevUrl || backUrl}`);
     const res = await lastValueFrom(res$);
 
     this.googleLoginUrl = res.url;
