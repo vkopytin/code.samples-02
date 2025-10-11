@@ -1,6 +1,6 @@
 <div class="text-sm breadcrumbs">
   <ul>
-    <li><a routerLink="/">Home</a></li> 
+    <li><a routerLink="/">Home</a></li>
     <li><a routerLink="/clients">Clients</a></li>
     <li><a routerLink="/clients/details/">New Client</a></li>
   </ul>
@@ -11,64 +11,120 @@
     <div class="label">
       <span class="label-text">Is Active</span>
     </div>
-    <input class="checkbox checkbox-sm w-full max-w-xs" type="checkbox" name="isActive" formControlName="isActive" title="Is Active"/>
+    <input
+      class="checkbox checkbox-sm max-w-xs m-2"
+      type="checkbox"
+      name="isActive"
+      formControlName="isActive"
+      title="Is Active"
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Client Id</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="clientId" formControlName="clientId" placeholder="e.g. platformnet6"/>
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="clientId"
+      formControlName="clientId"
+      placeholder="e.g. platformnet6"
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Client Name</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="clientName" formControlName="clientName" placeholder="Enter name..."/>
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="clientName"
+      formControlName="clientName"
+      placeholder="Enter name..."
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Client Secret</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="clientSecret" formControlName="clientSecret" placeholder="e.g. xyz" />
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="clientSecret"
+      formControlName="clientSecret"
+      placeholder="e.g. xyz"
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Allowed Scopes</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="allowedScopes" formControlName="allowedScopes" placeholder="e.g. read:files" />
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="allowedScopes"
+      formControlName="allowedScopes"
+      placeholder="e.g. read:files"
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Client Uri</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="clientUri" formControlName="clientUri" placeholder="e.g. https://..." />
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="clientUri"
+      formControlName="clientUri"
+      placeholder="e.g. https://..."
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Grant Type</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="grantType" formControlName="grantType" placeholder="e.g. code" />
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="grantType"
+      formControlName="grantType"
+      placeholder="e.g. code"
+    />
   </label>
 
   <label class="form-control w-full max-w-xs">
     <div class="label">
       <span class="label-text">Redirect Uri</span>
     </div>
-    <input class="input input-sm w-full max-w-xs" type="text" name="redirectUri" formControlName="redirectUri" placeholder="e.g. https://localhost:3001/signin-oidc" value="https://localhost:3001/signin-oidc" />
+    <input
+      class="input input-sm w-full max-w-xs"
+      type="text"
+      name="redirectUri"
+      formControlName="redirectUri"
+      placeholder="e.g. https://localhost:3001/signin-oidc"
+      value="https://localhost:3001/signin-oidc"
+    />
   </label>
 
   <div class="join">
-    <input class="btn btn-neutral join-item" type="reset" value="Cancel" (click)="clearSelection()" />
-    <input class="btn btn-primary join-item" type="submit"
+    <input
+      class="btn btn-neutral join-item"
+      type="reset"
+      value="Cancel"
+      (click)="clearSelection()"
+    />
+    <input
+      class="btn btn-primary join-item"
+      type="submit"
       [value]="isEdit ? 'Update' : 'Create'"
       [disabled]="!clientForm.valid"
       (click)="saveClient()"
-      />
+    />
   </div>
 </form>
