@@ -36,7 +36,7 @@
 <div class="drawer">
   <input id="main-menu" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
-    <header class="navbar bg-base-100 shadow-sm app-header">
+    <header class="navbar bg-base-100 shadow-sm app-header z-20">
       <nav class="navbar-start">
         <label
           for="main-menu"
@@ -71,7 +71,7 @@
       </nav>
     </header>
 
-    <div class="container">
+    <div class="container z-10">
       @if (isLoading) {
       <div>Loading...</div>
       } @else {
