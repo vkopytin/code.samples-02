@@ -15,9 +15,11 @@
 </ng-template>
 
 <div>
-  <ng-container
-    *ngTemplateOutlet="pagination; context: { name: 'topPaging' }"
-  ></ng-container>
+  <div class="py-2">
+    <ng-container
+      *ngTemplateOutlet="pagination; context: { name: 'topPaging' }"
+    ></ng-container>
+  </div>
 
   <div class="flex flex-col flex-wrap">
     @for (sub of subscriptions; track sub.id) {
@@ -31,6 +33,7 @@
           alt="Channel Thumbnail"
         />
       </figure>
+
       <div class="card-body">
         <div class="card-actions justify-end">
           @if (sub.isSubscribed) {
@@ -56,5 +59,7 @@
     }
   </div>
 
-  <ng-container *ngTemplateOutlet="pagination"></ng-container>
+  <div class="py-2">
+    <ng-container *ngTemplateOutlet="pagination"></ng-container>
+  </div>
 </div>
