@@ -41,6 +41,9 @@
       <ul>
         @for (a of allArticles; track a.id) {
         <li class="card shadow bg-base-200">
+          <div class="card-actions justify-end">
+            <button class="btn btn-xs btn-primary">Save</button>
+          </div>
           <figure>&nbsp;</figure>
           <h2
             class="card-title bg-slate-700"
@@ -48,9 +51,6 @@
             (code-editorChange)="contentChange(a)"
           ></h2>
           <div class="card-body">
-            <div class="card-actions justify-end">
-              <button class="btn btn-xs btn-primary">Save</button>
-            </div>
             <div
               [(content-editor)]="a.description"
               (content-editorChange)="contentChange(a)"
