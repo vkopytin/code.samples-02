@@ -13,7 +13,7 @@ import { SubscriptionItem } from '../subscription.model';
   styleUrl: './channels.component.scss'
 })
 export class ChannelsComponent implements OnInit {
-  subscriptions: SubscriptionItem[] = [];
+  subscriptions = this.channels.lastChannels;
   total = 0;
   limit = 10;
   from = 0;

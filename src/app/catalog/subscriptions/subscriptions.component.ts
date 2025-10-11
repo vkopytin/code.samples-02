@@ -13,7 +13,7 @@ import { SubscriptionItem } from '../subscription.model';
   styleUrl: './subscriptions.component.scss'
 })
 export class SubscriptionsComponent {
-  subscriptions: SubscriptionItem[] = [];
+  subscriptions = this.channels.lastSubscriptions;
   total = 0;
   limit = 10;
   from = 0;

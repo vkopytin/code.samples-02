@@ -2,13 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, lastValueFrom, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { SubscriptionResponse } from '../catalog/subscription.model';
+import { SubscriptionItem, SubscriptionResponse } from '../catalog/subscription.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChannelsService {
   domain = environment.catalog.domain;
+  lastSubscriptions: SubscriptionItem[] = [];
+  lastChannels: SubscriptionItem[] = [];
 
   constructor(
     private http: HttpClient,
@@ -17,12 +19,16 @@ export class ChannelsService {
   loadSubscriptions(from=0, limit=10): Observable<SubscriptionResponse> {
     return this.http.get<SubscriptionResponse>(
       `${this.domain}/youtube-api/list-subscriptions?limit=${limit}&from=${from}`
+    ).pipe(
+      tap(res => this.lastSubscriptions = res.items)
     );
   }
 
   loadChannels(from=0, limit=10): Observable<SubscriptionResponse> {
     return this.http.get<SubscriptionResponse>(
       `${this.domain}/youtube-api/list-channels?limit=${limit}&from=${from}`
+    ).pipe(
+      tap(res => this.lastChannels = res.items)
     );
   }
 
