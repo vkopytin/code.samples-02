@@ -33,50 +33,62 @@
   </li>
 </ng-template>
 
-<div class="container mx-auto pt-16">
-  @if (isLoading) {
-  <div>Loading...</div>
-  } @else {
-  <router-outlet></router-outlet>
-  }
-</div>
-
-<header
-  class="navbar bg-base-100 shadow-sm app-header absolute top-0 left-0 w-full z-50"
->
-  <nav class="navbar-start">
-    <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+<div class="drawer">
+  <input id="main-menu" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col">
+    <header class="navbar bg-base-100 shadow-sm app-header">
+      <nav class="navbar-start">
+        <label
+          for="main-menu"
+          aria-label="open sidebar"
+          class="btn btn-square btn-ghost"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h8m-8 6h16"
-          />
-        </svg>
-      </div>
-      <ul
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-      >
-        <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
-      </ul>
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+        </label>
+      </nav>
+      <nav class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1">
+          <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
+        </ul>
+      </nav>
+      <nav class="navbar-end">
+        <button class="btn btn-ghost" (click)="openLogin()">Login</button>
+      </nav>
+    </header>
+
+    <div class="container">
+      @if (isLoading) {
+      <div>Loading...</div>
+      } @else {
+      <router-outlet></router-outlet>
+      }
     </div>
-  </nav>
-  <nav class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1">
+  </div>
+  <div class="drawer-side">
+    <label
+      for="main-menu"
+      aria-label="close sidebar"
+      class="drawer-overlay"
+    ></label>
+    <ul class="menu bg-base-200 min-h-full w-80 p-4">
       <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
     </ul>
-  </nav>
-  <nav class="navbar-end">
-    <button class="btn btn-ghost" (click)="openLogin()">Login</button>
-  </nav>
-</header>
+  </div>
+</div>
 
 <router-outlet #accountOutlet="outlet" name="account"></router-outlet>
