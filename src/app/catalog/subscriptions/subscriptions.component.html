@@ -21,8 +21,8 @@
 
   <div class="flex flex-col flex-wrap">
     @for (sub of subscriptions; track sub.id) {
-    <div class="card card-side bg-base-200 shadow-sm w-full m-2">
-      <figure class="w-1/4">
+    <div class="card card-md md:card-side bg-base-200 shadow-sm w-full">
+      <figure class="md:w-1/4">
         <img
           class="w-64 h-64"
           width="32"
@@ -31,7 +31,7 @@
           alt="Channel Thumbnail"
         />
       </figure>
-      <div class="card-body w-3/4 p-2">
+      <div class="card-body md:w-3/4">
         <div class="card-actions justify-end">
           @if (sub.isSubscribed) {
           <button class="btn btn-primary" (click)="unsubscribe(sub.id)">
@@ -43,8 +43,8 @@
           </button>
           }
         </div>
-        <h2 class="card-title">{{ sub.title }}</h2>
-        <p class="text-justify">{{ sub.description }}</p>
+        <h2 class="card-title p-2">{{ sub.title }}</h2>
+        <p class="text-justify p-2">{{ sub.description }}</p>
       </div>
     </div>
     }
