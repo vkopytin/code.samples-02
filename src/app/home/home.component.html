@@ -3,7 +3,7 @@
   <div class="drawer-content">
     <label
       for="my-drawer-4"
-      class="drawer-button btn btn-dash btn-accent btn-ghost btn-xs"
+      class="drawer-button btn btn-soft btn-accent btn-ghost btn-xs"
       >Media library</label
     >
     <div class="client-region">
@@ -42,7 +42,7 @@
         @for (a of allArticles; track a.id) {
         <li class="card shadow bg-base-200">
           <div class="card-actions justify-end">
-            <button class="btn btn-xs btn-primary">Save</button>
+            <button class="btn btn-xs btn-primary btn-outline">Save</button>
           </div>
           <figure>&nbsp;</figure>
           <h2
@@ -69,9 +69,10 @@
     ></label>
     <div class="bg-base-200 text-base-content min-h-full w-80 p-2">
       <div class="h-16">Media library</div>
-      <label for="my-drawer-4" class="btn btn-xs btn-primary drawer-button"
-        >close x</label
-      >
+      <label for="my-drawer-4" class="join drawer-button">
+        <span class="join-item btn btn-xs btn-accent">close</span>
+        <span class="join-item btn btn-xs btn-accent btn-outline">x</span>
+      </label>
       <div class="flex flex-col space-y-4" [media-library]></div>
     </div>
   </div>
