@@ -1,10 +1,13 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 import { provideRouter } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AccountService } from './services/account.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -13,7 +16,14 @@ describe('AppComponent', () => {
       AppComponent,
       OAuthModule.forRoot()
     ],
-    providers: [provideRouter([]), AccountService, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    providers: [
+      provideRouter([]),
+      AccountService,
+      provideHttpClient(withInterceptorsFromDi()),
+      provideHttpClientTesting(),
+      provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+      provideMessaging(() => getMessaging()),
+    ]
 }).compileComponents();
   });
 
