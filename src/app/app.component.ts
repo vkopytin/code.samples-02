@@ -81,27 +81,27 @@ export class AppComponent implements OnInit {
     this.router.navigate([{ outlets: { account: 'login' } }]);
   }
 
-  requestPermission() {
+  async requestPermission() {
     console.log('Requesting permission...');
-    Notification.requestPermission().then((permission) => {
+
+    try {
+      const permission = await Notification.requestPermission();
       if (permission === 'granted') {
         console.log('Notification permission granted.');
-        getToken(this.messaging, {
+
+        const currentToken = await getToken(this.messaging, {
           vapidKey: environment.firebaseConfig.vapidKey,
-        })
-          .then((currentToken: string) => {
-            if (currentToken) {
-              console.log(currentToken);
-            } else {
-              console.log(
-                'No registration token available. Request permission to generate one.'
-              );
-            }
-          })
-          .catch((err: any) => {
-            console.log(err);
-          });
+        });
+        if (currentToken) {
+          console.log(currentToken);
+        } else {
+          console.log(
+            'No registration token available. Request permission to generate one.'
+          );
+        }
       }
-    });
+    } catch (error) {
+      console.error('Error requesting notification permission:', error);
+    }
   }
 }
