@@ -92,6 +92,11 @@
     <ul class="menu bg-base-200 min-h-full w-80 p-4">
       <li class="menu-title h-16">Menu</li>
       <ng-container *ngTemplateOutlet="mainMenu"></ng-container>
+      <li>
+        <button class="btn btn-info" (click)="requestPermission()">
+          Allow Notifications
+        </button>
+      </li>
     </ul>
   </div>
 </div>
