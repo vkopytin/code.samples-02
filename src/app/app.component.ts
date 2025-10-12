@@ -4,6 +4,8 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { environment } from '../environments/environment';
 import { AccountService } from './services/account.service';
 import { NgTemplateOutlet } from '@angular/common';
+import { LoadingService } from './services/loading.service';
+import { delay } from 'rxjs';
 
 const authConfig: AuthConfig = {
 
@@ -35,14 +37,21 @@ export class AppComponent {
   title = 'web-client';
   open = false;
   isLoading = true;
+  requestLoading = false;
 
   constructor(
+    public readonly loading: LoadingService,
     public router: Router,
     private account: AccountService,
     private oauthService: OAuthService
   ) {
     this.initLogin();
     oauthService.setStorage(localStorage);
+    this.loading.loadingSub
+      .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
+      .subscribe((loading) => {
+        this.requestLoading = loading;
+      });
   }
 
   private async initLogin(): Promise<void> {

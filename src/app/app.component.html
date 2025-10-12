@@ -60,6 +60,10 @@
             </svg>
           </div>
         </label>
+        <span
+          class="loading loading-bars loading-xs"
+          [class.hidden]="!requestLoading"
+        ></span>
       </nav>
       <nav class="navbar-center hidden md:flex">
         <ul class="menu menu-horizontal px-1">
