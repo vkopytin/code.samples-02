@@ -42,7 +42,12 @@
         @for (a of allArticles; track a.id) {
         <li class="card shadow bg-base-200">
           <div class="card-actions justify-end">
-            <button class="btn btn-xs btn-primary btn-outline">Save</button>
+            <button
+              class="btn btn-xs btn-primary btn-outline"
+              (click)="contentChange(a)"
+            >
+              Save
+            </button>
           </div>
           <figure class="px-10 pt-10">
             <div
