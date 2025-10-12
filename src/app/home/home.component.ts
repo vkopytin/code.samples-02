@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 
 import { ContentEditorModule } from '../content-editor/content-editor.module';
 import { ArticlesService } from '../services/articles.service';
+import { ArticleBlock } from '../services/models/articleBlock';
 import { ArticleDraft } from '../services/models/articleDraft';
 import { WebSiteModel } from '../services/models/webSiteModel';
 import { WebSitesService } from '../services/webSites.service';
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   articleForm!: FormGroup;
   articleTitle!: FormControl<string | null>;
   articleDescription!: FormControl<string | null>;
-  allArticles?: ArticleDraft[] = this.articles.lastArticles;
+  allArticles: ArticleDraft[] = this.articles.lastArticles;
   allWebSites?: WebSiteModel[] = this.webSites.lastWebsites;
   contentChange = debounce(this.contentChangeInternal, 500);
 
@@ -36,6 +37,22 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.listArticles();
     this.listWebSites();
+  }
+
+  getArticleMedia(article: ArticleDraft): ArticleBlock {
+    return article.media = article?.media || {
+      description: '',
+      title: ''
+    };
+  }
+
+  updateMedia(article: ArticleDraft, media: ArticleBlock): void {
+    if (!media) {
+      return;
+    }
+
+    article.media = media;
+    this.contentChange(article);
   }
 
   async listArticles(): Promise<void> {
@@ -59,8 +76,19 @@ export class HomeComponent implements OnInit {
     this.listArticles();
   }
 
+  async loadMore(): Promise<void> {
+    if (!this.articles.hasMore) {
+      return;
+    }
+
+    const res$ = this.articles.listArticles(this.allArticles?.length || 0, 10);
+    const articles = await lastValueFrom(res$);
+    this.allArticles = [...this.allArticles, ...articles];
+  }
+
   private async contentChangeInternal(article: ArticleDraft): Promise<void> {
     const res$ = this.articles.updateArticle(article);
-    await lastValueFrom(res$);
+    const updatedArticle = await lastValueFrom(res$);
+    article.media = updatedArticle.media;
   }
 }

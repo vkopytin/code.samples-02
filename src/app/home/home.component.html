@@ -44,7 +44,12 @@
           <div class="card-actions justify-end">
             <button class="btn btn-xs btn-primary btn-outline">Save</button>
           </div>
-          <figure>&nbsp;</figure>
+          <figure class="px-10 pt-10">
+            <div
+              [media-item]="getArticleMedia(a)"
+              (media-itemChange)="updateMedia(a, $event)"
+            ></div>
+          </figure>
           <h2
             class="card-title bg-slate-700"
             [(code-editor)]="a.title"
@@ -58,6 +63,15 @@
           </div>
         </li>
         }
+        <li>
+          <button
+            class="btn btn-info btn-outline"
+            (click)="loadMore()"
+            [disabled]="!articles.hasMore"
+          >
+            Load More
+          </button>
+        </li>
       </ul>
     </div>
   </div>

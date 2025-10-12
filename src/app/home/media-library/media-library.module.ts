@@ -8,7 +8,7 @@ import { MediaItemComponent } from './media-item/media-item.component';
 @NgModule({
   imports: [CommonModule, ContentEditorModule, DragDropModule],
   declarations: [MediaLibraryComponent, MediaItemComponent],
-  exports: [MediaLibraryComponent],
+  exports: [MediaLibraryComponent, MediaItemComponent],
 })
 export class MediaLibraryModule {
 }

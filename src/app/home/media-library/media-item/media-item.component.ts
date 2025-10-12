@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { catchError, lastValueFrom, map, of, tap } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { ArticleBlocksService } from '../../../services/articleBlocks.service';
 import { MediaService } from '../../../services/media.service';
 import { ArticleBlock } from '../../../services/models/articleBlock';
@@ -24,16 +24,22 @@ export class MediaItemComponent {
   }
 
   async contentChangeInternal(block: ArticleBlock): Promise<void> {
+    if (!block.id) {
+      console.warn(`Attemting to update block when id doesn't exist`);
+      return;
+    }
+
     const res$ = this.articleBlocks.updateArticleBlock(block);
     await lastValueFrom(res$);
   }
 
   async uploadMedia(evnt: Event) {
+    evnt && evnt.preventDefault();
     if (!this.item.id) {
       console.warn(`Attemting to upload media when block id doesn't exist`);
       return;
     }
-    evnt && evnt.preventDefault();
+
     const eventTarget = evnt.target as HTMLInputElement;
     const res$ = this.mediaSrv.upload(this.item.id, eventTarget);
 

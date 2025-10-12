@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ArticleDraft } from './models/articleDraft';
 
@@ -9,12 +9,22 @@ import { ArticleDraft } from './models/articleDraft';
 })
 export class ArticlesService {
   domain: string = environment.catalog.domain;
-  lastArticles?: ArticleDraft[];
+  lastArticles: ArticleDraft[] = [];
+  hasMore = true;
 
   constructor(private http: HttpClient) { }
 
-  listArticles(): Observable<ArticleDraft[]> {
-    return this.http.get<ArticleDraft[]>(`${this.domain}/articles/list`).pipe(
+  listArticles(from=0, limit=10): Observable<ArticleDraft[]> {
+    return this.http.get<ArticleDraft[]>(`${this.domain}/articles/list`, {
+      params: {
+        from,
+        limit: limit + 1
+      }
+    }).pipe(
+      map(res => {
+        this.hasMore = res.length > limit;
+        return [].slice.call(res, 0, limit);
+      }),
       tap(res => this.lastArticles = res)
     );
   }
