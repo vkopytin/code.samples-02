@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FirebaseApp, initializeApp } from '@angular/fire/app';
+import { getMessaging, getToken, onMessage } from '@angular/fire/messaging';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { delay } from 'rxjs';
 import { environment } from '../environments/environment';
 import { AccountService } from './services/account.service';
-import { NgTemplateOutlet } from '@angular/common';
 import { LoadingService } from './services/loading.service';
-import { delay } from 'rxjs';
 
 const authConfig: AuthConfig = {
 
@@ -33,17 +35,20 @@ const authConfig: AuthConfig = {
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'web-client';
   open = false;
   isLoading = true;
   requestLoading = false;
 
+  private messaging: any;
+
   constructor(
     public readonly loading: LoadingService,
     public router: Router,
     private account: AccountService,
-    private oauthService: OAuthService
+    private oauthService: OAuthService,
+    private app: FirebaseApp
   ) {
     this.initLogin();
     oauthService.setStorage(localStorage);
@@ -52,6 +57,16 @@ export class AppComponent {
       .subscribe((loading) => {
         this.requestLoading = loading;
       });
+  }
+
+  ngOnInit(): void {
+    this.messaging = getMessaging(this.app);
+    this.requestPermission();
+
+    onMessage(this.messaging, (payload) => {
+      console.log(JSON.stringify(payload));
+      // ...
+    });
   }
 
   private async initLogin(): Promise<void> {
@@ -64,5 +79,29 @@ export class AppComponent {
 
   openLogin() {
     this.router.navigate([{ outlets: { account: 'login' } }]);
+  }
+
+  requestPermission() {
+    console.log('Requesting permission...');
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+        getToken(this.messaging, {
+          vapidKey: environment.firebaseConfig.vapidKey,
+        })
+          .then((currentToken: string) => {
+            if (currentToken) {
+              console.log(currentToken);
+            } else {
+              console.log(
+                'No registration token available. Request permission to generate one.'
+              );
+            }
+          })
+          .catch((err: any) => {
+            console.log(err);
+          });
+      }
+    });
   }
 }
