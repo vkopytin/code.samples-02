@@ -68,17 +68,17 @@
           </div>
         </li>
         }
-        <li>
-          <button
-            class="btn btn-info btn-outline"
-            (click)="loadMore()"
-            [disabled]="!articles.hasMore"
-          >
-            Load More
-          </button>
-        </li>
       </ul>
     </div>
+  </div>
+  <div class="m-auto my-2">
+    <button
+      class="btn btn-info btn-outline"
+      (click)="loadMore()"
+      [disabled]="!articles.hasMore"
+    >
+      Load More
+    </button>
   </div>
   <div class="drawer-side">
     <label
