@@ -75,9 +75,10 @@
       </nav>
     </header>
 
-    <div class="m-auto container z-10">
+    <div class="container m-auto z-10">
       @if (isLoading) {
       <span class="loading loading-ring loading-md"></span>
+      <span>Loading...</span>
       } @else {
       <router-outlet></router-outlet>
       }
