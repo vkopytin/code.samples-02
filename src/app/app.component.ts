@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FirebaseApp, initializeApp } from '@angular/fire/app';
+import { FirebaseApp } from '@angular/fire/app';
 import { getMessaging, getToken, onMessage } from '@angular/fire/messaging';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';

@@ -40,7 +40,7 @@
       </div>
       <ul>
         @for (a of allArticles; track a.id) {
-        <li class="card shadow bg-base-200">
+        <li class="card shadow bg-base-200 my-2">
           <div class="card-actions justify-end">
             <button
               class="btn btn-xs btn-primary btn-outline"
@@ -49,7 +49,7 @@
               Save
             </button>
           </div>
-          <figure class="px-10 pt-10">
+          <figure class="px-10 pt-10 bg-slate-800">
             <div
               [media-item]="getArticleMedia(a)"
               (media-itemChange)="updateMedia(a, $event)"
