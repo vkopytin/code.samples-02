@@ -24,10 +24,9 @@ export class HomeComponent implements OnInit {
   articleTitle!: FormControl<string | null>;
   articleDescription!: FormControl<string | null>;
   allArticles: ArticleDraft[] = this.articles.lastArticles;
-  allWebSites?: WebSiteModel[] = this.webSites.lastWebsites;
   contentChange = debounce(this.contentChangeInternal, 500);
 
-  constructor(public articles: ArticlesService, public webSites: WebSitesService) {
+  constructor(public articles: ArticlesService) {
     this.articleForm = new FormGroup({
       articleTitle: this.articleTitle = new FormControl('', Validators.required),
       articleDescription: this.articleDescription = new FormControl('', Validators.required),
@@ -36,7 +35,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.listArticles();
-    this.listWebSites();
   }
 
   getArticleMedia(article: ArticleDraft): ArticleBlock {
@@ -58,11 +56,6 @@ export class HomeComponent implements OnInit {
   async listArticles(): Promise<void> {
     const res$ = this.articles.listArticles();
     this.allArticles = await lastValueFrom(res$);
-  }
-
-  async listWebSites(): Promise<void> {
-    const res$ = this.webSites.listWebSites();
-    this.allWebSites = await lastValueFrom(res$);
   }
 
   async createArticle(): Promise<void> {

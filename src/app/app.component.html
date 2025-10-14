@@ -60,10 +60,20 @@
             </svg>
           </div>
         </label>
-        <span
-          class="loading loading-bars loading-xs"
-          [class.hidden]="!requestLoading"
-        ></span>
+        <select class="select">
+          <option disabled selected>Pick a web site</option>
+          @for (site of allWebSites; track site.id) {
+          <option (click)="selectWebSite(site)">
+            {{ site.name }} ({{ site.hostName }})
+          </option>
+          }
+        </select>
+        <div class="p-2">
+          <span
+            class="loading loading-bars loading-xs"
+            [class.hidden]="!requestLoading"
+          ></span>
+        </div>
       </nav>
       <nav class="navbar-center hidden md:flex">
         <ul class="menu menu-horizontal px-1">

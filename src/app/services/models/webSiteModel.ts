@@ -1,4 +1,6 @@
 export interface WebSiteModel {
-  Id: string;
+  id: string;
+  hostName: string;
+  name: string;
   CreatedAt: string;
 };

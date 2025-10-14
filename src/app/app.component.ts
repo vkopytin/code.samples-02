@@ -4,10 +4,13 @@ import { FirebaseApp } from '@angular/fire/app';
 import { getMessaging, getToken, onMessage } from '@angular/fire/messaging';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { delay } from 'rxjs';
+import { delay, lastValueFrom } from 'rxjs';
+
 import { environment } from '../environments/environment';
 import { AccountService } from './services/account.service';
 import { LoadingService } from './services/loading.service';
+import { WebSiteModel } from './services/models/webSiteModel';
+import { WebSitesService } from './services/webSites.service';
 
 const authConfig: AuthConfig = {
 
@@ -36,6 +39,7 @@ const authConfig: AuthConfig = {
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+  allWebSites: WebSiteModel[] = this.webSites.lastWebsites;
   title = 'web-client';
   open = false;
   isLoading = true;
@@ -44,6 +48,7 @@ export class AppComponent implements OnInit {
   private messaging: any;
 
   constructor(
+    public readonly webSites: WebSitesService,
     public readonly loading: LoadingService,
     public router: Router,
     private account: AccountService,
@@ -51,17 +56,20 @@ export class AppComponent implements OnInit {
     private app: FirebaseApp
   ) {
     this.initLogin();
-    oauthService.setStorage(localStorage);
+  }
+
+  ngOnInit(): void {
+    this.isLoading = false;
+    this.listWebSites();
+    this.messaging = getMessaging(this.app);
+    this.requestPermission();
+    this.account.healthCheck();
+
     this.loading.loadingSub
       .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
       .subscribe((loading) => {
         this.requestLoading = loading;
       });
-  }
-
-  ngOnInit(): void {
-    this.messaging = getMessaging(this.app);
-    this.requestPermission();
 
     onMessage(this.messaging, (payload) => {
       console.log(JSON.stringify(payload));
@@ -70,11 +78,15 @@ export class AppComponent implements OnInit {
   }
 
   private async initLogin(): Promise<void> {
+    this.oauthService.setStorage(localStorage);
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
-    await this.account.healthCheck();
-    this.isLoading = false;
+  }
+
+  async listWebSites(): Promise<void> {
+    const res$ = this.webSites.listWebSites();
+    this.allWebSites = await lastValueFrom(res$);
   }
 
   openLogin() {
@@ -103,5 +115,9 @@ export class AppComponent implements OnInit {
     } catch (error) {
       console.error('Error requesting notification permission:', error);
     }
+  }
+
+  selectWebSite(site: {}) {
+    console.log(site);
   }
 }

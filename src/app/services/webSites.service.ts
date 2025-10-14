@@ -9,7 +9,7 @@ import { WebSiteModel } from './models/webSiteModel';
 })
 export class WebSitesService {
   domain: string = environment.catalog.domain;
-  lastWebsites?: WebSiteModel[];
+  lastWebsites: WebSiteModel[] = [];
 
   constructor(private http: HttpClient) { }
 
