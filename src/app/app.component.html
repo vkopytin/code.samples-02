@@ -63,7 +63,10 @@
         <select class="select">
           <option disabled selected>Pick a web site</option>
           @for (site of allWebSites; track site.id) {
-          <option (click)="selectWebSite(site)">
+          <option
+            [selected]="profile.selectedSiteId === site.id"
+            (click)="selectWebSite(site)"
+          >
             {{ site.name }} ({{ site.hostName }})
           </option>
           }

@@ -10,6 +10,7 @@ import { WebSiteModel } from './models/webSiteModel';
 export class WebSitesService {
   domain: string = environment.catalog.domain;
   lastWebsites: WebSiteModel[] = [];
+  profile: {selectedSiteId?: string} = {};
 
   constructor(private http: HttpClient) { }
 
@@ -17,5 +18,13 @@ export class WebSitesService {
     return this.http.get<WebSiteModel[]>(`${this.domain}/sites/list`).pipe(
       tap(res => this.lastWebsites = res)
     );
+  }
+
+  selectWebSite(site: WebSiteModel): Observable<WebSiteModel> {
+    return this.http.post<WebSiteModel>(`${this.domain}/sites/select`,  {siteId: site.id});
+  }
+
+  getProfile(): Observable<{selectedSiteId?: string}> {
+    return this.http.get<{selectedSiteId?: string}>(`${this.domain}/sites/profile`);
   }
 }

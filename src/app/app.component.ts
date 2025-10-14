@@ -39,7 +39,8 @@ const authConfig: AuthConfig = {
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  allWebSites: WebSiteModel[] = this.webSites.lastWebsites;
+  allWebSites = this.webSites.lastWebsites;
+  profile = this.webSites.profile;
   title = 'web-client';
   open = false;
   isLoading = true;
@@ -82,6 +83,8 @@ export class AppComponent implements OnInit {
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
     this.isLoading = false;
+
+    this.profile = await lastValueFrom(this.webSites.getProfile());
   }
 
   async listWebSites(): Promise<void> {
@@ -117,7 +120,9 @@ export class AppComponent implements OnInit {
     }
   }
 
-  selectWebSite(site: {}) {
-    console.log(site);
+  async selectWebSite(site: WebSiteModel): Promise<void> {
+    var res$ = this.webSites.selectWebSite(site);
+    await lastValueFrom(res$);
+    this.router.navigateByUrl('/');
   }
 }
