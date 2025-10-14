@@ -59,7 +59,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = false;
     this.listWebSites();
     this.messaging = getMessaging(this.app);
     this.requestPermission();
@@ -82,6 +81,7 @@ export class AppComponent implements OnInit {
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
+    this.isLoading = false;
   }
 
   async listWebSites(): Promise<void> {
