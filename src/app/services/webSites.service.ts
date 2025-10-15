@@ -20,8 +20,8 @@ export class WebSitesService {
     );
   }
 
-  selectWebSite(site: WebSiteModel): Observable<WebSiteModel> {
-    return this.http.post<WebSiteModel>(`${this.domain}/sites/select`,  {siteId: site.id});
+  selectWebSite(siteId: string): Observable<WebSiteModel> {
+    return this.http.post<WebSiteModel>(`${this.domain}/sites/select`,  {siteId});
   }
 
   getProfile(): Observable<{selectedSiteId?: string}> {

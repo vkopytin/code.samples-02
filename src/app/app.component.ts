@@ -120,8 +120,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  async selectWebSite(site: WebSiteModel): Promise<void> {
-    var res$ = this.webSites.selectWebSite(site);
+  async selectWebSite(evnt: Event): Promise<void> {
+    const siteId = (evnt.target as HTMLSelectElement).value;
+    if (!siteId) {
+      return;
+    }
+
+    var res$ = this.webSites.selectWebSite(siteId);
     await lastValueFrom(res$);
     this.router.navigateByUrl('/');
   }
