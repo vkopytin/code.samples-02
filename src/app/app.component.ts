@@ -121,7 +121,8 @@ export class AppComponent implements OnInit {
   }
 
   async selectWebSite(evnt: Event): Promise<void> {
-    const siteId = (evnt.target as HTMLSelectElement).value;
+    const selectElement = evnt.target as HTMLSelectElement | null;
+    const siteId = selectElement?.value;
     if (!siteId) {
       return;
     }
