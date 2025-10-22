@@ -31,12 +31,12 @@ export class AppComponent implements OnInit {
   private messaging: any;
 
   constructor(
-    public readonly webSites: WebSitesService,
-    public readonly loading: LoadingService,
-    public readonly router: Router,
     private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly app: FirebaseApp,
+    private readonly webSites: WebSitesService,
+    private readonly loading: LoadingService,
     private readonly account: AccountService,
-    private readonly app: FirebaseApp
   ) { }
 
   async ngOnInit(): Promise<void> {
