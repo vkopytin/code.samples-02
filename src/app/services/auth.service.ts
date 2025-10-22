@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { cookieExists, cookieRead } from '../utils';
@@ -8,6 +8,25 @@ import { UserInfo } from './models/UserInfo';
 import { UserLoginResult } from './models/userLoginResult';
 import { UserRegisterInput } from './models/userRegisterInput';
 import { UserRegisterResult } from './models/userRegisterResult';
+
+const authConfig: AuthConfig = {
+
+  // Url des Authorization-Servers
+  issuer: environment.issuer,
+
+  // Url der Angular-Anwendung
+  // An diese URL sendet der Authorization-Server den Access Code
+  redirectUri: window.location.origin + '/index.html',
+
+  // Name der Angular-Anwendung
+  clientId: environment.clientId,
+
+  // Rechte des Benutzers, die die Angular-Anwendung wahrnehmen möchte
+  scope: 'read:files read:user-info openid profile email offline_access api https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+
+  // Code Flow (PKCE ist standardmäßig bei Nutzung von Code Flow aktiviert)
+  responseType: 'code'
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +38,13 @@ export class AuthService {
     private oauthService: OAuthService,
     private http: HttpClient,
   ) { }
+
+  async initAuth() {
+    this.oauthService.setStorage(localStorage);
+    this.oauthService.configure(authConfig);
+    await this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.setupAutomaticSilentRefresh();
+  }
 
   isAuthenticated(): boolean {
     return cookieExists('token');

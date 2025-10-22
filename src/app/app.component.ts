@@ -3,33 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import { getMessaging, getToken, onMessage } from '@angular/fire/messaging';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { delay, lastValueFrom } from 'rxjs';
 
 import { environment } from '../environments/environment';
 import { AccountService } from './services/account.service';
 import { LoadingService } from './services/loading.service';
-import { WebSiteModel } from './services/models/webSiteModel';
+
 import { WebSitesService } from './services/webSites.service';
+import { AuthService } from './services/auth.service';
 
-const authConfig: AuthConfig = {
-
-  // Url des Authorization-Servers
-  issuer: environment.issuer,
-
-  // Url der Angular-Anwendung
-  // An diese URL sendet der Authorization-Server den Access Code
-  redirectUri: window.location.origin + '/index.html',
-
-  // Name der Angular-Anwendung
-  clientId: environment.clientId,
-
-  // Rechte des Benutzers, die die Angular-Anwendung wahrnehmen möchte
-  scope: 'read:files read:user-info openid profile email offline_access api https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-
-  // Code Flow (PKCE ist standardmäßig bei Nutzung von Code Flow aktiviert)
-  responseType: 'code'
-}
 
 @Component({
   selector: 'app-root',
@@ -51,19 +33,21 @@ export class AppComponent implements OnInit {
   constructor(
     public readonly webSites: WebSitesService,
     public readonly loading: LoadingService,
-    public router: Router,
-    private account: AccountService,
-    private oauthService: OAuthService,
-    private app: FirebaseApp
-  ) {
-    this.initLogin();
-  }
+    public readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly account: AccountService,
+    private readonly app: FirebaseApp
+  ) { }
 
-  ngOnInit(): void {
-    this.listWebSites();
+  async ngOnInit(): Promise<void> {
+    await this.authService.initAuth();
+    this.isLoading = false;
     this.messaging = getMessaging(this.app);
     this.requestPermission();
     this.account.healthCheck();
+
+    this.profile = await lastValueFrom(this.webSites.getProfile());
+    await this.listWebSites();
 
     this.loading.loadingSub
       .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
@@ -75,16 +59,6 @@ export class AppComponent implements OnInit {
       console.log(JSON.stringify(payload));
       // ...
     });
-  }
-
-  private async initLogin(): Promise<void> {
-    this.oauthService.setStorage(localStorage);
-    this.oauthService.configure(authConfig);
-    await this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    this.oauthService.setupAutomaticSilentRefresh();
-    this.isLoading = false;
-
-    this.profile = await lastValueFrom(this.webSites.getProfile());
   }
 
   async listWebSites(): Promise<void> {
