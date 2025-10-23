@@ -1,3 +1,12 @@
-<div [article-media]="article.media"></div>
-<h1 [code-editor]="article.title"></h1>
-<div [content-editor]="article.description"></div>
+<div class="card bg-base-100 w-96 shadow-sm">
+  <figure>
+    <div [article-media]="article.media"></div>
+  </figure>
+  <div class="card-body">
+    <h1 class="card-title" [code-editor]="article.title"></h1>
+    <div class="" [content-editor]="article.description"></div>
+    @for (block of article.blocks; track block.id) {
+    <div [content-editor]="block.description"></div>
+    }
+  </div>
+</div>

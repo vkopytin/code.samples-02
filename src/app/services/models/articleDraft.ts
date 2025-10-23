@@ -6,4 +6,5 @@ export interface ArticleDraft {
   description: string;
   mediaId?: number;
   media?: ArticleBlock;
+  blocks?: ArticleBlock[];
 }
