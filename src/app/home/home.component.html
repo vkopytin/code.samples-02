@@ -43,11 +43,18 @@
         <li class="card shadow bg-base-200 my-2">
           <div class="card-actions justify-end">
             <button
-              class="btn btn-xs btn-primary btn-outline"
+              class="btn btn-xs btn-info btn-outline"
               (click)="contentChange(a)"
             >
               Save
             </button>
+            <a
+              class="btn btn-xs btn-primary btn-ghost"
+              routerLinkActive="edit-article"
+              routerLink="/edit-article/{{ a.id }}"
+            >
+              Edit
+            </a>
           </div>
           <figure class="px-10 pt-10 bg-slate-800">
             <div
@@ -70,15 +77,15 @@
         }
       </ul>
     </div>
-  </div>
-  <div class="m-auto my-2">
-    <button
-      class="btn btn-info btn-outline"
-      (click)="loadMore()"
-      [disabled]="!articles.hasMore"
-    >
-      Load More
-    </button>
+    <div class="my-2 flex flex-col items-center">
+      <button
+        class="btn btn-info btn-outline"
+        (click)="loadMore()"
+        [disabled]="!articles.hasMore"
+      >
+        Load More
+      </button>
+    </div>
   </div>
   <div class="drawer-side">
     <label

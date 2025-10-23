@@ -7,15 +7,16 @@ import { ContentEditorModule } from '../content-editor/content-editor.module';
 import { ArticlesService } from '../services/articles.service';
 import { ArticleBlock } from '../services/models/articleBlock';
 import { ArticleDraft } from '../services/models/articleDraft';
-import { WebSiteModel } from '../services/models/webSiteModel';
-import { WebSitesService } from '../services/webSites.service';
 import { debounce } from '../utils';
 import { MediaLibraryModule } from './media-library/media-library.module';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, ContentEditorModule, MediaLibraryModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    RouterOutlet, RouterModule, ContentEditorModule,
+    MediaLibraryModule, FormsModule, ReactiveFormsModule,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -77,6 +78,9 @@ export class HomeComponent implements OnInit {
     const res$ = this.articles.listArticles(this.allArticles?.length || 0, 10);
     const articles = await lastValueFrom(res$);
     this.allArticles = [...this.allArticles, ...articles];
+  }
+
+  async editArticle(article: ArticleBlock): Promise<void> {
   }
 
   private async contentChangeInternal(article: ArticleDraft): Promise<void> {

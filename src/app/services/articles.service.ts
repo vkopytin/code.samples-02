@@ -29,6 +29,10 @@ export class ArticlesService {
     );
   }
 
+  getById(articleId: string): Observable<ArticleDraft> {
+    return this.http.get<ArticleDraft>(`${this.domain}/articles/${articleId}`);
+  }
+
   createArticle(article: ArticleDraft): Observable<ArticleDraft> {
     return this.http.post<ArticleDraft>(`${this.domain}/articles/create`, {
       ...article,

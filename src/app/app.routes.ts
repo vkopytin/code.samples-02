@@ -12,6 +12,7 @@ import { SubscriptionsComponent } from './catalog/subscriptions/subscriptions.co
 import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { ArticleEditorComponent } from './article-editor/article-editor.component';
 
 export const routes: Routes = [{
   path: '',
@@ -61,6 +62,8 @@ export const routes: Routes = [{
     path: 'register', component: RegisterComponent
   }, {
     path: 'login', component: LoginComponent, outlet: 'account'
+  }, {
+    path: 'edit-article/:articleId', component: ArticleEditorComponent
   }, {
     path: '**', redirectTo: ''
   }]
