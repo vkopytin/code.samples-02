@@ -6,6 +6,7 @@ import { ContentEditorModule } from '../content-editor/content-editor.module';
 import { ArticlesService } from '../services/articles.service';
 import { ArticleDraft } from '../services/models/articleDraft';
 import { ArticleMediaComponent } from './article-media/article-media.component';
+import { WebSitesService } from '../services/webSites.service';
 
 @Component({
   selector: '[article-editor]',
@@ -23,6 +24,7 @@ export class ArticleEditorComponent implements OnInit{
   constructor(
     private readonly route: ActivatedRoute,
     private readonly articles: ArticlesService,
+    public readonly webSites: WebSitesService,
   ) {}
 
   ngOnInit(): void {
@@ -44,5 +46,9 @@ export class ArticleEditorComponent implements OnInit{
 
   onTitleChange(newTitle: string): void {
     this.article.title = newTitle;
+  }
+
+  publishArticle(webSiteId: string): void {
+    console.log('Publishing article:', this.article);
   }
 }

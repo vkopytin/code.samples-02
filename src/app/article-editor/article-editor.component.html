@@ -1,9 +1,27 @@
-<div class="card bg-base-100 w-96 shadow-sm">
+<div class="card bg-base-100 w-96 shadow-sm mx-auto">
+  <div class="card-actions right">
+    <ul class="menu menu-horizontal px-1">
+      <li>
+        <details>
+          <summary>Publish to website:</summary>
+          <ul class="bg-base-100 rounded-t-none p-2">
+            @for (site of webSites.lastWebsites; track site.id) {
+            <li>
+              <a (click)="publishArticle(site.id)" class="hover:bg-base-200">
+                Publish to - {{ site.name }}
+              </a>
+            </li>
+            }
+          </ul>
+        </details>
+      </li>
+    </ul>
+  </div>
   <figure>
     <div [article-media]="article.media"></div>
   </figure>
   <div class="card-body">
-    <h1 class="card-title" [code-editor]="article.title"></h1>
+    <h1 class="card-title m-2" [code-editor]="article.title"></h1>
     <div class="" [content-editor]="article.description"></div>
     @for (block of article.blocks; track block.id) {
     <div [content-editor]="block.description"></div>
