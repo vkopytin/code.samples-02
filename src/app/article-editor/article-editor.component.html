@@ -7,7 +7,10 @@
           <ul class="bg-base-100 rounded-t-none p-2">
             @for (site of webSites.lastWebsites; track site.id) {
             <li>
-              <a (click)="publishArticle(site.id)" class="hover:bg-base-200">
+              <a
+                (click)="publishArticle(site.id)"
+                class="text-nowrap hover:bg-base-200"
+              >
                 Publish to - {{ site.name }}
               </a>
             </li>

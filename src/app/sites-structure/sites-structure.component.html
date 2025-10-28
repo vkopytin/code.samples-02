@@ -1,1 +1,59 @@
-<p>sites-structure works!</p>
+<h1>Sites Structure</h1>
+
+<div>
+  @for (site of webSites.lastWebsites; track site.id) {
+  <div class="card w-96 bg-base-100 shadow-sm m-2">
+    <div class="card-body">
+      <h2
+        class="card-title"
+        [(code-editor)]="site.name"
+        (code-editorChange)="saveChanges(site)"
+      >
+        {{ site.name }}
+      </h2>
+      <p
+        [(code-editor)]="site.hostName"
+        (code-editorChange)="saveChanges(site)"
+      >
+        Hostname: {{ site.hostName }}
+      </p>
+      <div>
+        <div
+          tabindex="0"
+          class="collapse collapse-arrow bg-base-100 border-base-300 border"
+        >
+          <div class="collapse-title font-semibold">
+            {{
+              site.parent
+                ? "Change parent site (current: " + site.parent.name + ")"
+                : "Set parent site"
+            }}
+          </div>
+          <div class="collapse-content text-sm">
+            <ul class="menu menu-vertical px-1 overflow-visible">
+              <li>
+                <a
+                  (click)="setParent(site.id, null)"
+                  class="text-nowrap hover:bg-base-200"
+                >
+                  Unset parent
+                </a>
+              </li>
+              @for (parent of webSites.lastWebsites; track parent.id) {
+              <li>
+                <a
+                  (click)="setParent(site.id, parent.id)"
+                  class="text-nowrap hover:bg-base-200"
+                >
+                  Publish to - {{ parent.name }}
+                </a>
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

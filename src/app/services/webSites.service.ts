@@ -27,4 +27,12 @@ export class WebSitesService {
   getProfile(): Observable<{selectedSiteId?: string}> {
     return this.http.get<{selectedSiteId?: string}>(`${this.domain}/sites/profile`);
   }
+
+  setParent(siteId: string | null, parentId: string | null): Observable<void> {
+    return this.http.post<void>(`${this.domain}/sites/${siteId}/set-parent`, {parentId});
+  }
+
+  updateWebSite(site: WebSiteModel): Observable<WebSiteModel> {
+    return this.http.put<WebSiteModel>(`${this.domain}/sites/${site.id}`, site);
+  }
 }
