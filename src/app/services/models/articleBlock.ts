@@ -1,3 +1,5 @@
+import { WebSiteModel } from "./webSiteModel";
+
 export interface ArticleBlock {
     id?: string;
     title: string;
@@ -9,4 +11,5 @@ export interface ArticleBlock {
     width?: number;
     height?: number;
     mediaError?: string;
+    webSites?: WebSiteModel[];
 }

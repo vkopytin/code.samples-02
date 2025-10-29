@@ -7,6 +7,8 @@ import { ArticlesService } from '../services/articles.service';
 import { ArticleDraft } from '../services/models/articleDraft';
 import { ArticleMediaComponent } from './article-media/article-media.component';
 import { WebSitesService } from '../services/webSites.service';
+import { WebSiteModel } from '../services/models/webSiteModel';
+import { ArticleBlock } from '../services/models/articleBlock';
 
 @Component({
   selector: '[article-editor]',
@@ -50,5 +52,9 @@ export class ArticleEditorComponent implements OnInit{
 
   publishArticle(webSiteId: string): void {
     console.log('Publishing article:', this.article);
+  }
+
+  hasSite(article: ArticleBlock, site: WebSiteModel): boolean {
+    return article.webSites?.some(s => s.id === site.id) ?? false;
   }
 }

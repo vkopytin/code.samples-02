@@ -25,7 +25,7 @@
           <div class="collapse-title font-semibold">
             {{
               site.parent
-                ? "Change parent site (current: " + site.parent.name + ")"
+                ? "Parent site (current: " + site.parent.name + ")"
                 : "Set parent site"
             }}
           </div>
@@ -44,8 +44,9 @@
                 <a
                   (click)="setParent(site.id, parent.id)"
                   class="text-nowrap hover:bg-base-200"
+                  [class.menu-active]="site.parentId === parent.id"
                 >
-                  Publish to - {{ parent.name }}
+                  Parent to - {{ parent.name }}
                 </a>
               </li>
               }
