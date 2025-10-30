@@ -18,41 +18,44 @@
         Hostname: {{ site.hostName }}
       </p>
       <div>
-        <div
-          tabindex="0"
-          class="collapse collapse-arrow bg-base-100 border-base-300 border"
-        >
-          <div class="collapse-title font-semibold">
-            {{
-              site.parent
-                ? "Parent site (current: " + site.parent.name + ")"
-                : "Set parent site"
-            }}
-          </div>
-          <div class="collapse-content text-sm">
-            <ul class="menu menu-vertical px-1 overflow-visible">
-              <li>
-                <a
-                  (click)="setParent(site.id, null)"
-                  class="text-nowrap hover:bg-base-200"
-                >
-                  Unset parent
-                </a>
-              </li>
-              @for (parent of webSites.lastWebsites; track parent.id) {
-              <li>
-                <a
-                  (click)="setParent(site.id, parent.id)"
-                  class="text-nowrap hover:bg-base-200"
-                  [class.menu-active]="site.parentId === parent.id"
-                >
-                  Parent to - {{ parent.name }}
-                </a>
-              </li>
-              }
-            </ul>
-          </div>
-        </div>
+        <label class="floating-label">
+          <span class="label">Parent: </span>
+          <ul class="menu menu-vertical">
+            <li>
+              <details>
+                <summary>
+                  {{
+                    site.parent
+                      ? "Parent site (current: " + site.parent.name + ")"
+                      : "Set parent site"
+                  }}
+                </summary>
+                <ul class="px-1 overflow-visible">
+                  <li>
+                    <a
+                      (click)="setParent(site.id, null)"
+                      class="text-nowrap hover:bg-base-200"
+                      [class.menu-active]="!site.parentId"
+                    >
+                      Unset parent
+                    </a>
+                  </li>
+                  @for (parent of webSites.lastWebsites; track parent.id) {
+                  <li>
+                    <a
+                      (click)="setParent(site.id, parent.id)"
+                      class="text-nowrap hover:bg-base-200"
+                      [class.menu-active]="site.parentId === parent.id"
+                    >
+                      Parent to - {{ parent.name }}
+                    </a>
+                  </li>
+                  }
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </label>
       </div>
     </div>
   </div>

@@ -1,37 +1,35 @@
-<div>
-  <div role="tablist" class="tabs tabs-lift">
-    <a
-      role="tab"
-      class="tab"
-      [class.tab-active]="!editHtml"
-      (click)="editHtml = false"
+<div role="tablist" class="tabs tabs-lift">
+  <a
+    role="tab"
+    class="tab"
+    [class.tab-active]="!editHtml"
+    (click)="editHtml = false"
+  >
+    Text
+  </a>
+  <a
+    role="tab"
+    class="tab"
+    [class.tab-active]="editHtml"
+    (click)="editHtml = true"
+  >
+    HTML
+  </a>
+  <div class="join absolute right-2">
+    <button
+      class="btn btn-xs join-item"
+      (click)="pasteFromClipboard(docEditor)"
     >
-      Text
-    </a>
-    <a
-      role="tab"
-      class="tab"
-      [class.tab-active]="editHtml"
-      (click)="editHtml = true"
-    >
-      HTML
-    </a>
-    <div class="join absolute right-2">
-      <button
-        class="btn btn-xs join-item"
-        (click)="pasteFromClipboard(docEditor)"
-      >
-        Paste
-      </button>
-      <button class="btn btn-xs join-item" (click)="copyToClipboard(docEditor)">
-        Copy
-      </button>
-    </div>
+      Paste
+    </button>
+    <button class="btn btn-xs join-item" (click)="copyToClipboard(docEditor)">
+      Copy
+    </button>
   </div>
-
-  @if (!editHtml) {
-  <div #docEditor class="doc-editor" [(html-editor)]="html"></div>
-  } @else {
-  <code #docEditor class="block html-code-editor" [(code-editor)]="html"></code>
-  }
 </div>
+
+@if (!editHtml) {
+<div #docEditor class="doc-editor" [(html-editor)]="html"></div>
+} @else {
+<code #docEditor class="block html-code-editor" [(code-editor)]="html"></code>
+}
