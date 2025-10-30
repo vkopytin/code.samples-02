@@ -2,7 +2,7 @@
   <button class="btn-outline-secondary my-2 my-sm-0">
     <label class="click-to-upload btn-outline" [class.btn]="!item.sourceUrl">
       @if (item.sourceUrl) {
-      <img src="{{ item.sourceUrl }}" />
+      <div [content-view]="item.description"></div>
       } @else if (item.origin) {
       <img src="{{ item.origin }}" />
       } @else {
@@ -27,8 +27,4 @@
     [(code-editor)]="item.title"
     (code-editorChange)="contentChange(item)"
   ></h2>
-  <div
-    [(content-editor)]="item.description"
-    (content-editorChange)="contentChange(item)"
-  ></div>
 </div>

@@ -1,3 +1,8 @@
-<img [src]="media?.sourceUrl" [alt]="media?.description" />
+<img [src]="media?.sourceUrl" [alt]="media?.title" />
 <h2>{{ media?.title }}</h2>
-<code>{{ media?.description }}</code>
+<code
+  #docEditor
+  class="block html-code-editor"
+  [(code-editor)]="media.description"
+  (code-editorChange)="mediaChange()"
+></code>
