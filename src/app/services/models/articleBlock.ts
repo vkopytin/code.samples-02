@@ -12,4 +12,5 @@ export interface ArticleBlock {
     height?: number;
     mediaError?: string;
     webSites?: WebSiteModel[];
+    blocks?: ArticleBlock[];
 }
