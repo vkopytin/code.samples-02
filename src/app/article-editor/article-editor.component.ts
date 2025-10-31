@@ -18,10 +18,17 @@ import { ArticleBlock } from '../services/models/articleBlock';
   styleUrl: './article-editor.component.scss'
 })
 export class ArticleEditorComponent implements OnInit{
-  @Input('article-editor') article: ArticleDraft = {
+  defaultArticleDraft: ArticleDraft = {
     title: '',
     description: '',
   };
+  private _article = {} as ArticleBlock;
+  @Input('article-editor') get article(): ArticleBlock {
+    return this._article;
+  }
+  set article(value: ArticleBlock) {
+    this._article = value || this.defaultArticleDraft;
+  }
 
   constructor(
     private readonly route: ActivatedRoute,

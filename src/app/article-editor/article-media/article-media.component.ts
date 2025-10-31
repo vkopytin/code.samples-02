@@ -9,7 +9,13 @@ import { ContentEditorModule } from '../../content-editor/content-editor.module'
   styleUrl: './article-media.component.scss'
 })
 export class ArticleMediaComponent {
-  @Input('article-media') media?: any;
+  _media: any = {};
+  @Input('article-media') get media(): any {
+    return this._media;
+  }
+  set media(value: any) {
+    this._media = value || {};
+  }
 
   @Output('article-mediaChange') mediaChangeEvent = new EventEmitter<any>();
 
