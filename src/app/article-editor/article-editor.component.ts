@@ -64,4 +64,14 @@ export class ArticleEditorComponent implements OnInit{
   hasSite(article: ArticleBlock, site: WebSiteModel): boolean {
     return article.webSites?.some(s => s.id === site.id) ?? false;
   }
+
+  async saveArticle(): Promise<void> {
+    if (!this.article.id) {
+      console.warn(`Attempting to save article when id doesn't exist`);
+      return;
+    }
+
+    const res$ = this.articles.updateArticle(this.article);
+    await lastValueFrom(res$);
+  }
 }

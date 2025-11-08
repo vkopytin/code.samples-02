@@ -25,6 +25,9 @@
     <div [(article-media)]="article.media"></div>
   </figure>
   <div class="card-body">
+    <div class="card-actions">
+      <button class="btn btn-primary" (click)="saveArticle()">Save</button>
+    </div>
     <h1 class="card-title m-2" [code-editor]="article.title"></h1>
     <div class="" [content-editor]="article.description"></div>
     @for (block of article.blocks; track block.id) {

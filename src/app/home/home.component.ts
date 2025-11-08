@@ -80,9 +80,6 @@ export class HomeComponent implements OnInit {
     this.allArticles = [...this.allArticles, ...articles];
   }
 
-  async editArticle(article: ArticleBlock): Promise<void> {
-  }
-
   private async contentChangeInternal(article: ArticleDraft): Promise<void> {
     const res$ = this.articles.updateArticle(article);
     const updatedArticle = await lastValueFrom(res$);

@@ -36,6 +36,14 @@ export class MediaItemComponent {
   async uploadMedia(evnt: Event) {
     evnt && evnt.preventDefault();
     if (!this.item.id) {
+      const res$ = this.articleBlocks.createArticleBlock({
+        title: this.item.title,
+        description: this.item.description,
+      });
+      this.item = await lastValueFrom(res$);
+    }
+
+    if (!this.item.id) {
       console.warn(`Attemting to upload media when block id doesn't exist`);
       return;
     }

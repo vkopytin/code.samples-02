@@ -36,6 +36,10 @@ export class ArticleBlocksService {
     return this.http.get<ArticleBlock>(`${this.domain}/articleblocks/${blockId}`);
   }
 
+  createArticleBlock(block: ArticleBlock): Observable<ArticleBlock> {
+    return this.http.post<ArticleBlock>(`${this.domain}/articleblocks/create`, block);
+  }
+
   updateArticleBlock(block: ArticleBlock): Observable<ArticleBlock> {
     return this.http.put<ArticleBlock>(`${this.domain}/articleblocks/${block.id}`, block);
   }
