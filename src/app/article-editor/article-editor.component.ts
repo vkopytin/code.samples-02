@@ -55,22 +55,7 @@ export class ArticleEditorComponent implements OnInit{
 
   togglePrintMediaView(): void {
     const src = this._article.media?.sourceUrl;
-    var win = window.open('about:blank', "_new");
-    if (!win) {
-      window.open(src, "_blank");
-      return;
-    }
-    win.document.open();
-    win.document.write([
-        '<html>',
-        '   <head>',
-        '   </head>',
-        '   <body onload="window.print()" onafterprint="window.close()">',
-        '       <img src="' + src + '"/>',
-        '   </body>',
-        '</html>'
-    ].join(''));
-    win.document.close();
+    window.open(src, "_new");
   }
 
   onTitleChange(newTitle: string): void {
