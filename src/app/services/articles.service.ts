@@ -43,4 +43,8 @@ export class ArticlesService {
   updateArticle(article: ArticleDraft): Observable<ArticleDraft> {
     return this.http.put<ArticleDraft>(`${this.domain}/articles/${article.id}`, article);
   }
+
+  publishToWebSite(articleId: string, webSiteId: string): Observable<void> {
+    return this.http.post<void>(`${this.domain}/articles/${articleId}/publish/${webSiteId}`, {});
+  }
 }

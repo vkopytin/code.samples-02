@@ -62,8 +62,9 @@ export class ArticleEditorComponent implements OnInit{
     this.article.title = newTitle;
   }
 
-  publishArticle(webSiteId: string): void {
-    console.log('Publishing article:', this.article);
+  async publishArticle(webSiteId: string): Promise<void> {
+    const res$ = this.articles.publishToWebSite(this.article.id!, webSiteId);
+    await lastValueFrom(res$);
   }
 
   hasSite(article: ArticleBlock, site: WebSiteModel): boolean {
