@@ -58,9 +58,11 @@ export class LoginComponent implements OnInit {
   }
 
   async loadGoogleLoginUrl() {
-    const { prevUrl } = this.route.snapshot.queryParams;
-    const backUrl = window.location;
-    const res$ = this.authService.googleLogin(`${prevUrl || backUrl}`);
+    let {
+      prevUrl = `${window.location}`
+    } = this.route.snapshot.queryParams;
+    prevUrl = prevUrl?.replace(/\([^\)]*\)$/, ''); // remove angular outlet info
+    const res$ = this.authService.googleLogin(`${prevUrl}`);
     const res = await lastValueFrom(res$);
 
     this.googleLoginUrl = res.url;

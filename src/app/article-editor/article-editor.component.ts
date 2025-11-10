@@ -29,6 +29,7 @@ export class ArticleEditorComponent implements OnInit{
   set article(value: ArticleBlock) {
     this._article = value || this.defaultArticleDraft;
   }
+  isLoading = true;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -51,10 +52,11 @@ export class ArticleEditorComponent implements OnInit{
     const res$ = this.articles.getById(articleId);
     const article = await lastValueFrom(res$);
     this.article = article;
+    this.isLoading = false;
   }
 
   togglePrintMediaView(): void {
-    const src = this._article.media?.sourceUrl;
+    const src = this.article.media?.sourceUrl;
     window.open(src, "_new");
   }
 

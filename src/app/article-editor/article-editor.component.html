@@ -1,3 +1,8 @@
+@if (isLoading) {
+<div class="flex justify-center items-center h-96">
+  <span class="loading loading-spinner loading-lg m-auto"></span>
+</div>
+} @else {
 <div class="card bg-base-100 w-96 shadow-sm mx-auto">
   <div class="card-actions right">
     <ul class="menu menu-vertical px-1">
@@ -22,6 +27,7 @@
     </ul>
     <button
       class="btn btn-soft btn-info btn-md"
+      [attr.disabled]="!article.media?.sourceUrl || null"
       (click)="togglePrintMediaView()"
     >
       Print Media
@@ -41,3 +47,4 @@
     }
   </div>
 </div>
+}

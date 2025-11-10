@@ -100,7 +100,7 @@ export class AuthService {
     const form = new FormData();
 
     form.append('accessToken', this.oauthService.getAccessToken());
-    form.append('prevUrl', prevUrl);
+    form.append('backUrl', prevUrl);
 
     return this.http.post<{url: string}>(`${this.domain}/home/google-login-url`, form, { withCredentials: true });
   }
