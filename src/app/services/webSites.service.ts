@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { WebSiteModel } from './models/webSiteModel';
 
@@ -10,9 +10,16 @@ import { WebSiteModel } from './models/webSiteModel';
 export class WebSitesService {
   domain: string = environment.catalog.domain;
   lastWebsites: WebSiteModel[] = [];
-  profile: {selectedSiteId?: string} = {};
+  profile: {selectedSiteId?: string} = {
+    selectedSiteId: this.getCurrentSiteId()
+  };
 
   constructor(private http: HttpClient) { }
+
+  getCurrentSiteId(): string | undefined {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('currentSiteId') || undefined;
+  }
 
   listWebSites(): Observable<WebSiteModel[]> {
     return this.http.get<WebSiteModel[]>(`${this.domain}/sites/list`).pipe(

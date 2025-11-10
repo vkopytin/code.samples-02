@@ -115,8 +115,18 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    var res$ = this.webSites.selectWebSite(siteId);
-    await lastValueFrom(res$);
-    this.router.navigateByUrl('/');
+    if (this.authService.isLoggedIn) {
+      var res$ = this.webSites.selectWebSite(siteId);
+      await lastValueFrom(res$);
+    } else {
+      this.setCurrentSiteId(siteId);
+    }
+  }
+
+  setCurrentSiteId(siteId: string) {
+    const params = new URLSearchParams(window.location.search);
+    params.set('currentSiteId', siteId);
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState({}, '', newUrl);
   }
 }
