@@ -52,6 +52,11 @@ export class AuthService {
     this.isLoggedIn = this.oauthService.hasValidAccessToken();
   }
 
+  logout() {
+    this.oauthService.logOut();
+    this.isLoggedIn = false;
+  }
+
   isAuthenticated(): boolean {
     return cookieExists('token');
   }

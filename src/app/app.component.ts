@@ -79,7 +79,9 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-
+    this.authService.logout();
+    this.isLoggedIn = this.authService.isLoggedIn;
+    this.isLoggedInChange.emit(this.authService.isLoggedIn);
   }
 
   async requestPermission() {
