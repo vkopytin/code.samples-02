@@ -87,7 +87,11 @@
         </ul>
       </nav>
       <nav class="navbar-end">
+        @if (isLoggedIn) {
+        <button class="btn btn-ghost" (click)="logout()">Logout</button>
+        } @else {
         <button class="btn btn-ghost" (click)="openLogin()">Login</button>
+        }
       </nav>
     </header>
 

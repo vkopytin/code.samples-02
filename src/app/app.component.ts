@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FirebaseApp } from '@angular/fire/app';
 import { getMessaging, getToken, onMessage } from '@angular/fire/messaging';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
@@ -28,6 +28,12 @@ export class AppComponent implements OnInit {
   isLoading = true;
   requestLoading = false;
 
+  @Input()
+  isLoggedIn = this.authService.isLoggedIn;
+
+  @Output()
+  isLoggedInChange = new EventEmitter<boolean>(this.authService.isLoggedIn);
+
   private messaging: any;
 
   constructor(
@@ -53,6 +59,8 @@ export class AppComponent implements OnInit {
       .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
       .subscribe((loading) => {
         this.requestLoading = loading;
+        this.isLoggedIn = this.authService.isLoggedIn;
+        this.isLoggedInChange.emit(this.authService.isLoggedIn);
       });
 
     onMessage(this.messaging, (payload) => {
@@ -68,6 +76,10 @@ export class AppComponent implements OnInit {
 
   openLogin() {
     this.router.navigate([{ outlets: { account: 'login' } }]);
+  }
+
+  logout() {
+
   }
 
   async requestPermission() {

@@ -34,6 +34,8 @@ const authConfig: AuthConfig = {
 export class AuthService {
   domain: string = environment.idm.domain;
 
+  isLoggedIn = false;
+
   constructor(
     private oauthService: OAuthService,
     private http: HttpClient,
@@ -44,6 +46,10 @@ export class AuthService {
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
+  }
+
+  refreshLogin() {
+    this.isLoggedIn = this.oauthService.hasValidAccessToken();
   }
 
   isAuthenticated(): boolean {
