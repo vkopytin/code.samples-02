@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   requestLoading = false;
 
   @Input()
-  isLoggedIn = this.authService.isLoggedIn;
+  isLoggedIn = false; //this.authService.isLoggedIn;
 
   @Output()
   isLoggedInChange = new EventEmitter<boolean>(this.authService.isLoggedIn);
@@ -59,8 +59,8 @@ export class AppComponent implements OnInit {
       .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
       .subscribe((loading) => {
         this.requestLoading = loading;
-        this.isLoggedIn = this.authService.isLoggedIn;
-        this.isLoggedInChange.emit(this.authService.isLoggedIn);
+        //this.isLoggedIn = this.authService.isLoggedIn;
+        //this.isLoggedInChange.emit(this.authService.isLoggedIn);
       });
 
     onMessage(this.messaging, (payload) => {
