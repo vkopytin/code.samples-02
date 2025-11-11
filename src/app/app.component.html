@@ -87,11 +87,38 @@
         </ul>
       </nav>
       <nav class="navbar-end">
-        @if (isLoggedIn) {
-        <button class="btn btn-ghost" (click)="logout()">Logout</button>
-        } @else {
-        <button class="btn btn-ghost" (click)="openLogin()">Login</button>
-        }
+        <ul class="menu menu-horizontal px-1">
+          <li>
+            <details>
+              <summary>Account</summary>
+              @if (isLoggedIn) {
+              <ul class="bg-base-100 rounded-t-none p-2">
+                <li>
+                  <button class="btn btn-ghost" (click)="logout()">
+                    Logout
+                  </button>
+                </li>
+                <li>
+                  <button class="btn btn-ghost" (click)="openLogin()">
+                    Login
+                  </button>
+                </li>
+              </ul>
+              } @else {
+              <ul class="bg-base-100 rounded-t-none p-2">
+                <li>
+                  <button class="btn btn-ghost" (click)="openLogin()">
+                    Login
+                  </button>
+                </li>
+                <li>
+                  <a routerLink="/register">Register</a>
+                </li>
+              </ul>
+              }
+            </details>
+          </li>
+        </ul>
       </nav>
     </header>
 
