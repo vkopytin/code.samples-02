@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { AcceptShareComponent } from './accept-share.component';
 import { LoginComponent, ProfileComponent, RegisterComponent } from './account';
+import { PermissionsComponent } from './account/permissions/permissions.component';
 import { UserDetailsComponent } from './account/profile/user-details/user-details.component';
 import { UsersListComponent } from './account/profile/users-list/users-list.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
@@ -56,6 +57,13 @@ export const routes: Routes = [{
     }, {
       path: 'old-channels', component: ChannelsComponent,
       data: { breadcrumb: 'Old Channels' },
+    }]
+  }, {
+    path: 'account',
+    data: { breadcrumb: 'Account' },
+    children: [{
+      path: 'permissions', component: PermissionsComponent,
+      data: { breadcrumb: 'Permissions' }
     }]
   }, {
     path: 'accept-share', component: AcceptShareComponent
