@@ -6,7 +6,7 @@ import {
   HttpInterceptor, HttpResponse,
   HttpInterceptorFn
 } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import {catchError, tap} from 'rxjs/operators'
 import { LoadingService } from './services/loading.service';
 import { AuthService } from './services/auth.service';
@@ -19,12 +19,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     loading.setLoading(true, request.url);
 
     return next.handle(request)
-      .pipe(catchError((err) => {
-        authService.refreshLogin();
-        loading.setLoading(false, request.url);
-        return of(err);
-      }))
       .pipe(
+        catchError((err) => {
+          authService.refreshLogin();
+          loading.setLoading(false, request.url);
+          return throwError(() => err);
+        }),
         tap((evt: HttpEvent<any>) => {
           authService.refreshLogin();
           if (evt instanceof HttpResponse) {

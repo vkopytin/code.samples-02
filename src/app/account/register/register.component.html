@@ -1,6 +1,13 @@
 <div class="register-profile">
   <form class="fieldset" [formGroup]="registerForm">
     <legend class="fieldset-legend">Create new profile</legend>
+
+    @if (errorMessage) {
+    <div class="alert alert-error mb-4">
+      <span>{{ errorMessage }}</span>
+    </div>
+    }
+
     <label class="input validator">
       <span class="label">Full Name</span>
       <input
@@ -58,18 +65,21 @@
       <option [value]="''"></option>
       <option [value]="'Everyone'" [defaultSelected]="true">Everyone</option>
     </select>
+
     <div class="join">
       <input
         class="btn join-item"
         type="reset"
         value="Cancel"
+        [disabled]="isSubmitting"
         (click)="onCancel()"
       />
       <input
         class="btn btn-neutral join-item"
         type="submit"
-        value="Create"
-        [attr.aria-disabled]="registerForm.invalid"
+        [value]="isSubmitting ? 'Creating...' : 'Create'"
+        [attr.aria-disabled]="registerForm.invalid || isSubmitting"
+        [disabled]="isSubmitting"
         (click)="onSubmit()"
       />
     </div>

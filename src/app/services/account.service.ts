@@ -65,8 +65,13 @@ export class AccountService {
     return this.http.put<UserToSave>(`${this.domain}/home/save-user`, client);
   }
 
-  listUsers(): Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(`${this.domain}/home/list-users`).pipe(
+  listUsers(from=0, limit=0): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`${this.domain}/home/list-users`, {
+      params: {
+        from: from.toString(),
+        limit: limit.toString()
+      }
+    }).pipe(
       tap(res => this.lastUsers = res)
     );
   }

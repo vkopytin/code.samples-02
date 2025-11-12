@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 
 import { OAuthService } from 'angular-oauth2-oidc';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -24,6 +24,9 @@ export class AuthInterceptor implements HttpInterceptor {
   @skipWhenAuthorizationHeaderIsDefined
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const oauthService = inject(OAuthService);
+    const router = inject(Router);
+    const route = inject(ActivatedRoute);
+
     const accessToken = oauthService.getAccessToken();
 
     if (accessToken) {
@@ -35,7 +38,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return next.handle(authRequest).pipe(
         catchError((error) => {
-          return of(this.autoLogin(error));
+          this.autoLogin(router, route, error);
+          return throwError(() => error);
         })
       );
     }
@@ -43,9 +47,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 
-  autoLogin<T extends { status: number; }>(error: T): T {
-    const router = inject(Router);
-    const route = inject(ActivatedRoute);
+  autoLogin<T extends { status: number; }>(router: Router, route: ActivatedRoute, error: T): T {
     const { status }: { status?: number } = error;
     if (status === 401) {
       router.navigate(

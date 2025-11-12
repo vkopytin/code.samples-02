@@ -1,5 +1,5 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
@@ -11,9 +11,12 @@ describe('RegisterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [OAuthModule.forRoot(), RegisterComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
+      imports: [OAuthModule.forRoot(), RegisterComponent],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ]
+    })
     .compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
