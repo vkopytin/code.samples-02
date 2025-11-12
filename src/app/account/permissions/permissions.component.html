@@ -1,1 +1,68 @@
 <p>permissions works!</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th rowspan="2">Role</th>
+      <th colspan="5">Permissions</th>
+    </tr>
+    <tr>
+      <th>List</th>
+      <th>Details</th>
+      <th>Create</th>
+      <th>Edit</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (role of roles; track role.name) {
+    <tr (change)="updateRole(role)">
+      <td>{{ role.name }}</td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.List)
+          "
+          (click)="updatePermission(role, PermissionFlags.List, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Details)
+          "
+          (click)="updatePermission(role, PermissionFlags.Details, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Create)
+          "
+          (click)="updatePermission(role, PermissionFlags.Create, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Edit)
+          "
+          (click)="updatePermission(role, PermissionFlags.Edit, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Remove)
+          "
+          (click)="updatePermission(role, PermissionFlags.Remove, $event)"
+        />
+      </td>
+    </tr>
+    }
+  </tbody>
+</table>
