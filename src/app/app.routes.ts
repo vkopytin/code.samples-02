@@ -15,6 +15,7 @@ import { SubscriptionsComponent } from './catalog/subscriptions/subscriptions.co
 import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { SitesStructureComponent } from './sites-structure/sites-structure.component';
+import { RolesComponent } from './account/roles/roles.component';
 
 export const routes: Routes = [{
   path: '',
@@ -64,6 +65,9 @@ export const routes: Routes = [{
     children: [{
       path: 'permissions', component: PermissionsComponent,
       data: { breadcrumb: 'Permissions' }
+    }, {
+      path: 'roles', component: RolesComponent,
+      data: { breadcrumb: 'Roles' }
     }]
   }, {
     path: 'accept-share', component: AcceptShareComponent

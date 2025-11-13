@@ -97,14 +97,13 @@
                   <a routerLink="/account/permissions">Permissions</a>
                 </li>
                 <li>
-                  <button class="btn btn-ghost" (click)="logout()">
-                    Logout
-                  </button>
+                  <a routerLink="/account/roles">Roles</a>
                 </li>
                 <li>
-                  <button class="btn btn-ghost" (click)="openLogin()">
-                    Login
-                  </button>
+                  <a href="#" (click)="logout()"> Logout </a>
+                </li>
+                <li>
+                  <a href="#" (click)="openLogin()"> Login </a>
                 </li>
               </ul>
               } @else {
