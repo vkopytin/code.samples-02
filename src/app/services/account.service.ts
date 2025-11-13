@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, lastValueFrom, Observable, of, tap } from 'rxjs';
-import { ClientModel, ClientToSave } from './models/clientModel';
-import { UserModel, UserToSave } from './models/userModel';
+import { catchError, from, lastValueFrom, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ClientModel, ClientToSave } from './models/clientModel';
+import { RoleModel } from './models/roleModel';
+import { UserModel, UserToSave } from './models/userModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   domain: string = environment.account.domain;
-  lastClients?: ClientModel[];
-  lastUsers?: UserModel[];
+  lastClients: ClientModel[] = [];
+  lastUsers: UserModel[] = [];
+  lastRoles: RoleModel[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -43,16 +45,6 @@ export class AccountService {
     );
   }
 
-  index(): Observable<{}> {
-    return this.http.get(`${this.domain}/home/index`);
-  }
-  home(): Observable<{}> {
-    return this.http.get(`${this.domain}/home/data`);
-  }
-  public(): Observable<{}> {
-    return this.http.get(`${this.domain}/home/public`);
-  }
-
   getUser(userId: string): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.domain}/home/user/${userId}`);
   }
@@ -65,14 +57,19 @@ export class AccountService {
     return this.http.put<UserToSave>(`${this.domain}/home/save-user`, client);
   }
 
-  listUsers(from=0, limit=0): Observable<UserModel[]> {
+  listUsers(from=0, limit=10): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(`${this.domain}/home/list-users`, {
-      params: {
-        from: from.toString(),
-        limit: limit.toString()
-      }
+      params: { from, limit },
     }).pipe(
       tap(res => this.lastUsers = res)
+    );
+  }
+
+  listRoles(from=0, limit=10): Observable<RoleModel[]> {
+    return this.http.get<RoleModel[]>(`${this.domain}/home/list-roles`, {
+      params: { from, limit },
+    }).pipe(
+      tap(res => this.lastRoles = res)
     );
   }
 }

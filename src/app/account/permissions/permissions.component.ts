@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { lastValueFrom } from 'rxjs';
+import { AccountService } from '../../services/account.service';
+import { RoleModel } from '../../services/models/roleModel';
 
 enum PermissionFlags {
   None = 0,
@@ -9,11 +13,6 @@ enum PermissionFlags {
   Remove = 1 << 4,
 }
 
-interface RoleModel {
-  name: string;
-  permissions: number;
-}
-
 @Component({
   selector: 'app-permissions',
   standalone: true,
@@ -21,15 +20,24 @@ interface RoleModel {
   templateUrl: './permissions.component.html',
   styleUrl: './permissions.component.scss'
 })
-export class PermissionsComponent {
+export class PermissionsComponent implements OnInit {
   PermissionFlags = PermissionFlags;
-  roles = [{
-    name: 'list_users',
-    permissions: PermissionFlags.List | PermissionFlags.Details,
-  }, {
-    name: 'edit_users',
-    permissions: PermissionFlags.Details | PermissionFlags.Edit,
-  }]
+  roles = this.account.lastRoles;
+
+  constructor(
+    private account: AccountService
+  ) {}
+
+  ngOnInit(): void {
+    this.listRoles();
+  }
+
+  async listRoles(): Promise<void> {
+    const res$ = this.account.listRoles(0, 100);
+
+    const roles = await lastValueFrom(res$);
+    this.roles = roles;
+  }
 
   calculatePermissions(value: number, flag: PermissionFlags): boolean {
     return (value & flag) === flag;

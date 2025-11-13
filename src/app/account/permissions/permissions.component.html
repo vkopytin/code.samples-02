@@ -14,9 +14,9 @@
     </tr>
   </thead>
   <tbody>
-    @for (role of roles; track role.name) {
+    @for (role of roles; track role.roleName) {
     <tr (change)="updateRole(role)">
-      <td>{{ role.name }}</td>
+      <td>{{ role.roleName }}</td>
       <td>
         <input
           type="checkbox"

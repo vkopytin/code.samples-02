@@ -20,7 +20,7 @@ export class UsersListComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-      const req$ = this.account.listUsers();
+      const req$ = this.account.listUsers(0, 100);
 
       this.allUsers = await lastValueFrom(req$);
   }
