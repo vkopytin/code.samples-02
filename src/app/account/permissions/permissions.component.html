@@ -1,4 +1,4 @@
-<p>permissions works!</p>
+<h2>Permissions</h2>
 <table class="table">
   <thead>
     <tr>
@@ -14,52 +14,57 @@
     </tr>
   </thead>
   <tbody>
-    @for (role of roles; track role.roleName) {
-    <tr (change)="updateRole(role)">
-      <td>{{ role.roleName }}</td>
+    @for (permission of permissions; track permission.roleName) {
+    <tr (change)="savePermission(permission)">
+      <td>{{ permission.roleName }}</td>
       <td>
         <input
           type="checkbox"
           [checked]="
-            calculatePermissions(role.permissions, PermissionFlags.List)
+            calculatePermissions(permission.permissions, PermissionFlags.List)
           "
-          (click)="updatePermission(role, PermissionFlags.List, $event)"
+          (click)="updatePermission(permission, PermissionFlags.List, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
           [checked]="
-            calculatePermissions(role.permissions, PermissionFlags.Details)
+            calculatePermissions(
+              permission.permissions,
+              PermissionFlags.Details
+            )
           "
-          (click)="updatePermission(role, PermissionFlags.Details, $event)"
+          (click)="
+            updatePermission(permission, PermissionFlags.Details, $event)
+          "
         />
       </td>
       <td>
         <input
           type="checkbox"
           [checked]="
-            calculatePermissions(role.permissions, PermissionFlags.Create)
+            calculatePermissions(permission.permissions, PermissionFlags.Create)
           "
-          (click)="updatePermission(role, PermissionFlags.Create, $event)"
+          (click)="updatePermission(permission, PermissionFlags.Create, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
           [checked]="
-            calculatePermissions(role.permissions, PermissionFlags.Edit)
+            calculatePermissions(permission.permissions, PermissionFlags.Edit)
           "
-          (click)="updatePermission(role, PermissionFlags.Edit, $event)"
+          (click)="updatePermission(permission, PermissionFlags.Edit, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
           [checked]="
-            calculatePermissions(role.permissions, PermissionFlags.Remove)
+            calculatePermissions(permission.permissions, PermissionFlags.Remove)
           "
-          (click)="updatePermission(role, PermissionFlags.Remove, $event)"
+          (click)="updatePermission(permission, PermissionFlags.Remove, $event)"
         />
       </td>
     </tr>

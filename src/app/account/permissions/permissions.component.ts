@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { lastValueFrom } from 'rxjs';
 import { AccountService } from '../../services/account.service';
-import { RoleModel } from '../../services/models/roleModel';
+import { PermissionModel } from '../../services/models/permissionModel';
 
 enum PermissionFlags {
   None = 0,
@@ -22,28 +22,28 @@ enum PermissionFlags {
 })
 export class PermissionsComponent implements OnInit {
   PermissionFlags = PermissionFlags;
-  roles = this.account.lastRoles;
+  permissions = this.account.lastPermissions;
 
   constructor(
     private account: AccountService
   ) {}
 
   ngOnInit(): void {
-    this.listRoles();
+    this.listPermissions();
   }
 
-  async listRoles(): Promise<void> {
-    const res$ = this.account.listRoles(0, 100);
+  async listPermissions(): Promise<void> {
+    const res$ = this.account.listPermissions(0, 100);
 
     const roles = await lastValueFrom(res$);
-    this.roles = roles;
+    this.permissions = roles;
   }
 
   calculatePermissions(value: number, flag: PermissionFlags): boolean {
     return (value & flag) === flag;
   }
 
-  updatePermission(role: RoleModel, flag: PermissionFlags, event: Event): void {
+  updatePermission(role: PermissionModel, flag: PermissionFlags, event: Event): void {
     const {checked: isChecked} = event.target as HTMLInputElement;
     if (isChecked) {
       role.permissions |= flag;
@@ -52,7 +52,7 @@ export class PermissionsComponent implements OnInit {
     }
   }
 
-  updateRole(role: RoleModel): void {
+  savePermission(role: PermissionModel): void {
     console.log('Saving permissions', role);
   }
 }

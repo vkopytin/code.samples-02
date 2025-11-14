@@ -1,10 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, from, lastValueFrom, Observable, of, tap } from 'rxjs';
+import { catchError, lastValueFrom, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ClientModel, ClientToSave } from './models/clientModel';
-import { RoleModel } from './models/roleModel';
+import { PermissionModel } from './models/permissionModel';
 import { UserModel, UserToSave } from './models/userModel';
+import { UserRoleAndPermissions } from './models/userRoleAndPermissions';
+
+interface WorkflowResource {
+  id: number;
+  name: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +19,9 @@ export class AccountService {
   domain: string = environment.account.domain;
   lastClients: ClientModel[] = [];
   lastUsers: UserModel[] = [];
-  lastRoles: RoleModel[] = [];
+  lastPermissions: PermissionModel[] = [];
+  lastRoles: UserRoleAndPermissions[] = [];
+  lastWorkflows: WorkflowResource[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -65,11 +73,25 @@ export class AccountService {
     );
   }
 
-  listRoles(from=0, limit=10): Observable<RoleModel[]> {
-    return this.http.get<RoleModel[]>(`${this.domain}/home/list-roles`, {
+  listPermissions(from=0, limit=10): Observable<PermissionModel[]> {
+    return this.http.get<PermissionModel[]>(`${this.domain}/home/list-permissions`, {
       params: { from, limit },
     }).pipe(
+      tap(res => this.lastPermissions = res)
+    );
+  }
+
+  listRoles(): Observable<UserRoleAndPermissions[]> {
+    return this.http.get<UserRoleAndPermissions[]>(
+      `${this.domain}/home/list-roles`
+    ).pipe(
       tap(res => this.lastRoles = res)
+    );
+  }
+
+  listWorkflows(): Observable<WorkflowResource[]> {
+    return this.http.get<WorkflowResource[]>(`${this.domain}/home/list-workflow-resources`).pipe(
+      tap(res => this.lastWorkflows = res)
     );
   }
 }

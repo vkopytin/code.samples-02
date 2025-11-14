@@ -1,1 +1,67 @@
-<p>roles works!</p>
+<h2>Roles & Permissions</h2>
+<form [formGroup]="roleForm">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Role Name</th>
+        <th>Resource</th>
+        <th>Permissions</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input
+            type="text"
+            placeholder="Type here"
+            class="input input-bordered w-full max-w-xs"
+            formControlName="roleName"
+          />
+        </td>
+        <td>
+          <select class="select" formControlName="workflowId">
+            @for (wf of workflows; track wf.id) {
+            <option value="{{ wf.id }}">
+              {{ wf.name }}
+            </option>
+            }
+          </select>
+        </td>
+        <td>
+          <button
+            class="btn btn-primary"
+            [disabled]="roleForm.invalid"
+            (click)="onSubmit()"
+          >
+            Add Role
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Role Name</th>
+      <th>Resource</th>
+      <th>Permissions</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input type="text" /></td>
+      <td><input type="text" /></td>
+      <td><button class="btn btn-primary">Add Role</button></td>
+    </tr>
+    @for (role of roles; track role.roleName) {
+    <tr>
+      <td>{{ role.roleName }}</td>
+      <td>{{ showPermissions(role) }}</td>
+    </tr>
+    }
+  </tbody>
+</table>
