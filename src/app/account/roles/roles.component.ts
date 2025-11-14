@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
+import { PermissionFlags } from '../../entities/permissionFlags';
 import { AccountService } from '../../services/account.service';
-
-interface UserRoleAndPermissions {
-  userId: string;
-  user: {};
-  roleName: string;
-  permissions: number;
-}
+import { UserRoleAndPermissions } from '../../services/models/userRoleAndPermissions';
 
 @Component({
   selector: 'app-roles',
@@ -18,6 +13,7 @@ interface UserRoleAndPermissions {
   styleUrl: './roles.component.scss'
 })
 export class RolesComponent implements OnInit {
+  PermissionFlags = PermissionFlags;
   roles = this.account.lastRoles;
   workflows = this.account.lastWorkflows;
   roleForm!: FormGroup;
@@ -47,11 +43,42 @@ export class RolesComponent implements OnInit {
     this.roles = await lastValueFrom(res$);
   }
 
-  showPermissions(role: UserRoleAndPermissions): string {
-    return '';
+  showResource(role: UserRoleAndPermissions): string {
+    return role.resource;
   }
 
-  onSubmit(): void {
-    console.log(this.roleForm.value);
+  async onSubmit(): Promise<void> {
+    const res$ = this.account.createRole({
+      roleName: this.roleForm.value.roleName,
+      workflowId: +this.roleForm.value.workflowId,
+    });
+
+    await lastValueFrom(res$);
+    this.roleForm.reset();
+    this.roleForm.setValue({
+      roleName: '',
+      workflowId: 0,
+    });
+    this.loadRoles();
+  }
+
+  calculatePermissions(value: number, flag: PermissionFlags): boolean {
+    return (value & flag) === flag;
+  }
+
+  updatePermission(role: UserRoleAndPermissions, flag: PermissionFlags, event: Event): void {
+    const {checked: isChecked} = event.target as HTMLInputElement;
+    if (isChecked) {
+      role.permissions |= flag;
+    } else {
+      role.permissions &= ~flag;
+    }
+  }
+
+  async saveRole(role: UserRoleAndPermissions): Promise<void> {
+    const res$ = this.account.updateUserRole(role);
+
+    const res = await lastValueFrom(res$);
+    Object.assign(role, res);
   }
 }

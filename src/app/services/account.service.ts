@@ -61,6 +61,10 @@ export class AccountService {
     return this.http.post<UserToSave>(`${this.domain}/home/create-user`, user);
   }
 
+  updateUser(user: UserToSave): Observable<UserToSave> {
+    return this.http.put<UserToSave>(`${this.domain}/home/save-user`, user);
+  }
+
   saveUser(client: UserToSave): Observable<UserToSave> {
     return this.http.put<UserToSave>(`${this.domain}/home/save-user`, client);
   }
@@ -93,5 +97,13 @@ export class AccountService {
     return this.http.get<WorkflowResource[]>(`${this.domain}/home/list-workflow-resources`).pipe(
       tap(res => this.lastWorkflows = res)
     );
+  }
+
+  createRole(role: {roleName: string; workflowId: number | null}): Observable<void> {
+    return this.http.post<void>(`${this.domain}/home/create-role`, role);
+  }
+
+  updateUserRole(role: UserRoleAndPermissions): Observable<UserRoleAndPermissions> {
+    return this.http.put<UserRoleAndPermissions>(`${this.domain}/home/update-role`, role);
   }
 }

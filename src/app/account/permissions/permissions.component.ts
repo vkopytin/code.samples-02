@@ -1,17 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { lastValueFrom } from 'rxjs';
+import { PermissionFlags } from '../../entities/permissionFlags';
 import { AccountService } from '../../services/account.service';
 import { PermissionModel } from '../../services/models/permissionModel';
-
-enum PermissionFlags {
-  None = 0,
-  List = 1 << 0,
-  Details = 1 << 1,
-  Create = 1 << 2,
-  Edit = 1 << 3,
-  Remove = 1 << 4,
-}
 
 @Component({
   selector: 'app-permissions',

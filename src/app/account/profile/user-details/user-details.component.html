@@ -12,7 +12,7 @@
       <span class="label-text">Email</span>
     </label>
     <input
-      [disabled]="true"
+      [readonly]="true"
       type="email"
       placeholder="Type here"
       class="input input-bordered w-full max-w-xs"
@@ -42,6 +42,22 @@
         userForm.get('firstName')?.touched) { First Name is required }</span
       >
     </label>
+  </div>
+
+  <div class="form-control w-full max-w-xs">
+    <label class="label">
+      <span class="label-text">Selected Website</span>
+    </label>
+    <select
+      class="select select-bordered w-full max-w-xs"
+      formControlName="role"
+    >
+      @for (role of roles; track role.roleName) {
+      <option value="{{ role.roleName }}">
+        {{ role.roleName }}
+      </option>
+      }
+    </select>
   </div>
 
   <button

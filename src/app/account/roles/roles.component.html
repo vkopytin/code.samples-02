@@ -44,23 +44,83 @@
 
 <table class="table">
   <thead>
+    <tr></tr>
     <tr>
-      <th>Role Name</th>
-      <th>Resource</th>
-      <th>Permissions</th>
+      <th rowspan="2">Role</th>
+      <th rowspan="2">Workflow (Resource)</th>
+      <th colspan="5">Permissions</th>
       <th></th>
+    </tr>
+    <tr>
+      <th>List</th>
+      <th>Details</th>
+      <th>Create</th>
+      <th>Edit</th>
+      <th>Remove</th>
+      <th>All</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><input type="text" /></td>
-      <td><input type="text" /></td>
-      <td><button class="btn btn-primary">Add Role</button></td>
-    </tr>
     @for (role of roles; track role.roleName) {
-    <tr>
+    <tr (change)="saveRole(role)">
       <td>{{ role.roleName }}</td>
-      <td>{{ showPermissions(role) }}</td>
+      <td>{{ showResource(role) }}</td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.List)
+          "
+          (click)="updatePermission(role, PermissionFlags.List, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Details)
+          "
+          (click)="updatePermission(role, PermissionFlags.Details, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Create)
+          "
+          (click)="updatePermission(role, PermissionFlags.Create, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Edit)
+          "
+          (click)="updatePermission(role, PermissionFlags.Edit, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.Remove)
+          "
+          (click)="updatePermission(role, PermissionFlags.Remove, $event)"
+        />
+      </td>
+      <td>
+        <input
+          type="checkbox"
+          [checked]="
+            calculatePermissions(role.permissions, PermissionFlags.All)
+          "
+          (click)="updatePermission(role, PermissionFlags.All, $event)"
+        />
+      </td>
+      <td><button class="btn btn-alert">Delete</button></td>
     </tr>
     }
   </tbody>

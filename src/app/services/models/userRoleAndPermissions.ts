@@ -1,6 +1,5 @@
 export interface UserRoleAndPermissions {
-  userId: string;
-  user: {};
   roleName: string;
+  resource: string;
   permissions: number;
 }
