@@ -34,17 +34,4 @@ export class PermissionsComponent implements OnInit {
   calculatePermissions(value: number, flag: PermissionFlags): boolean {
     return (value & flag) === flag;
   }
-
-  updatePermission(role: PermissionModel, flag: PermissionFlags, event: Event): void {
-    const {checked: isChecked} = event.target as HTMLInputElement;
-    if (isChecked) {
-      role.permissions |= flag;
-    } else {
-      role.permissions &= ~flag;
-    }
-  }
-
-  savePermission(role: PermissionModel): void {
-    console.log('Saving permissions', role);
-  }
 }

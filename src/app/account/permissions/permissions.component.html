@@ -16,65 +16,63 @@
   </thead>
   <tbody>
     @for (permission of permissions; track permission.roleName) {
-    <tr (change)="savePermission(permission)">
+    <tr>
       <td>{{ permission.roleName }}</td>
       <td>
         <input
           type="checkbox"
+          [disabled]="true"
           [checked]="
             calculatePermissions(permission.permissions, PermissionFlags.List)
           "
-          (click)="updatePermission(permission, PermissionFlags.List, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
+          [disabled]="true"
           [checked]="
             calculatePermissions(
               permission.permissions,
               PermissionFlags.Details
             )
           "
-          (click)="
-            updatePermission(permission, PermissionFlags.Details, $event)
-          "
         />
       </td>
       <td>
         <input
           type="checkbox"
+          [disabled]="true"
           [checked]="
             calculatePermissions(permission.permissions, PermissionFlags.Create)
           "
-          (click)="updatePermission(permission, PermissionFlags.Create, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
+          [disabled]="true"
           [checked]="
             calculatePermissions(permission.permissions, PermissionFlags.Edit)
           "
-          (click)="updatePermission(permission, PermissionFlags.Edit, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
+          [disabled]="true"
           [checked]="
             calculatePermissions(permission.permissions, PermissionFlags.Remove)
           "
-          (click)="updatePermission(permission, PermissionFlags.Remove, $event)"
         />
       </td>
       <td>
         <input
           type="checkbox"
+          [disabled]="true"
           [checked]="
             calculatePermissions(permission.permissions, PermissionFlags.All)
           "
-          (click)="updatePermission(permission, PermissionFlags.All, $event)"
         />
       </td>
     </tr>
