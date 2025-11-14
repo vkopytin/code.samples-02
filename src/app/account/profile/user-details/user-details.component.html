@@ -60,10 +60,17 @@
     </select>
   </div>
 
+  @if (errorMessage) {
+  <div class="alert alert-error mb-4">
+    <span>{{ errorMessage }}</span>
+  </div>
+  }
+
   <button
     type="submit"
     class="btn btn-primary mt-4"
-    [disabled]="userForm.invalid"
+    [attr.aria-disabled]="userForm.invalid || isSubmitting"
+    [disabled]="userForm.invalid || isSubmitting"
     (click)="onSubmit()"
   >
     Save

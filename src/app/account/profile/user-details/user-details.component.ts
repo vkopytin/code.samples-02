@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
 import { AccountService } from '../../../services/account.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-details',
@@ -16,6 +17,8 @@ export class UserDetailsComponent implements OnInit {
   roles = this.account.lastRoles;
   userForm!: FormGroup;
   isEdit = false;
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(private activatedRoute: ActivatedRoute, private account: AccountService) {
 
@@ -50,7 +53,7 @@ export class UserDetailsComponent implements OnInit {
     this.roles = await lastValueFrom(res$);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     const user = this.userForm.getRawValue();
     const res$ = this.account.updateUser({
       userName: user.userName,
@@ -58,7 +61,22 @@ export class UserDetailsComponent implements OnInit {
       role: user.role,
     });
 
-    const res = lastValueFrom(res$);
-    this.userForm.patchValue(res);
+    try {
+      this.isSubmitting = true;
+      const res = await lastValueFrom(res$);
+      this.userForm.patchValue(res);
+    } catch (error) {
+      if (error instanceof HttpErrorResponse) {
+        if (error.error && error.error.message) {
+          this.errorMessage = error.error.message;
+        } else {
+          this.errorMessage = 'An error occurred while saving the user.';
+        }
+      } else {
+        this.errorMessage = 'An unexpected error occurred.';
+      }
+    } finally {
+      this.isSubmitting = false;
+    }
   }
 }
