@@ -13,7 +13,11 @@
             @for (site of webSites.lastWebsites; track site.id) {
             <li>
               <a
-                (click)="publishArticle(site.id)"
+                (click)="
+                  hasSite(article, site)
+                    ? unpublishArticle(site.id)
+                    : publishArticle(site.id)
+                "
                 class="text-nowrap hover:bg-base-200"
                 [class.menu-active]="hasSite(article, site)"
               >

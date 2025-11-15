@@ -46,18 +46,33 @@
 
   <div class="form-control w-full max-w-xs">
     <label class="label">
-      <span class="label-text">Selected Website</span>
+      <span class="label-text">Selected Roles</span>
     </label>
-    <select
-      class="select select-bordered w-full max-w-xs"
-      formControlName="role"
-    >
-      @for (role of roles; track role.roleName) {
-      <option value="{{ role.roleName }}">
-        {{ role.roleName }}
-      </option>
-      }
-    </select>
+    <table>
+      <thead>
+        <tr>
+          <th>Selected</th>
+          <th>Role Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (role of roles; track role.roleName) {
+        <tr>
+          <td>
+            <input
+              class="checkbox"
+              type="checkbox"
+              [checked]="hasRole(role)"
+              (change)="onRoleChange(role, $event)"
+            />
+          </td>
+          <td>
+            {{ role.roleName }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
   </div>
 
   @if (errorMessage) {

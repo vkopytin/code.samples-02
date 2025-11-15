@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 
 import { AccountService } from '../../../services/account.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { UserRoleAndPermissions } from '../../../services/models/userRoleAndPermissions';
 
 @Component({
   selector: 'app-user-details',
@@ -51,6 +52,25 @@ export class UserDetailsComponent implements OnInit {
     const res$ = this.account.listRoles();
 
     this.roles = await lastValueFrom(res$);
+  }
+
+  hasRole(role: UserRoleAndPermissions): boolean {
+    const roles = `${this.userForm.value.role || ''}`.split(/\s+/);
+
+    return roles.includes(role.roleName);
+  }
+
+  onRoleChange(role: UserRoleAndPermissions, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let roles = `${this.userForm.value.role || ''}`.split(/\s+/);
+    if (input.checked) {
+      if (!roles.includes(role.roleName)) {
+        roles.push(role.roleName);
+      }
+    } else {
+      roles = roles.filter(r => r !== role.roleName);
+    }
+    this.userForm.patchValue({ role: roles.join(' ') });
   }
 
   async onSubmit(): Promise<void> {

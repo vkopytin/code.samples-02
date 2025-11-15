@@ -47,4 +47,8 @@ export class ArticlesService {
   publishToWebSite(articleId: string, webSiteId: string): Observable<void> {
     return this.http.post<void>(`${this.domain}/articles/${articleId}/publish/${webSiteId}`, {});
   }
+
+  unpublishFromWebSite(articleId: string, webSiteId: string): Observable<void> {
+    return this.http.post<void>(`${this.domain}/articles/${articleId}/unpublish/${webSiteId}`, {});
+  }
 }

@@ -38,6 +38,10 @@ export class ArticleEditorComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+    this.loadArticle();
+  }
+
+  async loadArticle(): Promise<void> {
     const articleId = this.route.snapshot.paramMap.get('articleId');
 
     if (!articleId) {
@@ -45,10 +49,6 @@ export class ArticleEditorComponent implements OnInit{
       return;
     }
 
-    this.loadArticle(articleId);
-  }
-
-  async loadArticle(articleId: string): Promise<void> {
     const res$ = this.articles.getById(articleId);
     const article = await lastValueFrom(res$);
     this.article = article;
@@ -67,6 +67,13 @@ export class ArticleEditorComponent implements OnInit{
   async publishArticle(webSiteId: string): Promise<void> {
     const res$ = this.articles.publishToWebSite(this.article.id!, webSiteId);
     await lastValueFrom(res$);
+    await this.loadArticle();
+  }
+
+  async unpublishArticle(webSiteId: string): Promise<void> {
+    const res$ = this.articles.unpublishFromWebSite(this.article.id!, webSiteId);
+    await lastValueFrom(res$);
+    await this.loadArticle();
   }
 
   hasSite(article: ArticleBlock, site: WebSiteModel): boolean {
