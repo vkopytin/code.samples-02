@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { SitesStructureComponent } from './sites-structure.component';
 
 describe('SitesStructureComponent', () => {
@@ -14,6 +15,7 @@ describe('SitesStructureComponent', () => {
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
     .compileComponents();
