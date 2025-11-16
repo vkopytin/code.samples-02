@@ -14,8 +14,11 @@ export class ArticlesService {
 
   constructor(private http: HttpClient) { }
 
-  listArticles(from=0, limit=10): Observable<ArticleDraft[]> {
-    return this.http.get<ArticleDraft[]>(`${this.domain}/articles/list`, {
+  listArticles(webSiteId: string | undefined, from=0, limit=10): Observable<ArticleDraft[]> {
+    const listArticlesUrl = webSiteId ?
+      `${this.domain}/articles/list/${webSiteId}` :
+      `${this.domain}/articles/list`;
+    return this.http.get<ArticleDraft[]>(listArticlesUrl, {
       params: {
         from,
         limit: limit + 1

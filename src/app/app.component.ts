@@ -23,6 +23,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   allWebSites = this.webSites.lastWebsites;
   profile = this.webSites.profile;
+  currentSiteId = this.webSites.getCurrentSiteId();
   title = 'web-client';
   open = false;
   isLoading = true;
@@ -115,18 +116,15 @@ export class AppComponent implements OnInit {
       return;
     }
 
+    this.setCurrentSiteId(siteId);
     if (this.authService.isLoggedIn) {
       var res$ = this.webSites.selectWebSite(siteId);
       await lastValueFrom(res$);
-    } else {
-      this.setCurrentSiteId(siteId);
     }
   }
 
   setCurrentSiteId(siteId: string) {
-    const params = new URLSearchParams(window.location.search);
-    params.set('currentSiteId', siteId);
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState({}, '', newUrl);
+    this.currentSiteId = siteId;
+    this.webSites.setCurrentSiteId(siteId);
   }
 }

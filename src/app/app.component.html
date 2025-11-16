@@ -1,6 +1,13 @@
 <ng-template #mainMenu>
   <li>
-    <a routerLinkActive="menu-active" routerLink="/home"> Home </a>
+    <a
+      routerLinkActive="menu-active"
+      routerLink="/home"
+      merge
+      [queryParams]="{ currentSiteId: currentSiteId }"
+    >
+      Home
+    </a>
   </li>
   <li>
     <a routerLinkActive="menu-active" routerLink="/clients"> Clients </a>
@@ -66,10 +73,7 @@
         <select class="select" (change)="selectWebSite($event)">
           <option disabled selected>Pick a web site</option>
           @for (site of allWebSites; track site.id) {
-          <option
-            value="{{ site.id }}"
-            [selected]="profile.selectedSiteId === site.id"
-          >
+          <option value="{{ site.id }}" [selected]="currentSiteId === site.id">
             {{ site.name }} ({{ site.hostName }})
           </option>
           }

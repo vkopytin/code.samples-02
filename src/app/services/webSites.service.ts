@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { WebSiteModel } from './models/webSiteModel';
 
@@ -14,11 +15,26 @@ export class WebSitesService {
     selectedSiteId: this.getCurrentSiteId()
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private http: HttpClient,
+  ) { }
 
   getCurrentSiteId(): string | undefined {
     const params = new URLSearchParams(window.location.search);
     return params.get('currentSiteId') || undefined;
+  }
+
+  setCurrentSiteId(siteId: string) {
+    const queryParams = { currentSiteId: siteId };
+    this.router.navigate(
+    [],
+    {
+      relativeTo: this.activatedRoute,
+      queryParams,
+    }
+  );
   }
 
   listWebSites(): Observable<WebSiteModel[]> {
