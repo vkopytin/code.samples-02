@@ -19,7 +19,7 @@
     <a routerLinkActive="menu-active" routerLink="/edit-sites"> Sites </a>
   </li>
   <li>
-    <details>
+    <details class="dropdown">
       <summary>Subscriptions</summary>
       <ul>
         <li>
@@ -93,7 +93,7 @@
       <nav class="navbar-end">
         <ul class="menu menu-horizontal px-1">
           <li>
-            <details>
+            <details class="dropdown">
               <summary>Account</summary>
               @if (isLoggedIn) {
               <ul class="bg-base-100 rounded-t-none p-2">
