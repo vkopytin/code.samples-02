@@ -3,9 +3,9 @@
   <span class="loading loading-spinner loading-lg m-auto"></span>
 </div>
 } @else {
-<div class="card bg-base-100 w-96 shadow-sm mx-auto">
-  <div class="card-actions right">
-    <ul class="menu menu-vertical px-1">
+<div class="card bg-base-100 shadow-sm mx-auto">
+  <div class="card-actions items-center justify-end">
+    <ul class="menu menu-horizontal px-1 z-10">
       <li>
         <details>
           <summary>Publish to website:</summary>
@@ -36,14 +36,12 @@
     >
       Print Media
     </button>
+    <button class="btn btn-primary" (click)="saveArticle()">Save</button>
   </div>
   <figure>
     <div [(article-media)]="article.media"></div>
   </figure>
   <div class="card-body">
-    <div class="card-actions">
-      <button class="btn btn-primary" (click)="saveArticle()">Save</button>
-    </div>
     <h1 class="card-title m-2" [code-editor]="article.title"></h1>
     <div class="" [content-editor]="article.description"></div>
     @for (block of article.blocks; track block.id) {

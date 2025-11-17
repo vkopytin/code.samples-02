@@ -1,5 +1,13 @@
-<div class="more-height" [content-view]="media.description"></div>
-<h2>{{ media?.title }}</h2>
+<label>
+  <div class="more-height" [content-view]="media.description"></div>
+  <input
+    type="file"
+    class="hidden"
+    accept="image/*,video/*"
+    (input)="uploadMedia($event)"
+  />
+</label>
+<h2>{{ media.title }}</h2>
 <code
   #docEditor
   class="block html-code-editor"

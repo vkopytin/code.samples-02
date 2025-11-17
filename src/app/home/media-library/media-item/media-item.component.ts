@@ -77,6 +77,6 @@ export class MediaItemComponent {
       return;
     }
 
-    setTimeout(() => this.waitNormalization(count - 1), 1000);
+    setTimeout(() => this.waitNormalization(count - 1), 2000);
   }
 }
