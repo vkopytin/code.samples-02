@@ -5,11 +5,11 @@
 } @else {
 <div class="card bg-base-100 shadow-sm mx-auto">
   <div class="card-actions items-center justify-end">
-    <ul class="menu menu-horizontal px-1 z-10">
+    <ul class="menu menu-horizontal m-0 px-0 z-10">
       <li>
-        <details>
+        <details class="dropdown">
           <summary>Publish to website:</summary>
-          <ul class="bg-base-100 rounded-t-none p-2">
+          <ul class="bg-base-100 mt-0">
             @for (site of webSites.lastWebsites; track site.id) {
             <li>
               <a
