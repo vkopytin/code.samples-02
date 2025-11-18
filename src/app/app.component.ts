@@ -75,7 +75,8 @@ export class AppComponent implements OnInit {
     this.allWebSites = await lastValueFrom(res$);
   }
 
-  openLogin() {
+  openLogin(evnt: Event): void {
+    evnt.preventDefault();
     this.router.navigate([{ outlets: { account: 'login' } }]);
   }
 

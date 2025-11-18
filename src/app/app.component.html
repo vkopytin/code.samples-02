@@ -107,13 +107,13 @@
                   <a href="#" (click)="logout()"> Logout </a>
                 </li>
                 <li>
-                  <a href="#" (click)="openLogin()"> Login </a>
+                  <a href="#" (click)="openLogin($event)"> Login </a>
                 </li>
               </ul>
               } @else {
               <ul class="bg-base-100 rounded-t-none p-2">
                 <li>
-                  <button class="btn btn-ghost" (click)="openLogin()">
+                  <button class="btn btn-ghost" (click)="openLogin($event)">
                     Login
                   </button>
                 </li>
