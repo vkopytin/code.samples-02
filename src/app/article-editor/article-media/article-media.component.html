@@ -1,16 +1,23 @@
 <label>
+  @if (media.description) {
   <div class="more-height" [content-view]="media.description"></div>
+  } @else {
+  <div class="more-height">
+    <div class="btn btn-ghost">Upload</div>
+  </div>
+  }
   <input
     type="file"
     class="hidden"
-    accept="image/*,video/*"
+    accept="image/*,video/*,application/pdf"
     (input)="uploadMedia($event)"
   />
 </label>
 <h2>{{ media.title }}</h2>
 <code
   #docEditor
-  class="block html-code-editor"
+  class="block html-code-editor w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[100px]"
+  placeholder="Enter media html..."
   [(code-editor)]="media.description"
   (code-editorChange)="mediaChange()"
 ></code>

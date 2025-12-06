@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       username: new FormControl<string>('', Validators.required),
     });
-    this.loadGoogleLoginUrl();
   }
 
   onSubmit(): void {
@@ -66,6 +65,12 @@ export class LoginComponent implements OnInit {
     const res = await lastValueFrom(res$);
 
     this.googleLoginUrl = res.url;
+  }
+
+  async onGoogleLogin(evnt: Event): Promise<void> {
+    evnt && evnt.preventDefault();
+    await this.loadGoogleLoginUrl();
+    window.location.href = this.googleLoginUrl;
   }
 
   private closeForm(): void {

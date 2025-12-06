@@ -107,7 +107,9 @@
                   <a href="#" (click)="logout()"> Logout </a>
                 </li>
                 <li>
-                  <a href="#" (click)="openLogin($event)"> Login </a>
+                  <a [routerLink]="[{ outlets: { account: ['login'] } }]">
+                    Login
+                  </a>
                 </li>
               </ul>
               } @else {

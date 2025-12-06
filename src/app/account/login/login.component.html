@@ -25,10 +25,11 @@
       <div class="modal-action">
         <div class="join">
           <a
-            href="{{ googleLoginUrl }}"
+            href="#"
             type="submit"
             value="Google Login"
             class="btn btn-dash btn-ghost join-item"
+            (click)="onGoogleLogin($event)"
           >
             Google Login
           </a>

@@ -27,14 +27,4 @@ export class MediaService {
       map(({ result }) => result)
     );
   }
-
-  update(media: Partial<ArticleBlock>) {
-    if (!media.id) {
-      return;
-    }
-
-    return this.http.put<CommonResponse<ArticleBlock>>(this.updateMediaUrl(media.id), media).pipe(
-      map(({ result }) => result)
-    )
-  }
 }

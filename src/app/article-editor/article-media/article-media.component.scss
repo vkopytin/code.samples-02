@@ -1,0 +1,13 @@
+[placeholder] {
+  min-width: 150px;
+}
+
+[placeholder]:empty::before {
+  display: block;
+  content: attr(placeholder);
+  color: #555;
+}
+
+[placeholder]:empty:focus::before {
+ content: attr(placeholder);
+}

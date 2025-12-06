@@ -21,7 +21,7 @@ export class CodeEditorComponent {
       this.text = value;
       this.elRef.nativeElement.innerText = value;
     } else if (!value) {
-      this.text = '<p><br/></p>';
+      this.text = '';
       this.elRef.nativeElement.innerText = this.text;
     }
   }
