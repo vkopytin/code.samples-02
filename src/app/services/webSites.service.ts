@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { WebSiteModel } from './models/webSiteModel';
+import { SiteProfileModel } from './models/siteProfileModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { WebSiteModel } from './models/webSiteModel';
 export class WebSitesService {
   domain: string = environment.catalog.domain;
   lastWebsites: WebSiteModel[] = [];
-  profile: {selectedSiteId?: string} = {
+  profile: SiteProfileModel = {
     selectedSiteId: this.getCurrentSiteId()
   };
 
@@ -47,8 +48,8 @@ export class WebSitesService {
     return this.http.post<WebSiteModel>(`${this.domain}/sites/select`,  {siteId});
   }
 
-  getProfile(): Observable<{selectedSiteId?: string}> {
-    return this.http.get<{selectedSiteId?: string}>(`${this.domain}/sites/profile`);
+  getProfile(): Observable<SiteProfileModel> {
+    return this.http.get<SiteProfileModel>(`${this.domain}/sites/profile`);
   }
 
   setParent(siteId: string | null, parentId: string | null): Observable<void> {

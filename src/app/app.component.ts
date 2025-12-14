@@ -53,8 +53,13 @@ export class AppComponent implements OnInit {
     this.requestPermission();
     this.account.healthCheck();
 
-    this.profile = await lastValueFrom(this.webSites.getProfile());
-    await this.listWebSites();
+    (async () => {
+      this.profile = await lastValueFrom(this.webSites.getProfile());
+      if (!this.currentSiteId && this.profile.selectedSiteId) {
+        this.setCurrentSiteId(this.profile.selectedSiteId);
+      }
+    })();
+    this.listWebSites();
 
     this.loading.loadingSub
       .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
