@@ -34,6 +34,13 @@ export class ArticleMediaComponent {
     this.mediaChangeEvent.emit(this.media);
   }
 
+  async deleteMedia() {
+    this.media.sourceUrl = '';
+    this.media.origin = '';
+    this.media.description = '';
+    this.mediaChangeEvent.emit(this.media);
+  }
+
   async uploadMedia(evnt: Event) {
     evnt && evnt.preventDefault();
 
