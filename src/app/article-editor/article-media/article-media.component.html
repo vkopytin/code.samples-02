@@ -1,17 +1,20 @@
-<label>
-  @if (media.description) {
-  <div class="more-height" [content-view]="media.description"></div>
-  } @else {
-  <div class="more-height">
-    <div class="btn btn-ghost">Upload</div>
+<label class="relative">
+  <div class="indicator more-height">
+    <span
+      class="indicator-item indicator-center indicator-middle badge badge-secondary"
+    >
+      Upload
+    </span>
+    @if (media.description) {
+    <div [content-view]="media.description"></div>
+    }
+    <input
+      type="file"
+      class="hidden"
+      accept="image/*,video/*,application/pdf"
+      (input)="uploadMedia($event)"
+    />
   </div>
-  }
-  <input
-    type="file"
-    class="hidden"
-    accept="image/*,video/*,application/pdf"
-    (input)="uploadMedia($event)"
-  />
 </label>
 <h2>{{ media.title }}</h2>
 <code
