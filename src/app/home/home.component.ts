@@ -41,13 +41,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listArticles();
     this.activatedRoute.queryParams.subscribe(params => {
       const currentSiteId = params['currentSiteId'];
       if (currentSiteId !== this.currentSiteId) {
         this.currentSiteId = currentSiteId;
-        this.listArticles();
       }
+      this.listArticles();
     });
   }
 
