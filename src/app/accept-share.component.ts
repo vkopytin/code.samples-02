@@ -1,23 +1,33 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 
 @Component({
-    imports: [CommonModule],
+    imports: [],
     selector: 'app-accept-share',
     template: `
     <div class="p-4">
       <h2>Shared Content Received</h2>
-      <div *ngIf="title"><strong>Title:</strong> {{ title }}</div>
-      <div *ngIf="text"><strong>Text:</strong> {{ text }}</div>
-      <div *ngIf="url"><strong>URL:</strong> <a [href]="url" target="_blank">{{ url }}</a></div>
-      <div *ngIf="files && files.length">
-        <strong>Files:</strong>
-        <ul>
-          <li *ngFor="let file of files">{{ file.name }} ({{ file.type }})</li>
-        </ul>
-      </div>
+      @if (title) {
+        <div><strong>Title:</strong> {{ title }}</div>
+      }
+      @if (text) {
+        <div><strong>Text:</strong> {{ text }}</div>
+      }
+      @if (url) {
+        <div><strong>URL:</strong> <a [href]="url" target="_blank">{{ url }}</a></div>
+      }
+      @if (files && files.length) {
+        <div>
+          <strong>Files:</strong>
+          <ul>
+            @for (file of files; track file) {
+              <li>{{ file.name }} ({{ file.type }})</li>
+            }
+          </ul>
+        </div>
+      }
     </div>
-  `
+    `
 })
 export class AcceptShareComponent {
   title?: string;

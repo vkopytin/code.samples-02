@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewChild } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewChild, DOCUMENT } from '@angular/core';
+
 import { CodeEditorComponent } from './code-editor.component';
 import { HtmlEditorComponent } from './html-editor.component';
 

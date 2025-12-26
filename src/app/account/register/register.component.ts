@@ -4,11 +4,11 @@ import { AuthService } from '../../services/auth.service';
 import { lastValueFrom, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-register',
-    imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    imports: [FormsModule, ReactiveFormsModule],
     providers: [AuthService],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
