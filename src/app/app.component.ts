@@ -14,11 +14,10 @@ import { AuthService } from './services/auth.service';
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [NgTemplateOutlet, RouterOutlet, RouterModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [NgTemplateOutlet, RouterOutlet, RouterModule],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   allWebSites = this.webSites.lastWebsites;

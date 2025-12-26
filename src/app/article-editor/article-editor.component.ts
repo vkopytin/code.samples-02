@@ -11,11 +11,10 @@ import { WebSiteModel } from '../services/models/webSiteModel';
 import { ArticleBlock } from '../services/models/articleBlock';
 
 @Component({
-  selector: '[article-editor]',
-  standalone: true,
-  imports: [ArticleMediaComponent, ContentEditorModule],
-  templateUrl: './article-editor.component.html',
-  styleUrl: './article-editor.component.scss'
+    selector: '[article-editor]',
+    imports: [ArticleMediaComponent, ContentEditorModule],
+    templateUrl: './article-editor.component.html',
+    styleUrl: './article-editor.component.scss'
 })
 export class ArticleEditorComponent implements OnInit{
   defaultArticleDraft: ArticleDraft = {

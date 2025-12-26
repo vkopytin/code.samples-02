@@ -6,11 +6,10 @@ import { lastValueFrom } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-users-list',
-  standalone: true,
-  imports: [],
-  templateUrl: './users-list.component.html',
-  styleUrl: './users-list.component.scss'
+    selector: 'app-users-list',
+    imports: [],
+    templateUrl: './users-list.component.html',
+    styleUrl: './users-list.component.scss'
 })
 export class UsersListComponent implements OnInit {
   allUsers?: UserModel[] = this.account.lastUsers;

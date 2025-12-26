@@ -4,9 +4,10 @@ import { CodeEditorComponent } from './code-editor.component';
 import { HtmlEditorComponent } from './html-editor.component';
 
 @Component({
-  selector: '[content-editor]',
-  templateUrl: './content-editor.component.html',
-  styleUrl: './content-editor.component.scss'
+    selector: '[content-editor]',
+    templateUrl: './content-editor.component.html',
+    styleUrl: './content-editor.component.scss',
+    standalone: false
 })
 export class ContentEditorComponent {
   @ViewChild ("docEditor", {read: ElementRef}) docEditor?: ElementRef;

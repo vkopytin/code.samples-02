@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
 
 @Component({
-  host: {
-    tabindex: '0'
-  },
-  selector: '[code-editor]',
-  template: '',
+    host: {
+        tabindex: '0'
+    },
+    selector: '[code-editor]',
+    template: '',
+    standalone: false
 })
 export class CodeEditorComponent {
   public viewId = 'code-editor-' + Math.random().toString(36).substring(2);

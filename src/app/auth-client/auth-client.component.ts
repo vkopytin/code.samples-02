@@ -5,11 +5,10 @@ import { AuthClientDetailsComponent } from './auth-client-details/auth-client-de
 import { AuthClientListComponent } from './auth-client-list/auth-client-list.component';
 
 @Component({
-  selector: 'app-auth-client',
-  standalone: true,
-  imports: [RouterOutlet, RouterModule, AuthClientListComponent, AuthClientDetailsComponent],
-  templateUrl: './auth-client.component.html',
-  styleUrl: './auth-client.component.scss'
+    selector: 'app-auth-client',
+    imports: [RouterOutlet, RouterModule, AuthClientListComponent, AuthClientDetailsComponent],
+    templateUrl: './auth-client.component.html',
+    styleUrl: './auth-client.component.scss'
 })
 export class AuthClientComponent {
   appToken = '';

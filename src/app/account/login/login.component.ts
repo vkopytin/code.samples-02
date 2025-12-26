@@ -8,12 +8,11 @@ import { AuthService } from '../../services/auth.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [AsyncPipe, RouterOutlet, RouterModule, FormsModule, ReactiveFormsModule],
-  providers: [AuthService],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+    selector: 'app-login',
+    imports: [AsyncPipe, RouterOutlet, RouterModule, FormsModule, ReactiveFormsModule],
+    providers: [AuthService],
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;

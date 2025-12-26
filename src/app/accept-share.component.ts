@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  imports: [CommonModule],
-  selector: 'app-accept-share',
-  template: `
+    imports: [CommonModule],
+    selector: 'app-accept-share',
+    template: `
     <div class="p-4">
       <h2>Shared Content Received</h2>
       <div *ngIf="title"><strong>Title:</strong> {{ title }}</div>
@@ -17,8 +17,7 @@ import { Component } from '@angular/core';
         </ul>
       </div>
     </div>
-  `,
-  standalone: true
+  `
 })
 export class AcceptShareComponent {
   title?: string;

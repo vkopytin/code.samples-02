@@ -1,11 +1,12 @@
 import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
 
 @Component({
-  host: {
-    tabindex: '0'
-  },
-  selector: '[html-editor]',
-  template: '',
+    host: {
+        tabindex: '0'
+    },
+    selector: '[html-editor]',
+    template: '',
+    standalone: false
 })
 export class HtmlEditorComponent {
   private text: string = '';

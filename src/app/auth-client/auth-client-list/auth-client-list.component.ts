@@ -8,11 +8,10 @@ import { AuthService } from '../../services/auth.service';
 import { ClientModel } from '../../services/models/clientModel';
 
 @Component({
-  selector: 'app-auth-client-list',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
-  templateUrl: './auth-client-list.component.html',
-  styleUrl: './auth-client-list.component.scss'
+    selector: 'app-auth-client-list',
+    imports: [FormsModule, ReactiveFormsModule],
+    templateUrl: './auth-client-list.component.html',
+    styleUrl: './auth-client-list.component.scss'
 })
 export class AuthClientListComponent implements OnInit {
   allClients?: ClientModel[] = this.account.lastClients;

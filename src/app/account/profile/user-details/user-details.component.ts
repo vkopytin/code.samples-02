@@ -8,11 +8,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { UserRoleAndPermissions } from '../../../services/models/userRoleAndPermissions';
 
 @Component({
-  selector: 'app-user-details',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './user-details.component.html',
-  styleUrl: './user-details.component.scss'
+    selector: 'app-user-details',
+    imports: [FormsModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './user-details.component.html',
+    styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent implements OnInit {
   roles = this.account.lastRoles;

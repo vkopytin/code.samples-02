@@ -7,11 +7,10 @@ import { AccountService } from '../../services/account.service';
 import { ClientModel, ClientToSave } from '../../services/models/clientModel';
 
 @Component({
-  selector: 'app-auth-client-details',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './auth-client-details.component.html',
-  styleUrl: './auth-client-details.component.scss'
+    selector: 'app-auth-client-details',
+    imports: [FormsModule, ReactiveFormsModule, RouterModule],
+    templateUrl: './auth-client-details.component.html',
+    styleUrl: './auth-client-details.component.scss'
 })
 export class AuthClientDetailsComponent implements OnInit {
   clientForm!: FormGroup;

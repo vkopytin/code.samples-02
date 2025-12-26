@@ -6,11 +6,10 @@ import { MediaService } from '../../services/media.service';
 import { ArticleBlock } from '../../services/models/articleBlock';
 
 @Component({
-  selector: '[article-media]',
-  standalone: true,
-  imports: [ContentEditorModule],
-  templateUrl: './article-media.component.html',
-  styleUrl: './article-media.component.scss'
+    selector: '[article-media]',
+    imports: [ContentEditorModule],
+    templateUrl: './article-media.component.html',
+    styleUrl: './article-media.component.scss'
 })
 export class ArticleMediaComponent {
   _media = {} as ArticleBlock;

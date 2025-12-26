@@ -6,11 +6,10 @@ import { AccountService } from '../../services/account.service';
 import { UserRoleAndPermissions } from '../../services/models/userRoleAndPermissions';
 
 @Component({
-  selector: 'app-roles',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
-  templateUrl: './roles.component.html',
-  styleUrl: './roles.component.scss'
+    selector: 'app-roles',
+    imports: [FormsModule, ReactiveFormsModule],
+    templateUrl: './roles.component.html',
+    styleUrl: './roles.component.scss'
 })
 export class RolesComponent implements OnInit {
   PermissionFlags = PermissionFlags;

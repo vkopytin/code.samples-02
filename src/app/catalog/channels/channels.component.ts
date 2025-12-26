@@ -6,11 +6,10 @@ import { ChannelsService } from '../../services/channels.service';
 import { SubscriptionItem } from '../subscription.model';
 
 @Component({
-  selector: 'app-channels',
-  standalone: true,
-  imports: [NgTemplateOutlet, RouterModule],
-  templateUrl: './channels.component.html',
-  styleUrl: './channels.component.scss'
+    selector: 'app-channels',
+    imports: [NgTemplateOutlet, RouterModule],
+    templateUrl: './channels.component.html',
+    styleUrl: './channels.component.scss'
 })
 export class ChannelsComponent implements OnInit {
   subscriptions = this.channels.lastChannels;

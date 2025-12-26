@@ -7,12 +7,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-register',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
-  providers: [AuthService],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+    selector: 'app-register',
+    imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    providers: [AuthService],
+    templateUrl: './register.component.html',
+    styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;

@@ -6,11 +6,10 @@ import { WebSiteModel } from '../services/models/webSiteModel';
 import { debounce } from '../utils';
 
 @Component({
-  selector: 'app-sites-structure',
-  standalone: true,
-  imports: [ContentEditorModule],
-  templateUrl: './sites-structure.component.html',
-  styleUrl: './sites-structure.component.scss'
+    selector: 'app-sites-structure',
+    imports: [ContentEditorModule],
+    templateUrl: './sites-structure.component.html',
+    styleUrl: './sites-structure.component.scss'
 })
 export class SitesStructureComponent {
   saveChanges = debounce(this.saveChangesInternal, 500);

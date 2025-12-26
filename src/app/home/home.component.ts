@@ -12,14 +12,13 @@ import { MediaLibraryModule } from './media-library/media-library.module';
 import { WebSitesService } from '../services/webSites.service';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    RouterOutlet, RouterModule, ContentEditorModule,
-    MediaLibraryModule, FormsModule, ReactiveFormsModule,
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [
+        RouterOutlet, RouterModule, ContentEditorModule,
+        MediaLibraryModule, FormsModule, ReactiveFormsModule,
+    ],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
   currentSiteId = this.webSites.getCurrentSiteId();

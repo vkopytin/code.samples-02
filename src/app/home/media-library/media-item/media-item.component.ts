@@ -6,9 +6,10 @@ import { ArticleBlock } from '../../../services/models/articleBlock';
 import { debounce } from '../../../utils';
 
 @Component({
-  selector: '[media-item]',
-  templateUrl: './media-item.component.html',
-  styleUrl: './media-item.component.scss'
+    selector: '[media-item]',
+    templateUrl: './media-item.component.html',
+    styleUrl: './media-item.component.scss',
+    standalone: false
 })
 export class MediaItemComponent {
   @Input('media-item') item = {} as ArticleBlock;

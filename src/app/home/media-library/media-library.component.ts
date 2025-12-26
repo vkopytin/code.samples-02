@@ -3,9 +3,10 @@ import { lastValueFrom, map, tap } from 'rxjs';
 import { ArticleBlocksService } from '../../services/articleBlocks.service';
 
 @Component({
-  selector: '[media-library]',
-  templateUrl: './media-library.component.html',
-  styleUrl: './media-library.component.scss'
+    selector: '[media-library]',
+    templateUrl: './media-library.component.html',
+    styleUrl: './media-library.component.scss',
+    standalone: false
 })
 export class MediaLibraryComponent implements OnInit {
   @Input('media-library') folder? = '';

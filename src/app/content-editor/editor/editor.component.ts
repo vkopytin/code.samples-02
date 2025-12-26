@@ -1,12 +1,13 @@
 import { Component, ElementRef, HostBinding, HostListener, Input } from '@angular/core';
 
 @Component({
-  host: {
-    tabindex: '0'
-  },
-  selector: '[editor]',
-  templateUrl: './editor.component.html',
-  styleUrl: './editor.component.scss',
+    host: {
+        tabindex: '0'
+    },
+    selector: '[editor]',
+    templateUrl: './editor.component.html',
+    styleUrl: './editor.component.scss',
+    standalone: false
 })
 export class EditorComponent {
   private element: HTMLElement = document.createElement('div');

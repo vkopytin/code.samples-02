@@ -1,8 +1,9 @@
 import { Component, ElementRef, Input } from '@angular/core';
 
 @Component({
-  selector: '[content-view]',
-  template: '',
+    selector: '[content-view]',
+    template: '',
+    standalone: false
 })
 export class ContentViewComponent {
   @Input('content-view') get child(): string {
