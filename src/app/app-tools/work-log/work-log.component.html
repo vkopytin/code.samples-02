@@ -1,1 +1,18 @@
-<p>work-log works!</p>
+<fieldset class="fieldset">
+  <legend class="fieldset-legend">Work Log</legend>
+  <textarea
+    class="textarea h-24"
+    name="work-log"
+    placeholder="Write your work log here..."
+    [value]="workLog"
+    (input)="changeWorkLog($event)"
+  ></textarea>
+  <div class="label">{{ totalTime }} hours</div>
+</fieldset>
+<div>
+  <ul>
+    @for (entry of report; track entry) {
+    <li>{{ entry }}</li>
+    }
+  </ul>
+</div>
