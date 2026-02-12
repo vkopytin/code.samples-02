@@ -16,6 +16,8 @@ import { AuthGuard } from './helpers/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { SitesStructureComponent } from './sites-structure/sites-structure.component';
 import { RolesComponent } from './account/roles/roles.component';
+import { WordBookComponent } from './app-tools/word-book/word-book.component';
+import { WorkLogComponent } from './app-tools/work-log/work-log.component';
 
 export const routes: Routes = [{
   path: '',
@@ -79,6 +81,10 @@ export const routes: Routes = [{
     path: 'edit-article/:articleId', component: ArticleEditorComponent
   }, {
     path: 'edit-sites', component: SitesStructureComponent
+  }, {
+    path: 'word-book', component: WordBookComponent
+  }, {
+    path: 'work-log', component: WorkLogComponent
   }, {
     path: '**', redirectTo: ''
   }]
