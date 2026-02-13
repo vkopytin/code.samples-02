@@ -1,2 +1,76 @@
-<input type="text" placeholder="Enter a sentence..." /><button>Search</button>
-<div>Results</div>
+<div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100">
+  <div class="join">
+    <label class="input join-item">
+      <span class="label">Text:&nbsp;</span>
+      <input
+        type="text"
+        placeholder="Enter a sentence..."
+        [value]="searchTerm"
+        (input)="changeSearchTerm($event.target.value)"
+      />
+      <span class="btn badge" (click)="resetSearchTerm()">Reset</span>
+    </label>
+    <button class="btn join-item" (click)="doSearch()">Add</button>
+  </div>
+</div>
+
+<div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>English</th>
+        <th>German</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th></th>
+        <td>
+          <input
+            type="text"
+            placeholder="Enter a sentence..."
+            class="input input-bordered w-full"
+            [value]="enText"
+            (input)="enText = $event.target.value"
+          />
+        </td>
+        <td>
+          <input
+            type="text"
+            placeholder="Enter a sentence..."
+            class="input input-bordered w-full"
+            [value]="deText"
+            (input)="deText = $event.target.value"
+          />
+        </td>
+        <td>
+          <button class="btn" (click)="addEntry()">Save</button>
+        </td>
+      </tr>
+      <!-- row 1 -->
+      <tr>
+        <th>1</th>
+        <td>Quality specialist</td>
+        <td>Qualitätskontrolleur</td>
+        <td>2023-01-01</td>
+      </tr>
+      <!-- row 2 -->
+      <tr>
+        <th>2</th>
+        <td>Desktop Support Technician</td>
+        <td>Desktop-Support-Techniker</td>
+        <td>2023-01-02</td>
+      </tr>
+      <!-- row 3 -->
+      <tr>
+        <th>3</th>
+        <td>Tax Accountant</td>
+        <td>Steuerberater</td>
+        <td>2023-01-03</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
