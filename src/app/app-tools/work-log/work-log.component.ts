@@ -34,7 +34,7 @@ export class WorkLogComponent {
     }
 
     calculateTotalTime() {
-        const lines = this.workLog.split('\n').reverse();
+        const lines = this.workLog.match(/\d\d?:\d\d?.*/g)?.reverse() || [];
         const entries = new Map<string, number>();
         let lastTime = 0;
         for (const line of lines) {
