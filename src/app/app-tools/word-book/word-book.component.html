@@ -50,27 +50,14 @@
           <button class="btn" (click)="addEntry()">Save</button>
         </td>
       </tr>
-      <!-- row 1 -->
+      @for (entry of results; track entry.id) {
       <tr>
-        <th>1</th>
-        <td>Quality specialist</td>
-        <td>Qualitätskontrolleur</td>
-        <td>2023-01-01</td>
+        <th></th>
+        <td>{{ entry.en }}</td>
+        <td>{{ entry.de }}</td>
+        <td>{{ entry.createdAt }}</td>
       </tr>
-      <!-- row 2 -->
-      <tr>
-        <th>2</th>
-        <td>Desktop Support Technician</td>
-        <td>Desktop-Support-Techniker</td>
-        <td>2023-01-02</td>
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <th>3</th>
-        <td>Tax Accountant</td>
-        <td>Steuerberater</td>
-        <td>2023-01-03</td>
-      </tr>
+      }
     </tbody>
   </table>
 </div>

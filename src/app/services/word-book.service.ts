@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-interface WorkBookEntry {
+interface WordBookEntry {
     id: string;
     en: string;
     de: string;
@@ -13,10 +13,10 @@ interface WorkBookEntry {
 @Injectable({
   providedIn: 'root'
 })
-export class WorkBookService {
+export class WordBookService {
     domain: string = environment.catalog.domain;
     searchTerm: string | null = null;
-    results: WorkBookEntry[] = [];
+    results: WordBookEntry[] = [];
 
     constructor(
         private http: HttpClient
@@ -25,9 +25,9 @@ export class WorkBookService {
     }
 
     async search(): Promise<void> {
-        const req = this.http.get<WorkBookEntry[]>(`${this.domain}/api/workbook/search`, {
+        const req = this.http.get<WordBookEntry[]>(`${this.domain}/wordbook/search`, {
             params: {
-                q: this.searchTerm || ''
+                term: this.searchTerm || ''
             }
         });
 
@@ -35,7 +35,7 @@ export class WorkBookService {
     }
 
     async addEntry(en: string, de: string): Promise<void> {
-        const req = this.http.post<WorkBookEntry>(`${this.domain}/api/workbook/add`, {
+        const req = this.http.post<WordBookEntry>(`${this.domain}/wordbook/add`, {
             en,
             de
         });

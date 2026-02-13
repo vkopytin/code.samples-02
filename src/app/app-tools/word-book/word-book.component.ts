@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkBookService } from '../../services/work-book.service';
+import { WordBookService } from '../../services/word-book.service';
 import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -9,8 +9,8 @@ import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
   styleUrl: './word-book.component.scss',
 })
 export class WordBookComponent implements OnInit {
-    searchTerm = this.workBook.searchTerm;
-    results = this.workBook.results;
+    searchTerm = this.wordBook.searchTerm;
+    results = this.wordBook.results;
 
     enText = '';
     deText = '';
@@ -18,7 +18,7 @@ export class WordBookComponent implements OnInit {
     searchTerm$ = new BehaviorSubject<string>(this.searchTerm || '');
     ngUnsubscribe = new Subject<void>();
 
-    constructor(private workBook: WorkBookService) {
+    constructor(private wordBook: WordBookService) {
 
     }
 
@@ -27,10 +27,12 @@ export class WordBookComponent implements OnInit {
             debounceTime(500),
             takeUntil(this.ngUnsubscribe),
         ).subscribe(async term => {
-            this.workBook.searchTerm = term;
-            await this.workBook.search();
-            this.results = this.workBook.results;
-        })
+            this.wordBook.searchTerm = term;
+            await this.wordBook.search();
+            this.results = this.wordBook.results;
+        });
+
+        this.searchTerm$.next(this.searchTerm || '');
     }
 
     ngOnDestroy(): void {
@@ -48,14 +50,14 @@ export class WordBookComponent implements OnInit {
     }
 
     async doSearch(): Promise<void> {
-        await this.workBook.search();
-        this.results = this.workBook.results;
+        await this.wordBook.search();
+        this.results = this.wordBook.results;
     }
 
     async addEntry(): Promise<void> {
-        await this.workBook.addEntry(this.enText, this.deText);
+        await this.wordBook.addEntry(this.enText, this.deText);
         this.enText = '';
         this.deText = '';
-        this.results = this.workBook.results;
+        this.results = this.wordBook.results;
     }
 }
