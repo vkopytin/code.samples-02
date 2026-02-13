@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 
 import { ContentEditorModule } from '../content-editor/content-editor.module';
@@ -14,7 +14,7 @@ import { WebSitesService } from '../services/webSites.service';
 @Component({
     selector: 'app-home',
     imports: [
-        RouterOutlet, RouterModule, ContentEditorModule,
+        RouterModule, ContentEditorModule,
         MediaLibraryModule, FormsModule, ReactiveFormsModule,
     ],
     templateUrl: './home.component.html',

@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-import { AsyncPipe } from '@angular/common';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../../services/auth.service';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
     selector: 'app-login',
-    imports: [AsyncPipe, RouterOutlet, RouterModule, FormsModule, ReactiveFormsModule],
+    imports: [RouterModule, FormsModule, ReactiveFormsModule],
     providers: [AuthService],
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss'
