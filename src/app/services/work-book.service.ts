@@ -15,7 +15,7 @@ interface WorkBookEntry {
 })
 export class WorkBookService {
     domain: string = environment.catalog.domain;
-    searchTerm = '';
+    searchTerm: string | null = null;
     results: WorkBookEntry[] = [];
 
     constructor(
@@ -27,7 +27,7 @@ export class WorkBookService {
     async search(): Promise<void> {
         const req = this.http.get<WorkBookEntry[]>(`${this.domain}/api/workbook/search`, {
             params: {
-                q: this.searchTerm
+                q: this.searchTerm || ''
             }
         });
 

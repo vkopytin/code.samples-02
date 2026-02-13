@@ -9,7 +9,7 @@ import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
   styleUrl: './word-book.component.scss',
 })
 export class WordBookComponent implements OnInit {
-    searchTerm: string | null = this.workBook.searchTerm;
+    searchTerm = this.workBook.searchTerm;
     results = this.workBook.results;
 
     enText = '';
