@@ -71,8 +71,8 @@ English sentence 2 - German sentence 2
 </div>
 
 <div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100 py-4">
-  <div class="join max-w">
-    <label class="input join-item w-80">
+  <div class="join w-full">
+    <label class="input join-item w-full">
       <span class="label">Text:&nbsp;</span>
       <input
         type="text"
@@ -83,7 +83,7 @@ English sentence 2 - German sentence 2
       />
       <span class="btn badge" (click)="resetSearchTerm()">Reset</span>
     </label>
-    <button class="btn join-item w-16" (click)="doSearch()">Search</button>
+    <button class="btn join-item" (click)="doSearch()">Search</button>
   </div>
 </div>
 
