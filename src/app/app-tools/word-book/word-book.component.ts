@@ -50,7 +50,12 @@ export class WordBookComponent implements OnInit {
     }
 
     changeSelectedItem(item: WordBookComponent['results'][0]): void {
-        this.selectedItem = item;
+        const entry = this.results.find(e => e.id === this.selectedItem?.id);
+        if (entry && this.selectedItem?.id) {
+            entry.de = this.selectedItem?.de;
+            entry.en = this.selectedItem?.en;
+        }
+        this.selectedItem = {...item };
     }
 
     async changeSearchTerm(term: string): Promise<void> {
