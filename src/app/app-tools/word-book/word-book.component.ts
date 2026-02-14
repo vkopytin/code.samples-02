@@ -14,6 +14,7 @@ export class WordBookComponent implements OnInit {
 
     enText = '';
     deText = '';
+    bulkText = '';
 
     searchTerm$ = new BehaviorSubject<string>(this.searchTerm || '');
     ngUnsubscribe = new Subject<void>();
@@ -44,6 +45,16 @@ export class WordBookComponent implements OnInit {
         this.searchTerm$.next(term);
     }
 
+    onChangeEnText(event: Event): void {
+        const target = event.target as HTMLTextAreaElement;
+        this.enText = target.value;
+    }
+
+    onChangeDeText(event: Event): void {
+        const target = event.target as HTMLTextAreaElement;
+        this.deText = target.value;
+    }
+
     resetSearchTerm(): void {
         this.searchTerm = null;
         this.changeSearchTerm('');
@@ -55,9 +66,24 @@ export class WordBookComponent implements OnInit {
     }
 
     async addEntry(): Promise<void> {
+        if (!this.enText || !this.deText) {
+            return;
+        }
+
         await this.wordBook.addEntry(this.enText, this.deText);
         this.enText = '';
         this.deText = '';
+        this.results = this.wordBook.results;
+    }
+
+    onChangeBulkText(event: Event): void {
+        const target = event.target as HTMLTextAreaElement;
+        this.bulkText = target.value;
+    }
+
+    async addBulkEntries(): Promise<void> {
+        await this.wordBook.addBulkEntries(this.bulkText);
+        this.bulkText = '';
         this.results = this.wordBook.results;
     }
 }

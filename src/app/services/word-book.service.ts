@@ -31,7 +31,12 @@ export class WordBookService {
             }
         });
 
-        this.results = await lastValueFrom(req);
+        const results = await lastValueFrom(req);
+
+        this.results = results.map(r => ({
+            ...r,
+            createdAt: new Date(r.createdAt).toLocaleString()
+        }));
     }
 
     async addEntry(en: string, de: string): Promise<void> {
@@ -40,6 +45,14 @@ export class WordBookService {
             de
         });
 
+        await lastValueFrom(req);
+        await this.search();
+    }
+
+    async addBulkEntries(entries: string): Promise<void> {
+        const req = this.http.post<WordBookEntry[]>(`${this.domain}/wordbook/add-batch`, {
+            entries
+        });
         await lastValueFrom(req);
         await this.search();
     }

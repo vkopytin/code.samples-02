@@ -1,5 +1,77 @@
-<div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100">
-  <div class="join">
+<div class="join join-vertical bg-base-100">
+  <div class="collapse collapse-arrow join-item border-base-300 border">
+    <input type="radio" name="add-entry-1" checked="checked" />
+    <div class="collapse-title font-semibold">Add Entry</div>
+    <div class="collapse-content text-sm">
+      <fieldset class="fieldset bg-base-100 rounded-box">
+        <label class="label px-1">English</label>
+        <textarea
+          placeholder="Enter a sentence..."
+          class="input input-bordered w-full"
+          [value]="deText"
+          (input)="onChangeDeText($event)"
+        ></textarea>
+
+        <label class="label px-1">German</label>
+        <textarea
+          placeholder="Enter a sentence..."
+          class="input input-bordered w-full"
+          [value]="enText"
+          (input)="onChangeEnText($event)"
+        ></textarea>
+
+        <button
+          class="btn btn-neutral mt-4"
+          [attr.aria-disabled]="!enText || !deText"
+          [disabled]="!enText || !deText"
+          (click)="addEntry()"
+        >
+          Add
+        </button>
+      </fieldset>
+    </div>
+  </div>
+  <div class="collapse collapse-arrow join-item border-base-300 border">
+    <input type="radio" name="add-entry-1" />
+    <div class="collapse-title font-semibold">
+      Add multiple entries (copy/paste)
+    </div>
+    <div class="collapse-content text-sm">
+      <p class="mb-2">
+        You can add multiple entries at once by copying and pasting them in the
+        following format:
+      </p>
+      <pre class="bg-base-200 p-2 rounded-box mb-4">
+English sentence 1 - German sentence 1
+English sentence 2 - German sentence 2
+...
+        </pre
+      >
+      <p class="mb-2">
+        Just make sure to separate the English and German sentences with a tab
+        character.
+      </p>
+      <textarea
+        placeholder="Enter sentences in the format: English - German"
+        class="input input-bordered w-full h-48"
+        [value]="bulkText"
+        (input)="onChangeBulkText($event)"
+      ></textarea>
+
+      <button
+        class="btn btn-neutral mt-4"
+        [attr.aria-disabled]="!bulkText"
+        [disabled]="!bulkText"
+        (click)="addBulkEntries()"
+      >
+        Add Entries
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100 py-4">
+  <div class="join w-96">
     <label class="input join-item">
       <span class="label">Text:&nbsp;</span>
       <input
@@ -10,7 +82,7 @@
       />
       <span class="btn badge" (click)="resetSearchTerm()">Reset</span>
     </label>
-    <button class="btn join-item" (click)="doSearch()">Add</button>
+    <button class="btn join-item" (click)="doSearch()">Search</button>
   </div>
 </div>
 
@@ -19,42 +91,16 @@
     <!-- head -->
     <thead>
       <tr>
-        <th></th>
-        <th>English</th>
         <th>German</th>
+        <th>English</th>
         <th>Created</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th></th>
-        <td>
-          <input
-            type="text"
-            placeholder="Enter a sentence..."
-            class="input input-bordered w-full"
-            [value]="enText"
-            (input)="enText = $event.target.value"
-          />
-        </td>
-        <td>
-          <input
-            type="text"
-            placeholder="Enter a sentence..."
-            class="input input-bordered w-full"
-            [value]="deText"
-            (input)="deText = $event.target.value"
-          />
-        </td>
-        <td>
-          <button class="btn" (click)="addEntry()">Save</button>
-        </td>
-      </tr>
       @for (entry of results; track entry.id) {
       <tr>
-        <th></th>
-        <td>{{ entry.en }}</td>
         <td>{{ entry.de }}</td>
+        <td>{{ entry.en }}</td>
         <td>{{ entry.createdAt }}</td>
       </tr>
       }
