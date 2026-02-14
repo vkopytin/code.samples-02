@@ -4,20 +4,20 @@
     <div class="collapse-title font-semibold">Add Entry</div>
     <div class="collapse-content text-sm">
       <fieldset class="fieldset bg-base-100 rounded-box">
-        <label class="label px-1">English</label>
-        <textarea
-          placeholder="Enter a sentence..."
-          class="input input-bordered w-full"
-          [value]="deText"
-          (input)="onChangeDeText($event)"
-        ></textarea>
-
         <label class="label px-1">German</label>
         <textarea
           placeholder="Enter a sentence..."
           class="input input-bordered w-full"
+          [value]="deText"
+          (input)="deText = getValue($event)"
+        ></textarea>
+
+        <label class="label px-1">English</label>
+        <textarea
+          placeholder="Enter a sentence..."
+          class="input input-bordered w-full"
           [value]="enText"
-          (input)="onChangeEnText($event)"
+          (input)="enText = getValue($event)"
         ></textarea>
 
         <button
@@ -100,9 +100,15 @@ English sentence 2 - German sentence 2
     <tbody>
       @for (entry of results; track entry.id) {
       <tr>
-        <td>{{ entry.de }}</td>
-        <td>{{ entry.en }}</td>
+        <td [(code-editor)]="entry.de" (click)="changeSelectedItem(entry)"></td>
+        <td [(code-editor)]="entry.en" (click)="changeSelectedItem(entry)"></td>
+        @if (selectedItem && selectedItem.id === entry.id) {
+        <td class="flex justify-center">
+          <button class="btn" (click)="saveEntry(entry)">Save</button>
+        </td>
+        } @else {
         <td>{{ entry.createdAt }}</td>
+        }
       </tr>
       }
     </tbody>

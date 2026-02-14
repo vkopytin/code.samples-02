@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { WordBookService } from '../../services/word-book.service';
 import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
+import { ContentEditorModule } from '../../content-editor/content-editor.module';
 
 @Component({
   selector: 'app-word-book',
-  imports: [],
+  imports: [ContentEditorModule],
   templateUrl: './word-book.component.html',
   styleUrl: './word-book.component.scss',
 })
@@ -15,6 +16,8 @@ export class WordBookComponent implements OnInit {
     enText = '';
     deText = '';
     bulkText = '';
+
+    selectedItem: WordBookComponent['results'][0] | null = null;
 
     searchTerm$ = new BehaviorSubject<string>(this.searchTerm || '');
     ngUnsubscribe = new Subject<void>();
@@ -41,18 +44,17 @@ export class WordBookComponent implements OnInit {
         this.ngUnsubscribe.complete();
     }
 
+    getValue(event: Event): string {
+        const target = event.target as HTMLInputElement;
+        return target.value;
+    }
+
+    changeSelectedItem(item: WordBookComponent['results'][0]): void {
+        this.selectedItem = item;
+    }
+
     async changeSearchTerm(term: string): Promise<void> {
         this.searchTerm$.next(term);
-    }
-
-    onChangeEnText(event: Event): void {
-        const target = event.target as HTMLTextAreaElement;
-        this.enText = target.value;
-    }
-
-    onChangeDeText(event: Event): void {
-        const target = event.target as HTMLTextAreaElement;
-        this.deText = target.value;
     }
 
     resetSearchTerm(): void {
@@ -85,5 +87,15 @@ export class WordBookComponent implements OnInit {
         await this.wordBook.addBulkEntries(this.bulkText);
         this.bulkText = '';
         this.results = this.wordBook.results;
+    }
+
+    async saveEntry(entry: WordBookComponent['results'][0]): Promise<void> {
+        if (!this.selectedItem) {
+            return;
+        }
+
+        await this.wordBook.update(entry);
+
+        this.selectedItem = null;
     }
 }

@@ -49,6 +49,12 @@ export class WordBookService {
         await this.search();
     }
 
+    async update(entry: WordBookEntry): Promise<void> {
+        const req = this.http.put<WordBookEntry>(`${this.domain}/wordbook/${entry.id}`, entry);
+        await lastValueFrom(req);
+        await this.search();
+    }
+
     async addBulkEntries(entries: string): Promise<void> {
         const req = this.http.post<WordBookEntry[]>(`${this.domain}/wordbook/add-batch`, {
             entries
