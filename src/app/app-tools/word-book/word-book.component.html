@@ -99,7 +99,7 @@ English sentence 2 - German sentence 2
     <tbody>
       @for (entry of results; track entry.id) {
       <tr>
-        <td class="font-sans" (click)="changeSelectedItem(entry)">
+        <td (click)="changeSelectedItem(entry)">
           <code
             class="block w-full"
             [code-editor]="entry.de + ' - ' + entry.en"
