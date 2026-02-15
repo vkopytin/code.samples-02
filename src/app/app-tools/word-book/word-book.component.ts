@@ -12,8 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './word-book.component.scss',
 })
 export class WordBookComponent implements OnInit {
-    searchForm!: FormGroup;
-    searchTerm = this.wordBook.searchTerm;
+    searchForm: FormGroup;
     results = this.wordBook.results;
     pages = [0];
 
@@ -25,28 +24,24 @@ export class WordBookComponent implements OnInit {
     page = 1;
     pageSize = 20;
 
-    searchTerm$ = new BehaviorSubject<string>(this.searchTerm || '');
     ngUnsubscribe = new Subject<void>();
 
     constructor(private wordBook: WordBookService) {
-
-    }
-
-    ngOnInit(): void {
         this.searchForm = new FormGroup({
             search: new FormControl<string>(''),
         });
-        this.searchTerm$.pipe(
+    }
+
+    ngOnInit(): void {
+        this.searchForm.valueChanges.pipe(
             debounceTime(500),
             takeUntil(this.ngUnsubscribe),
-        ).subscribe(async term => {
-            this.wordBook.searchTerm = term;
+        ).subscribe(async value => {
+            this.wordBook.searchTerm = value.search;
             await this.doSearch();
         });
 
-        this.searchForm.valueChanges.subscribe(value => {
-            this.searchTerm$.next(value.search || '');
-        });
+        this.doSearch();
     }
 
     ngOnDestroy(): void {
@@ -63,13 +58,7 @@ export class WordBookComponent implements OnInit {
         this.selectedItem = {...item };
     }
 
-    resetSearchTerm(): void {
-        this.searchForm.reset();
-    }
-
-    async doSearch(event?: Event): Promise<void> {
-        event?.preventDefault();
-
+    async doSearch(): Promise<void> {
         await this.wordBook.search((this.page - 1) * this.pageSize, this.pageSize);
         this.pages = this.makePagesMap(this.wordBook.total, this.pageSize);
         this.results = this.wordBook.results;
