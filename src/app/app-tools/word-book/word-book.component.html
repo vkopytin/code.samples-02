@@ -71,20 +71,25 @@ English sentence 2 - German sentence 2
 </div>
 
 <div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100 py-4">
-  <div class="join w-full">
+  <form
+    class="join w-full"
+    [formGroup]="searchForm"
+    (submit)="doSearch($event)"
+  >
     <label class="input join-item w-full">
       Text:
       <input
         type="text"
         name="search"
+        formControlName="search"
         placeholder="Enter a sentence..."
-        [value]="searchTerm"
-        (input)="changeSearchTerm($event.target.value)"
       />
       <span class="btn badge" (click)="resetSearchTerm()">Reset</span>
     </label>
-    <button class="btn join-item" (click)="doSearch()">Search</button>
-  </div>
+    <button type="submit" class="btn join-item" (click)="doSearch($event)">
+      Search
+    </button>
+  </form>
 </div>
 <div class="pagination join">
   @for (p of pages; track p) {

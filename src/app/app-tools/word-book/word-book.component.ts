@@ -3,14 +3,16 @@ import { WordBookService } from '../../services/word-book.service';
 import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
 import { ContentEditorModule } from '../../content-editor/content-editor.module';
 import { WordBookEntry } from '../../services/models/WordBookEntry';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-word-book',
-  imports: [ContentEditorModule],
+  imports: [ReactiveFormsModule, ContentEditorModule],
   templateUrl: './word-book.component.html',
   styleUrl: './word-book.component.scss',
 })
 export class WordBookComponent implements OnInit {
+    searchForm!: FormGroup;
     searchTerm = this.wordBook.searchTerm;
     results = this.wordBook.results;
     pages = [0];
@@ -31,6 +33,9 @@ export class WordBookComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.searchForm = new FormGroup({
+            search: new FormControl<string>(''),
+        });
         this.searchTerm$.pipe(
             debounceTime(500),
             takeUntil(this.ngUnsubscribe),
@@ -39,7 +44,9 @@ export class WordBookComponent implements OnInit {
             await this.doSearch();
         });
 
-        this.searchTerm$.next(this.searchTerm || '');
+        this.searchForm.valueChanges.subscribe(value => {
+            this.searchTerm$.next(value.search || '');
+        });
     }
 
     ngOnDestroy(): void {
@@ -56,16 +63,13 @@ export class WordBookComponent implements OnInit {
         this.selectedItem = {...item };
     }
 
-    async changeSearchTerm(term: string): Promise<void> {
-        this.searchTerm$.next(term);
-    }
-
     resetSearchTerm(): void {
-        this.searchTerm = null;
-        this.changeSearchTerm('');
+        this.searchForm.reset();
     }
 
-    async doSearch(): Promise<void> {
+    async doSearch(event?: Event): Promise<void> {
+        event?.preventDefault();
+
         await this.wordBook.search((this.page - 1) * this.pageSize, this.pageSize);
         this.pages = this.makePagesMap(this.wordBook.total, this.pageSize);
         this.results = this.wordBook.results;
