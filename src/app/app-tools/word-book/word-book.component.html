@@ -48,11 +48,11 @@ English sentence 2 - German sentence 2
         </pre
       >
       <p class="mb-2">
-        Just make sure to separate the English and German sentences with a tab
-        character.
+        Just make sure to separate the English and German sentences with a
+        :space:tab:space: character.
       </p>
       <textarea
-        placeholder="Enter sentences in the format: English - German"
+        placeholder="Enter sentences in the format: English[ - ]German"
         class="input input-bordered w-full h-48"
         [value]="bulkText"
         (input)="onChangeBulkText($event)"
@@ -92,19 +92,23 @@ English sentence 2 - German sentence 2
     <!-- head -->
     <thead>
       <tr>
-        <th>German</th>
-        <th>English</th>
+        <th>German - English</th>
         <th>Created</th>
       </tr>
     </thead>
     <tbody>
       @for (entry of results; track entry.id) {
       <tr>
-        <td [(code-editor)]="entry.de" (click)="changeSelectedItem(entry)"></td>
-        <td [(code-editor)]="entry.en" (click)="changeSelectedItem(entry)"></td>
+        <td class="font-sans" (click)="changeSelectedItem(entry)">
+          <code
+            class="block w-full"
+            [code-editor]="entry.de + ' - ' + entry.en"
+            (code-editorChange)="onEntryChange($event)"
+          ></code>
+        </td>
         @if (selectedItem && selectedItem.id === entry.id) {
         <td class="flex justify-center">
-          <button class="btn" (click)="saveEntry(entry)">Save</button>
+          <button class="btn" (click)="saveEntry()">Save</button>
         </td>
         } @else {
         <td>{{ entry.createdAt }}</td>

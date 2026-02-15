@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WordBookService } from '../../services/word-book.service';
 import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
 import { ContentEditorModule } from '../../content-editor/content-editor.module';
@@ -49,12 +49,17 @@ export class WordBookComponent implements OnInit {
         return target.value;
     }
 
-    changeSelectedItem(item: WordBookComponent['results'][0]): void {
-        const entry = this.results.find(e => e.id === this.selectedItem?.id);
-        if (entry && this.selectedItem?.id) {
-            entry.de = this.selectedItem?.de;
-            entry.en = this.selectedItem?.en;
+    onEntryChange(value: string): void {
+        if (!this.selectedItem) {
+            return;
         }
+
+        const [de, en] = value.split(' - ');
+        this.selectedItem.de = de.trim();
+        this.selectedItem.en = en.trim();
+    }
+
+    changeSelectedItem(item: WordBookComponent['results'][0]): void {
         this.selectedItem = {...item };
     }
 
@@ -94,12 +99,12 @@ export class WordBookComponent implements OnInit {
         this.results = this.wordBook.results;
     }
 
-    async saveEntry(entry: WordBookComponent['results'][0]): Promise<void> {
+    async saveEntry(): Promise<void> {
         if (!this.selectedItem) {
             return;
         }
 
-        await this.wordBook.update(entry);
+        await this.wordBook.update(this.selectedItem);
 
         this.selectedItem = null;
     }
