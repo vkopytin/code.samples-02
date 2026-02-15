@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { WordBookService } from '../../services/word-book.service';
 import { BehaviorSubject, debounceTime, Subject, takeUntil } from 'rxjs';
 import { ContentEditorModule } from '../../content-editor/content-editor.module';
+import { WordBookEntry } from '../../services/models/WordBookEntry';
 
 @Component({
   selector: 'app-word-book',
@@ -12,12 +13,15 @@ import { ContentEditorModule } from '../../content-editor/content-editor.module'
 export class WordBookComponent implements OnInit {
     searchTerm = this.wordBook.searchTerm;
     results = this.wordBook.results;
+    pages = [0];
 
     enText = '';
     deText = '';
     bulkText = '';
 
-    selectedItem: WordBookComponent['results'][0] | null = null;
+    selectedItem: WordBookEntry | null = null;
+    page = 1;
+    pageSize = 20;
 
     searchTerm$ = new BehaviorSubject<string>(this.searchTerm || '');
     ngUnsubscribe = new Subject<void>();
@@ -32,8 +36,7 @@ export class WordBookComponent implements OnInit {
             takeUntil(this.ngUnsubscribe),
         ).subscribe(async term => {
             this.wordBook.searchTerm = term;
-            await this.wordBook.search();
-            this.results = this.wordBook.results;
+            await this.doSearch();
         });
 
         this.searchTerm$.next(this.searchTerm || '');
@@ -49,17 +52,7 @@ export class WordBookComponent implements OnInit {
         return target.value;
     }
 
-    onEntryChange(value: string): void {
-        if (!this.selectedItem) {
-            return;
-        }
-
-        const [de, en] = value.split(' - ');
-        this.selectedItem.de = de.trim();
-        this.selectedItem.en = en.trim();
-    }
-
-    changeSelectedItem(item: WordBookComponent['results'][0]): void {
+    changeSelectedItem(item: WordBookEntry): void {
         this.selectedItem = {...item };
     }
 
@@ -73,8 +66,38 @@ export class WordBookComponent implements OnInit {
     }
 
     async doSearch(): Promise<void> {
-        await this.wordBook.search();
+        await this.wordBook.search((this.page - 1) * this.pageSize, this.pageSize);
+        this.pages = this.makePagesMap(this.wordBook.total, this.pageSize);
         this.results = this.wordBook.results;
+    }
+
+    goToPage(page: number): void {
+        this.page = page;
+        this.doSearch();
+    }
+
+    makePagesMap(total: number, pageSize: number): number[] {
+        const allPages = Array(Math.ceil(total / pageSize)).fill(0).map((_, i) => i);
+        if (allPages.length <= 10) {
+            return allPages;
+        }
+        if (this.page <= 5) {
+            return allPages.slice(0, 10);
+        }
+        if (this.page > allPages.length - 5) {
+            return allPages.slice(-10);
+        }
+        return allPages.slice(this.page - 5, this.page + 5);
+    }
+
+    onEntryChange(value: string): void {
+        if (!this.selectedItem) {
+            return;
+        }
+
+        const [de, en] = value.split(' - ');
+        this.selectedItem.de = de.trim();
+        this.selectedItem.en = en.trim();
     }
 
     async addEntry(): Promise<void> {

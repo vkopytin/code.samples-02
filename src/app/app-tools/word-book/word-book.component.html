@@ -86,7 +86,19 @@ English sentence 2 - German sentence 2
     <button class="btn join-item" (click)="doSearch()">Search</button>
   </div>
 </div>
-
+<div class="pagination join">
+  @for (p of pages; track p) {
+  <input
+    type="radio"
+    name="paging-1"
+    class="join-item btn btn-square"
+    [attr.checked]="page === p + 1 ? 'checked' : null"
+    [attr.aria-label]="p + 1"
+    value="{{ p + 1 }}"
+    (click)="goToPage(p + 1)"
+  />
+  }
+</div>
 <div class="overflow-x-auto rounded-box border-base-content/5 bg-base-100">
   <table class="table">
     <!-- head -->
@@ -117,4 +129,17 @@ English sentence 2 - German sentence 2
       }
     </tbody>
   </table>
+</div>
+<div class="pagination join">
+  @for (p of pages; track p) {
+  <input
+    type="radio"
+    name="paging-2"
+    class="join-item btn btn-square"
+    [attr.checked]="page === p + 1 ? 'checked' : null"
+    [attr.aria-label]="p + 1"
+    value="{{ p + 1 }}"
+    (click)="goToPage(p + 1)"
+  />
+  }
 </div>

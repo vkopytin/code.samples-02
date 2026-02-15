@@ -2,13 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-interface WordBookEntry {
-    id: string;
-    en: string;
-    de: string;
-    createdAt: string;
-}
+import { WordBookEntry } from './models/WordBookEntry';
+import { PagedResult } from './models/pagedResult';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +12,7 @@ export class WordBookService {
     domain: string = environment.catalog.domain;
     searchTerm: string | null = null;
     results: WordBookEntry[] = [];
+    total: number = 0;
 
     constructor(
         private http: HttpClient
@@ -24,19 +20,22 @@ export class WordBookService {
 
     }
 
-    async search(): Promise<void> {
-        const req = this.http.get<WordBookEntry[]>(`${this.domain}/wordbook/search`, {
+    async search(from = 0, limit = 20): Promise<void> {
+        const req = this.http.get<PagedResult<WordBookEntry>>(`${this.domain}/wordbook/search`, {
             params: {
-                term: this.searchTerm || ''
+                term: this.searchTerm || '',
+                from,
+                limit
             }
         });
 
         const results = await lastValueFrom(req);
 
-        this.results = results.map(r => ({
+        this.results = results.items.map(r => ({
             ...r,
             createdAt: new Date(r.createdAt).toLocaleString()
         }));
+        this.total = results.total;
     }
 
     async addEntry(en: string, de: string): Promise<void> {
