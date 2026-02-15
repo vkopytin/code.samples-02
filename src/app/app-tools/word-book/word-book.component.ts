@@ -58,7 +58,9 @@ export class WordBookComponent implements OnInit {
         this.selectedItem = {...item };
     }
 
-    async doSearch(): Promise<void> {
+    async doSearch(event?: Event): Promise<void> {
+        event?.preventDefault();
+
         await this.wordBook.search((this.page - 1) * this.pageSize, this.pageSize);
         this.pages = this.makePagesMap(this.wordBook.total, this.pageSize);
         this.results = this.wordBook.results;

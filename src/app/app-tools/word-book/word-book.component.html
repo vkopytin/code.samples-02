@@ -82,7 +82,9 @@ English sentence 2 - German sentence 2
       />
       <span class="btn badge" (click)="this.searchForm.reset()">Reset</span>
     </label>
-    <button type="submit" class="btn join-item">Search</button>
+    <button type="submit" class="btn join-item" (click)="doSearch($event)">
+      Search
+    </button>
   </form>
 </div>
 <div class="pagination join">
