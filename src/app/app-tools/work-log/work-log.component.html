@@ -1,7 +1,7 @@
 <fieldset class="fieldset">
   <legend class="fieldset-legend">Work Log</legend>
   <textarea
-    class="textarea h-24"
+    class="textarea h-24 w-full"
     name="work-log"
     placeholder="Write your work log here..."
     [value]="workLog"
@@ -12,7 +12,7 @@
 <div>
   <ul>
     @for (entry of report; track entry) {
-    <li>{{ entry }}</li>
+      <li>{{ entry }}</li>
     }
   </ul>
 </div>
