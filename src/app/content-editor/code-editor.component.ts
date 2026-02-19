@@ -12,7 +12,7 @@ export class CodeEditorComponent {
   public viewId = 'code-editor-' + Math.random().toString(36).substring(2);
   private text: string = '';
 
-  @HostBinding('attr.contenteditable') contenteditable: string | boolean = "false";
+  @HostBinding('attr.contenteditable') contenteditable: string | boolean | null = "false";
 
   @Input('code-editor') get child(): string {
     return this.text;
@@ -33,7 +33,7 @@ export class CodeEditorComponent {
     this.contenteditable = 'true';
   }
   @HostListener('focusout', ['$event']) onFocusOut(evnt: Event) {
-    this.contenteditable = 'false';
+    this.contenteditable = null;
   }
   @HostListener('input', ['$event']) onChange(evnt: Event) {
     this.text = this.elRef.nativeElement.innerText;
