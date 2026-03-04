@@ -72,15 +72,16 @@ export class WordBookComponent implements OnInit {
     }
 
     makePagesMap(total: number, pageSize: number): number[] {
+        const maxPages = 11;
         const allPages = Array(Math.ceil(total / pageSize)).fill(0).map((_, i) => i);
-        if (allPages.length <= 10) {
+        if (allPages.length <= maxPages) {
             return allPages;
         }
         if (this.page <= 5) {
-            return allPages.slice(0, 10);
+            return allPages.slice(0, maxPages);
         }
         if (this.page > allPages.length - 5) {
-            return allPages.slice(-10);
+            return allPages.slice(-maxPages);
         }
         return allPages.slice(this.page - 5, this.page + 5);
     }
