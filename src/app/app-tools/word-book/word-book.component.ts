@@ -72,7 +72,7 @@ export class WordBookComponent implements OnInit {
     }
 
     makePagesMap(total: number, pageSize: number): number[] {
-        const maxPages = 11;
+        const maxPages = 9;
         const allPages = Array(Math.ceil(total / pageSize)).fill(0).map((_, i) => i);
         if (allPages.length <= maxPages) {
             return allPages;
