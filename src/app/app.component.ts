@@ -12,12 +12,11 @@ import { LoadingService } from './services/loading.service';
 import { WebSitesService } from './services/webSites.service';
 import { AuthService } from './services/auth.service';
 
-
 @Component({
-    selector: 'app-root',
-    imports: [NgTemplateOutlet, RouterOutlet, RouterModule],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+  selector: 'app-root',
+  imports: [NgTemplateOutlet, RouterOutlet, RouterModule],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   allWebSites = this.webSites.lastWebsites;
@@ -43,7 +42,7 @@ export class AppComponent implements OnInit {
     private readonly webSites: WebSitesService,
     private readonly loading: LoadingService,
     private readonly account: AccountService,
-  ) { }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.authService.initAuth();
@@ -105,7 +104,7 @@ export class AppComponent implements OnInit {
           console.log(currentToken);
         } else {
           console.log(
-            'No registration token available. Request permission to generate one.'
+            'No registration token available. Request permission to generate one.',
           );
         }
       }

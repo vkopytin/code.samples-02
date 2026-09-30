@@ -1,18 +1,29 @@
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
-    host: {
-        tabindex: '0'
-    },
-    selector: '[code-editor]',
-    template: '',
-    standalone: false
+  host: {
+    tabindex: '0',
+  },
+  selector: '[code-editor]',
+  template: '',
+  standalone: false,
 })
 export class CodeEditorComponent {
   public viewId = 'code-editor-' + Math.random().toString(36).substring(2);
   private text: string = '';
 
-  @HostBinding('attr.contenteditable') contenteditable: string | boolean | null = "false";
+  @HostBinding('attr.contenteditable') contenteditable:
+    | string
+    | boolean
+    | null = 'false';
 
   @Input('code-editor') get child(): string {
     return this.text;
@@ -40,7 +51,5 @@ export class CodeEditorComponent {
     this.textChange.emit(this.text);
   }
 
-  constructor(private elRef: ElementRef) {
-
-  }
+  constructor(private elRef: ElementRef) {}
 }

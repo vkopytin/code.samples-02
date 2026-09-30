@@ -1,16 +1,26 @@
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, Output, ViewChild, DOCUMENT } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  Output,
+  ViewChild,
+  DOCUMENT,
+} from '@angular/core';
 
 import { CodeEditorComponent } from './code-editor.component';
 import { HtmlEditorComponent } from './html-editor.component';
 
 @Component({
-    selector: '[content-editor]',
-    templateUrl: './content-editor.component.html',
-    styleUrl: './content-editor.component.scss',
-    standalone: false
+  selector: '[content-editor]',
+  templateUrl: './content-editor.component.html',
+  styleUrl: './content-editor.component.scss',
+  standalone: false,
 })
 export class ContentEditorComponent {
-  @ViewChild ("docEditor", {read: ElementRef}) docEditor?: ElementRef;
+  @ViewChild('docEditor', { read: ElementRef }) docEditor?: ElementRef;
   @ViewChild(CodeEditorComponent) codeEditor?: CodeEditorComponent;
   @ViewChild(HtmlEditorComponent) htmlEditor?: HtmlEditorComponent;
 
@@ -38,7 +48,9 @@ export class ContentEditorComponent {
     this.htmlChange.emit(this.originValue);
   }
 
-  async pasteFromClipboard(docEditor: ElementRef = this.docEditor!): Promise<void> {
+  async pasteFromClipboard(
+    docEditor: ElementRef = this.docEditor!,
+  ): Promise<void> {
     if (!docEditor) return;
 
     if (this.codeEditor) {
@@ -61,9 +73,12 @@ export class ContentEditorComponent {
     this.document.execCommand('paste');
   }
 
-  async copyToClipboard(docEditor: ElementRef = this.docEditor!): Promise<void> {
+  async copyToClipboard(
+    docEditor: ElementRef = this.docEditor!,
+  ): Promise<void> {
     if (!docEditor) return;
-    const plainText = docEditor.nativeElement?.innerText || this.originValue || '';
+    const plainText =
+      docEditor.nativeElement?.innerText || this.originValue || '';
 
     if (this.window?.navigator?.clipboard) {
       try {

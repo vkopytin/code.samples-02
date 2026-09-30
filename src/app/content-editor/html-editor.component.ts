@@ -1,17 +1,26 @@
-import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
-    host: {
-        tabindex: '0'
-    },
-    selector: '[html-editor]',
-    template: '',
-    standalone: false
+  host: {
+    tabindex: '0',
+  },
+  selector: '[html-editor]',
+  template: '',
+  standalone: false,
 })
 export class HtmlEditorComponent {
   private text: string = '';
 
-  @HostBinding('attr.contenteditable') contenteditable: string | boolean = "false";
+  @HostBinding('attr.contenteditable') contenteditable: string | boolean =
+    'false';
 
   @Input('html-editor') get child(): string {
     return this.text;
@@ -28,7 +37,10 @@ export class HtmlEditorComponent {
 
   @Output('html-editorChange') textChange = new EventEmitter<string>();
 
-  @HostListener('focusin', ['$event']) onFocusIn(evnt: Event) {
+  @HostListener('mouseup', ['$event']) onFocusIn(evnt: Event) {
+    this.contenteditable = 'true';
+  }
+  @HostListener('touchend', ['$event']) onTouchEnd(evnt: Event) {
     this.contenteditable = 'true';
   }
   @HostListener('focusout', ['$event']) onFocusOut(evnt: Event) {
@@ -39,7 +51,5 @@ export class HtmlEditorComponent {
     this.textChange.emit(this.text);
   }
 
-  constructor(private elRef: ElementRef) {
-
-  }
+  constructor(private elRef: ElementRef) {}
 }
